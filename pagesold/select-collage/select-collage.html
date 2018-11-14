@@ -1,0 +1,143 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="main" #mainContent>
+        <ion-title>多选拼包</ion-title>
+        <ion-buttons end (click)="openMenu()">
+            <button ion-button>
+                <span class="ftz20" color="primary" showWhen="ios,android,windows,browser">选择</span>
+                <!-- <ion-icon class="ftz28" name="qr-scanner" showWhen="ios,android,windows,browser"></ion-icon> -->
+                <!-- <ion-icon class="ftz28" name="md-qr-scanner"></ion-icon> -->
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+    <!-- <ion-toolbar>
+      <ion-segment color="main" mode="md" [(ngModel)]="segModel" (ionChange)="segChange($event)">
+          <ion-segment-button [value]="x" *ngFor="let x of segArr;let i = index">
+              <span class="ftz16">{{segTitObj[x]}}</span>
+          </ion-segment-button>
+      </ion-segment>
+  </ion-toolbar> -->
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 侧滑菜单 Begin -->
+<ion-menu id="selSmallPackage" side="right" persistent="true" swipeEnabled="false" type="overlay" [content]="mainContent">
+    <ion-content class="h100p">
+        <div>
+            <div class="">
+                <ion-list>
+                    <ion-item *ngFor="let x of dataList;let i = index;" (click)="clickSel($event,x.id,x)">
+                        <div class="checkbox-wrap disFlex">
+                            <div class="flexBasis20 pt20">
+                                <div class="checkbox-box" [ngClass]="{'active': isSelected(x.id)}">
+                                    <div class="checkbox-box-inner" [ngClass]="{' checkbox-box-check': isSelected(x.id)}"></div>
+                                </div>
+                                <input type="checkbox" class="checkbox-base" />
+                            </div>
+                            <label class="checkbox-label flexGrow1">
+                                <div class="disFlex justConSB pl10 pr10">
+                                    <div>
+                                        <span class="ftz14">小包号：{{x.deliveryPackageNo}}</span>
+                                    </div>
+                                </div>
+                                <div class="disFlex justConSB pl10 pr10">
+                                    <div>
+                                        <span class="ftz14">类型：<span class="colorPri" *ngIf="x.buyerClientOrder?.payType == '现付'">现付</span><span class="colorDan" *ngIf="x.buyerClientOrder?.payType == '到付'">到付</span></span>
+                                    </div>
+                                    <div>
+                                        <span class="ftz14">发货人：{{x.buyerClientOrder?.merchantPhone}}</span>
+                                    </div>
+                                </div>
+                                <div class="disFlex justConSB pl10 pr10">
+                                    <div>
+                                        <span class="ftz14">收货人：{{x.buyerClientOrder?.toPerson}}</span>
+                                    </div>
+                                    <div>
+                                        <span class="ftz14">电话：{{x.buyerClientOrder?.toPhone}}</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </div>
+    </ion-content>
+    <ion-footer>
+        <ion-toolbar>
+            <div class="w100p" text-center>
+                <button ion-button color="main" class="w90p" *ngIf="selIdArr.length > 0" (click)="confirmSel()">确认选择</button>
+            </div>
+        </ion-toolbar>
+    </ion-footer>
+</ion-menu>
+<!-- 侧滑菜单 End -->
+
+<!-- 页面内容区域 Begin -->
+<ion-content>
+    <div class="bgcEEE pb45">
+        <div>
+            <div>
+                <div class="w100p bgcEEE pt5 minH500">
+                    <div class="w100p bgcEEE">
+                        <div class="w100p" *ngFor="let x of showDataList;let i = index" (press)="longTapDelSmall(x.id,i,x)">
+                            <div class="p5">
+                                <ion-card no-padding class="borRadius6 m0 w100p">
+                                    <ion-card-header>
+                                        <div class="w100p tal">
+                                            <span>小包号:</span>
+                                            <span class="">{{x.deliveryPackageNo}}</span>
+                                        </div>
+                                    </ion-card-header>
+                                    <ion-card-content>
+                                        <div class="w100p">
+                                            <!-- <div class="disFlex justConSB pl10 pr10">
+                                                <div>
+                                                    <span class="ftz14">类型：<span class="colorPri" *ngIf="x.buyerClientOrder?.payType == '现付'">现付</span><span class="colorDan" *ngIf="x.buyerClientOrder?.payType == '到付'">到付</span></span>
+                                                </div>
+                                                <div>
+                                                    <span class="ftz14">发货人：{{x.buyerClientOrder?.merchantPhone}}</span>
+                                                </div>
+                                            </div> -->
+                                            <div class="pb5 w100p disFlex flexDirR flexWrapN justConSB">
+                                                <div class="color262127 disFlex">
+                                                    <div class="ftz16 tal">支付类型：</div>
+                                                    <div class="ftz16">
+                                                        <span class="colorPri" *ngIf="x.buyerClientOrder?.payType == '现付'">现付</span>
+                                                        <span class="colorDan" *ngIf="x.buyerClientOrder?.payType == '到付'">到付</span>
+                                                    </div>
+                                                </div>
+                                                <div class="color262127 disFlex">
+                                                    <div class="ftz16 tal">发货人电话：</div>
+                                                    <div class="ftz16">{{x.buyerClientOrder?.merchantPhone}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="pb5 w100p disFlex flexDirR flexWrapN justConSB">
+                                                <div class="color262127 disFlex">
+                                                    <div class="ftz16 tal">收货人：</div>
+                                                    <div class="ftz16">{{x.buyerClientOrder?.toPerson}}</div>
+                                                </div>
+                                                <div class="color262127 disFlex">
+                                                    <div class="ftz16 tal">电话：</div>
+                                                    <div class="ftz16">{{x.buyerClientOrder?.toPhone}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ion-card-content>
+                                </ion-card>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <div class="w100p" text-center>
+            <button ion-button color="main" class="w90p" (click)="saveForm()">确认拼包</button>
+        </div>
+    </ion-toolbar>
+</ion-footer>
+<!-- 页面内容区域 End -->

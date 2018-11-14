@@ -1,0 +1,59 @@
+<!-- 导航条区域Begin -->
+<ion-header>
+    <ion-navbar color="main">
+        <ion-title>{{pageTit}}</ion-title>
+        <!-- <ion-buttons start>
+            <button ion-button>
+            <span color="primary" showWhen="ios">返回</span>
+            <ion-icon name="close" showWhen="android,windows"></ion-icon>
+          </button>
+        </ion-buttons> -->
+        <ion-buttons end>
+            <button ion-button class="w40 tac" (click)="saveForm()">
+                <!-- <ion-icon name="md-add"></ion-icon> -->
+                <!-- <ion-icon ios="ios-add" md="md-add"></ion-icon> -->
+                <span color="primary">确定</span>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域End -->
+
+<!-- 页面内容区域Begin -->
+<ion-content>
+    <!-- 下拉刷新控制元素Begin -->
+    <ion-refresher (ionRefresh)="downRefresh($event,reqUrl,sendData)">
+        <ion-refresher-content pullingIcon="arrow-down" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="正在加载">
+        </ion-refresher-content>
+    </ion-refresher>
+    <!-- 下拉刷新控制元素End -->
+    <ion-list radio-group [(ngModel)]="selObj">
+        <ion-item *ngFor="let x of dataList;let i = index;">
+            <ion-label>
+                <div class="disFlex justConSB">
+                    <div>{{x.consigneeName}}</div>
+                    <div>{{x.consigneePhone}}</div>
+                </div>
+                <div>
+                    <p>
+                        <span>{{x.consigneeAddress}}</span>
+                    </p>
+                </div>
+            </ion-label>
+            <ion-radio [value]="x" (ionSelect)="isSelected($event)"></ion-radio>
+        </ion-item>
+    </ion-list>
+
+
+    <!-- 上拉加载控制元素Begin -->
+    <ion-infinite-scroll (ionInfinite)="upLoad($event,reqUrl,sendData)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载更多数据..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <ion-row [hidden]="!isShowNoData" padding-bottom>
+        <ion-col col-12 text-center>
+            <span class="ftz16">没有更多数据</span>
+        </ion-col>
+    </ion-row>
+    <!-- 上拉加载控制元素End -->
+</ion-content>
+<!-- 页面内容区域End -->

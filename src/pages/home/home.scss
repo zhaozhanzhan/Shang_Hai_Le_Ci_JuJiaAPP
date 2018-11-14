@@ -1,0 +1,117 @@
+page-home {
+    .iconFont {
+        // font-weight: bold;
+        -webkit-text-fill-color: transparent !important;
+    }
+    .iconColor1 {
+        background: linear-gradient(120deg, #5A41FD, #B924FC) !important;
+        -webkit-background-clip: text !important;
+        @extend .iconFont;
+    }
+    .iconColor2 {
+        background: linear-gradient(180deg, #4897F0, #29DAE9) !important;
+        -webkit-background-clip: text !important;
+        @extend .iconFont;
+    }
+    .iconColor3 {
+        background: linear-gradient(270deg, #FC16A0, #F8420B) !important;
+        -webkit-background-clip: text !important;
+        @extend .iconFont;
+    }
+    .iconColor4 {
+        background: linear-gradient(240deg, #E32AC7, #FBA498) !important;
+        -webkit-background-clip: text !important;
+        @extend .iconFont;
+    }
+    .iconColor5 {
+        background: linear-gradient(270deg, #3AC489, #54DA73) !important;
+        -webkit-background-clip: text !important;
+        @extend .iconFont;
+    }
+    .iconColor6 {
+        background: linear-gradient(270deg, #FF6306, #FFC101) !important;
+        -webkit-background-clip: text !important;
+        @extend .iconFont;
+    }
+    .iconColor7 {
+        background: linear-gradient(300deg, #FC4677, #EC261C) !important;
+        -webkit-background-clip: text !important;
+        @extend .iconFont;
+    }
+    .walletBg {
+        background: linear-gradient(240deg, #FFA465, #FEC445) !important;
+    }
+    .recOrderDef {
+        position: relative;
+        background: radial-gradient(circle, #2FDAEC, #0388FE) !important;
+        // background: linear-gradient(270deg, #0388FE, #0067C4) !important;
+        // background: rgba(255, 255, 255, 1) !important;
+        .recCircleOut {
+            position: absolute;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            // background: radial-gradient(circle, #2FDAEC, #0F81FA) !important;
+            // background: linear-gradient(270deg, #3EF2AB, #FFF) !important;
+            // background: linear-gradient(270deg, #0388FE, rgba(255, 255, 255, .3)) !important;
+        }
+        .recCircleIn {
+            position: absolute;
+            z-index: 20;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            margin: auto;
+            width: calc(100% - 10px);
+            height: calc(100% - 10px);
+            border-radius: 50%;
+            color: #FFF;
+            // background: radial-gradient(circle, #2FDAEC, rgb(64, 156, 253)) !important;
+            // background: transparent;
+            // background: #FFF !important;
+            // background: linear-gradient(270deg, #F00, #00BCD8) !important;
+        }
+    }
+    .recOrderRun {
+        position: relative;
+        // background: radial-gradient(circle, #2FDAEC, #0F81FA) !important;
+        // background: linear-gradient(270deg, #0388FE, #0067C4) !important;
+        // background: rgba(255, 255, 255, 1) !important;
+        .recCircleOut {
+            position: absolute;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(270deg, #B400FF, #FFF, #0388FE) !important;
+            animation: run 2.5s linear infinite;
+            // background: linear-gradient(270deg, #0388FE, rgba(255, 255, 255, .3)) !important;
+        }
+        .recCircleIn {
+            position: absolute;
+            z-index: 20;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            margin: auto;
+            width: calc(100% - 10px);
+            height: calc(100% - 10px);
+            border-radius: 50%;
+            background: #FFF !important;
+            // color: #FFF;
+            // background: transparent;
+            // background: linear-gradient(270deg, #F00, #00BCD8) !important;
+        }
+    }
+    @keyframes run {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+}

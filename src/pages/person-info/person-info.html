@@ -1,0 +1,106 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="orange" hideBackButton="true">
+        <ion-title>个人信息</ion-title>
+        <ion-buttons start>
+            <button ion-button class="pl10" (click)="backHome()">
+                <!-- <span color="primary" showWhen="ios">返回</span> -->
+                <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button class="pr10" (click)="navCtrl.pop()">
+                <span showWhen="android,windows,ios">返回</span>
+                <!-- <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon> -->
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar mode="ios" no-padding>
+        <div class="h100 w100p p10">
+            <div class="h100p w100p disFlex">
+                <div class="h100p w100">
+                    <div class="w100p h100p disFlex justConC">
+                        <!-- <img class="h100p borRadius50p" src="assets/imgs/logoback.png"> -->
+                        <img class="h100p borRadius50p" src="https://via.placeholder.com/150">
+                    </div>
+                </div>
+                <div class="h100p disFlex flexDirC justConSA pt10 pb10">
+                    <div>
+                        <span class="ftz20">李四</span>
+                        <span class="ml20">女</span>
+                    </div>
+                    <div>
+                        <span>工号：1002</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-toolbar>
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 页面内容区域 Begin -->
+<ion-content>
+    <div>
+        <div>
+            <div class="p10">
+                <div class="h30 disFlex aligItec">
+                    <span class="ftz16">上海市静安区宝山路街道服务站</span>
+                </div>
+                <div class="disFlex justConSB h30 aligItec">
+                    <div>
+                        <span class="ftz16">年龄：34岁</span>
+                    </div>
+                    <div>
+                        <span class="ftz16">电话：15907291311</span>
+                    </div>
+                </div>
+                <div class="disFlex justConSB h30 aligItec">
+                    <div>
+                        <span class="ftz16">文化程度：初中</span>
+                    </div>
+                    <div>
+                        <span class="ftz16">政治面貌：群众</span>
+                    </div>
+                </div>
+                <div class="disFlex">
+                    <div class="flexShrink0">
+                        <span class="ftz16">居住地：</span>
+                    </div>
+                    <div class="flexShrink1">
+                        <span class="ftz16">上海市静安区宝山路</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p10 mt10">
+                <div>
+                    <div>
+                        <div class="borBBox">
+                            <div class="disFlex justConSB h26 aligItec">
+                                <span class="ftz16">健康证明：</span>
+                            </div>
+                        </div>
+                        <div class="pt10">
+                            <div class="w150 h150">
+                                <img class="h100p w100p" src="https://via.placeholder.com/150">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt20">
+                        <div class="borBBox">
+                            <div class="disFlex justConSB h26 aligItec">
+                                <span class="ftz16">等级证书：</span>
+                            </div>
+                        </div>
+                        <div class="pt10">
+                            <div class="w150 h150">
+                                <img class="h100p w100p" src="https://via.placeholder.com/150">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<!-- 页面内容区域 End -->

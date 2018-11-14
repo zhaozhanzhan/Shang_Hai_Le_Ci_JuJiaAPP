@@ -1,0 +1,49 @@
+page-scan {
+    html,
+    body,
+    ion-app,
+    ion-content,
+    ion-page,
+    .toolbar-background-md,
+    .toolbar-background-ios,
+    .nav-decor {
+        background-color: transparent !important;
+        border-color: transparent !important;
+    }
+    .toolbar-title-ios,
+    .bar-button-default-ios {
+        color: #FFF !important;
+    }
+    .content-ios:not([no-bounce])>.scroll-content::before {
+        bottom: 0px;
+    }
+    .scanLine {
+        z-index: 100;
+        top: 10px;
+        height: 1px;
+        width: 100%;
+        background-color: #00EAFF !important;
+        box-shadow: 0px 0px 6px 1px #00D8EA !important;
+        animation: scan 2s ease-in-out infinite alternate;
+    }
+    @keyframes scan {
+        from {
+            top: 5%;
+        }
+        to {
+            top: 95%;
+        }
+    }
+    .iconBg {
+        background-color: rgba(0, 0, 0, .3) !important;
+        .iconColor {
+            color: #FFF !important;
+        }
+        &.active {
+            background-color: #FFF !important;
+            .iconColor {
+                color: #FBE202 !important;
+            }
+        }
+    }
+}

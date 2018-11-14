@@ -1,0 +1,53 @@
+{
+  "dev": {
+    "config-file": {
+        "url": "http://192.168.1.129:7777/www1111/chcp.json"
+    },
+    "auto-download": {
+        "enabled": true
+    },
+    "auto-install": {
+        "enabled": true
+    },
+    "local-development": {
+        "enabled": true
+    },
+    "native-interface": {
+        "version": 2
+    }
+  },
+  "production": {
+    "config-file": {
+        "url": "http://192.168.1.129:7777/www/chcp.json"
+    },
+    "auto-download": {
+        "enabled": true
+    },
+    "auto-install": {
+        "enabled": true
+    },
+    "local-development": {
+        "enabled": true
+    },
+    "native-interface": {
+        "version": 2
+    }
+  },
+  "QA": {
+    "config-file": {
+        "url": "http://192.168.1.129:7777/www/chcp.json"
+    },
+    "auto-download": {
+        "enabled": true
+    },
+    "auto-install": {
+        "enabled": true
+    },
+    "local-development": {
+        "enabled": true
+    },
+    "native-interface": {
+        "version": 2
+    }
+  }
+}

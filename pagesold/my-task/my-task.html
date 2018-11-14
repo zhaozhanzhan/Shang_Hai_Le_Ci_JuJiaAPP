@@ -1,0 +1,252 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="main">
+        <ion-title>我的任务</ion-title>
+        <!-- <ion-buttons start>
+            <button ion-button>
+            <span color="primary" showWhen="ios">返回</span>
+            <ion-icon name="close" showWhen="android,windows"></ion-icon>
+          </button>
+        </ion-buttons> -->
+    </ion-navbar>
+    <ion-toolbar>
+        <ion-segment color="main" mode="md" [(ngModel)]="segModel" (ionChange)="segChange($event)">
+            <ion-segment-button [value]="x" *ngFor="let x of segArr;let i = index">
+                <span class="ftz16">{{segTitObj[x]}}</span>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 页面内容区域 Begin -->
+<ion-content>
+    <!-- 下拉刷新控制元素 Begin -->
+    <ion-refresher (ionRefresh)="downRefresh($event,reqUrl,pageArr[pageIndex]['sendData'])">
+        <ion-refresher-content pullingIcon="arrow-down" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="正在加载">
+        </ion-refresher-content>
+    </ion-refresher>
+    <!-- 下拉刷新控制元素 End -->
+    <div class="bgcEEE">
+        <div>
+            <ion-slides #swiperPanel (ionSlideDidChange)="slideChanged()">
+                <ion-slide>
+                    <!-- 待处理 Begin -->
+                    <div>
+                        <div class="w100p bgcEEE pt5 minH500">
+                            <div class="w100p bgcEEE">
+                                <div class="w100p bgcFFF disFlex justConSB p10 mb5" *ngFor="let x of pageArr[0]['dataList'];let i = index">
+                                    <div class="flexGrow1" (click)="jumpPage('MerchantOrderDetailPage',{'id':x.id})">
+                                        <div class="w100p disFlex justConSB">
+                                            <div class="color999 ftz14">订单号:{{x.buyerClientOrder?.orderNum}}</div>
+                                            <div class="color999 ftz14" *ngIf="x.status == 0">状态:<span class="colorDan">待处理</span></div>
+                                        </div>
+                                        <div class="tal color999 ftz14">指派时间:{{x.createDate}}</div>
+                                        <div class="disFlex justConSB mt10">
+                                            <div class="disFlex flexDirC">
+                                                <div class="ftz20 tac">常熟市</div>
+                                                <div class="color999 ftz16">{{x.buyerClientOrder?.merchantName}}</div>
+                                                <div class="color999 ftz16">{{x.buyerClientOrder?.merchantPhone}}</div>
+                                            </div>
+                                            <div class="disFlex flexDirC justConC">
+                                                <i class="iconfont icon-JianTou ftz70 colorCCC"></i>
+                                            </div>
+                                            <div class="disFlex flexDirC">
+                                                <div class="ftz20 tac">{{x.buyerClientOrder?.toCity}}</div>
+                                                <div class="color999 ftz16">{{x.buyerClientOrder?.toPerson}}</div>
+                                                <div class="color999 ftz16">{{x.buyerClientOrder?.toPhone}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="tal ftz16 mt10">发货点:{{x.buyerClientOrder?.merchantAddress}}</div>
+                                    </div>
+                                    <div class="disFlex flexDirC justConSA w60">
+                                        <div (click)="isRecOrder(true,x.id,i)">
+                                            <div>
+                                                <ion-icon name="ios-checkmark-circle-outline" class="ftz35 colorSec"></ion-icon>
+                                            </div>
+                                            <div class="ftz16">接受</div>
+                                        </div>
+                                        <div (click)="isRecOrder(false,x.id,i)">
+                                            <div>
+                                                <ion-icon name="ios-close-circle-outline" class="ftz35 colorDan"></ion-icon>
+                                            </div>
+                                            <div class="ftz16">取消</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 待处理 End -->
+                </ion-slide>
+                <ion-slide>
+                    <!-- 进行中 Begin -->
+                    <div>
+                        <div class="w100p bgcEEE pt5 minH500">
+                            <div class="w100p bgcEEE">
+                                <div class="w100p bgcFFF disFlex justConSB p10 mb5" *ngFor="let x of pageArr[1]['dataList'];let i = index">
+                                    <!-- (click)="jumpDetailPage(x.btnType,'MergePackageDetailPage',{'id':x?.buyerClientOrder?.id})" -->
+                                    <div class="flexGrow1" (click)="jumpPage('MerchantOrderDetailPage',{'id':x.id,'status':x.status})">
+                                        <div class="w100p disFlex justConSB">
+                                            <div class="color999 ftz14">订单号:{{x.buyerClientOrder?.orderNum}}</div>
+                                            <div class="color999 ftz14" *ngIf="x.status == 1">状态:<span class="color09F">提货中</span></div>
+                                            <div class="color999 ftz14" *ngIf="x.status == 2">状态:<span class="colorEF6D23">已取货</span></div>
+                                            <div class="color999 ftz14" *ngIf="x.status == 3">状态:<span class="colorSec">已拼包</span></div>
+                                        </div>
+                                        <div class="tal color999 ftz14">指派时间:{{x.createDate}}</div>
+                                        <div class="disFlex justConSB mt10">
+                                            <div class="disFlex flexDirC">
+                                                <div class="ftz20 tac">常熟市</div>
+                                                <div class="color999 ftz16">{{x.buyerClientOrder?.merchantName}}</div>
+                                                <div class="color999 ftz16">{{x.buyerClientOrder?.merchantPhone}}</div>
+                                            </div>
+                                            <div class="disFlex flexDirC justConC">
+                                                <i class="iconfont icon-JianTou ftz70 colorCCC"></i>
+                                            </div>
+                                            <div class="disFlex flexDirC">
+                                                <div class="ftz20 tac">{{x.buyerClientOrder?.toCity}}</div>
+                                                <div class="color999 ftz16">{{x.buyerClientOrder?.toPerson}}</div>
+                                                <div class="color999 ftz16">{{x.buyerClientOrder?.toPhone}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="tal ftz16 mt10">发货点:{{x.buyerClientOrder?.merchantAddress}}</div>
+                                    </div>
+                                    <!-- <div class="disFlex flexDirC justConSA w70">
+                                        (click)="jumpPage('PickupGoodsPage',{'id':x?.buyerClientOrder?.id})"
+                                        <div *ngIf="x.status == 1">
+                                            <div>
+                                                <ion-icon name="ios-timer-outline" class="ftz35 colorPri"></ion-icon>
+                                            </div>
+                                            <div class="ftz16">提货中</div>
+                                        </div>
+                                        (click)="jumpPage('MergePackagePage',{'id':x?.buyerClientOrder?.id})"
+                                        <div *ngIf="x.status == 2">
+                                            <div>
+                                                <i class="iconfont icon-PinBao ftz35 colorPri"></i>
+                                                <ion-icon name="ios-timer-outline" class="ftz35 colorPri"></ion-icon>
+                                            </div>
+                                            <div class="ftz16">已取货</div>
+                                        </div>
+                                        (click)="openQRCodeModal('QrcodeModalPage',x.clientOrder?.orderNum)"
+                                        <div *ngIf="x.status == 3">
+                                            <div>
+                                                <i class="iconfont icon-QRCode ftz35 colorPri"></i>
+                                                <ion-icon name="ios-timer-outline" class="ftz35 colorPri"></ion-icon>
+                                            </div>
+                                            <div class="ftz16">拼包中</div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 进行中 End -->
+                </ion-slide>
+                <ion-slide>
+                    <!-- 已完成 Begin -->
+                    <div>
+                        <div class="w100p bgcEEE pt5 minH500">
+                            <div class="w100p bgcEEE">
+                                <div class="w100p bgcFFF disFlex justConSB p10 mb5" *ngFor="let x of pageArr[2]['dataList'];let i = index">
+                                    <div class="flexGrow1">
+                                        <div class="w100p disFlex justConSB">
+                                            <div class="color999 ftz14">订单号:{{x.buyerClientOrder?.orderNum}}</div>
+                                            <div class="color999 ftz14" *ngIf="x.status == 4">状态:<span class="colorSec">已完成</span></div>
+                                            <div class="color999 ftz14" *ngIf="x.status == -1">状态:<span class="colorDan">已取消</span></div>
+                                        </div>
+                                        <div class="tal color999 ftz14">指派时间:{{x.createDate}}</div>
+                                        <div class="disFlex justConSB mt10">
+                                            <div class="disFlex flexDirC">
+                                                <div class="ftz20 tac">常熟市</div>
+                                                <div class="color999 ftz16">{{x.buyerClientOrder?.merchantName}}</div>
+                                                <div class="color999 ftz16">{{x.buyerClientOrder?.merchantPhone}}</div>
+                                            </div>
+                                            <div class="disFlex flexDirC justConC">
+                                                <i class="iconfont icon-JianTou ftz70 colorCCC"></i>
+                                            </div>
+                                            <div class="disFlex flexDirC">
+                                                <div class="ftz20 tac">{{x.buyerClientOrder?.toCity}}</div>
+                                                <div class="color999 ftz16">{{x.buyerClientOrder?.toPerson}}</div>
+                                                <div class="color999 ftz16">{{x.buyerClientOrder?.toPhone}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="tal ftz16 mt10">发货点:{{x.buyerClientOrder?.merchantAddress}}</div>
+                                    </div>
+                                    <!-- <div class="disFlex flexDirC justConSA w70">
+                                        <div *ngIf="x.status == 4">
+                                            <div>
+                                                <ion-icon name="ios-checkbox-outline" class="ftz35 colorSec"></ion-icon>
+                                            </div>
+                                            <div class="ftz16">已完成</div>
+                                        </div>
+                                        <div *ngIf="x.status == -1">
+                                            <div>
+                                                <ion-icon name="ios-close-outline" class="ftz35 colorDan"></ion-icon>
+                                            </div>
+                                            <div class="ftz16">已取消</div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 已完成 End -->
+                </ion-slide>
+                <ion-slide>
+                    <!-- 已超时 Begin -->
+                    <div>
+                        <div class="w100p bgcEEE pt5 minH500">
+                            <div class="w100p bgcEEE">
+                                <div class="w100p bgcFFF disFlex justConSB p10 mb5" *ngFor="let x of pageArr[3]['dataList'];let i = index">
+                                    <div class="flexGrow1">
+                                        <div class="w100p disFlex justConSB">
+                                            <div class="color999 ftz14">订单号:{{x.buyerClientOrder?.orderNum}}</div>
+                                            <div class="color999 ftz14" *ngIf="x.status == 5">状态:<span class="colorDan">已超时</span></div>
+                                        </div>
+                                        <div class="tal color999 ftz14">指派时间:{{x.createDate}}</div>
+                                        <div class="disFlex justConSB mt10">
+                                            <div class="disFlex flexDirC">
+                                                <div class="ftz20 tac">常熟市</div>
+                                                <div class="color999 ftz16">{{x.buyerClientOrder?.merchantName}}</div>
+                                                <div class="color999 ftz16">{{x.buyerClientOrder?.merchantPhone}}</div>
+                                            </div>
+                                            <div class="disFlex flexDirC justConC">
+                                                <i class="iconfont icon-JianTou ftz70 colorCCC"></i>
+                                            </div>
+                                            <div class="disFlex flexDirC">
+                                                <div class="ftz20 tac">{{x.buyerClientOrder?.toCity}}</div>
+                                                <div class="color999 ftz16">{{x.buyerClientOrder?.toPerson}}</div>
+                                                <div class="color999 ftz16">{{x.buyerClientOrder?.toPhone}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="tal ftz16 mt10">发货点:{{x.buyerClientOrder?.merchantAddress}}</div>
+                                    </div>
+                                    <!-- <div class="disFlex flexDirC justConSA w70">
+                                        <div>
+                                            <div>
+                                                <i class="iconfont icon-OverTime ftz35 colorDan"></i>
+                                            </div>
+                                            <div class="ftz16">已超时</div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 已超时 End -->
+                </ion-slide>
+            </ion-slides>
+        </div>
+    </div>
+    <!-- 上拉加载控制元素 Begin -->
+    <ion-infinite-scroll class="bgcEEE" (ionInfinite)="upLoad($event,reqUrl,pageArr[pageIndex]['sendData'])">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载更多数据..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <ion-row class="bgcEEE" *ngFor="let x of segArr;let i = index" padding-bottom>
+        <ion-col class="bgcEEE" col-12 text-center *ngIf="i == pageIndex" [hidden]="!pageArr[pageIndex]['isShowNoData']">
+            <span class="ftz16">没有更多数据</span>
+        </ion-col>
+    </ion-row>
+    <!-- 上拉加载控制元素 End -->
+</ion-content>
+<!-- 页面内容区域 End -->

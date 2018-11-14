@@ -1,0 +1,7 @@
+page-register {
+    .text-input[disabled],
+    button[disabled],
+    [ion-button][disabled] {
+        opacity: 1 !important;
+    }
+}

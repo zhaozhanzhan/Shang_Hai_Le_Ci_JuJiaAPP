@@ -1,0 +1,134 @@
+<!-- 导航条区域Begin -->
+<ion-header>
+    <ion-navbar color="main" #mainContent>
+        <ion-title>拼包</ion-title>
+        <!-- <ion-buttons end>
+            <button ion-button class="ftz22 w40 tac">
+                <ion-icon name="md-add"></ion-icon>
+            </button>
+        </ion-buttons> -->
+        <!-- <ion-buttons start text-center class="w44">
+            <button ion-button>
+                <span color="primary" showWhen="ios">取消</span>
+                <ion-icon name="close" showWhen="android,windows"></ion-icon>
+            </button>
+        </ion-buttons> -->
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域End -->
+
+<!-- 侧滑菜单 Begin -->
+<ion-menu id="selSmallPackage" side="right" persistent="true" swipeEnabled="false" type="overlay" [content]="mainContent">
+    <ion-content class="h100p">
+        <div>
+            <div class="">
+                <ion-list>
+                    <ion-item *ngFor="let x of dataList;let i = index;" (click)="clickSel($event,x.id,x)">
+                        <div class="checkbox-wrap disFlex">
+                            <div class="flexBasis20">
+                                <div class="checkbox-box" [ngClass]="{'active': isSelected(x.id)}">
+                                    <div class="checkbox-box-inner" [ngClass]="{' checkbox-box-check': isSelected(x.id)}"></div>
+                                </div>
+                                <input type="checkbox" class="checkbox-base" />
+                            </div>
+                            <label class="checkbox-label flexGrow1">
+                                <div class="disFlex justConSB pl10 pr10">
+                                    <div>
+                                        <span class="ftz14">小包名：{{x.deliveryPackageName}}</span>
+                                    </div>
+                                    <div>
+                                        <span class="ftz14">品名：{{x.deliveryDetails?.goodsName}}</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </div>
+    </ion-content>
+    <ion-footer>
+        <ion-toolbar>
+            <div class="w100p" text-center>
+                <button ion-button color="main" class="w90p" *ngIf="selSmlIdArr.length > 0" (click)="saveSmallPkg()">确认选择</button>
+            </div>
+        </ion-toolbar>
+    </ion-footer>
+</ion-menu>
+<!-- 侧滑菜单 End -->
+
+<!-- 页面内容区域Begin -->
+<ion-content>
+    <div>
+        <div>
+            <div>
+                <ion-item-divider no-padding class="pl10">
+                    <span class="ftz14">订单号：{{formInfo?.clientOrder?.orderNum}}</span>
+                </ion-item-divider>
+                <div class="borBSCCC pb10">
+                    <div class="pt10 pb10 pl10">
+                        <span class="ftz14">收货人信息</span>
+                    </div>
+                    <div>
+                        <div class="disFlex justConSB pl20 pr15">
+                            <div class="disFlex justConFS aligIteFS color262127">
+                                <div class="flexShrink0 ftz16">姓名：</div>
+                                <div class="ftz16">{{formInfo?.clientOrder?.toPerson}}</div>
+                            </div>
+                            <div class="disFlex justConFS aligIteFS color262127">
+                                <div class="flexShrink0 ftz16">电话：</div>
+                                <div class="ftz16">{{formInfo?.clientOrder?.toPhone}}</div>
+                            </div>
+                        </div>
+                        <div class="disFlex justConFS aligIteFS pl20 mt5 color262127">
+                            <div class="flexShrink0 ftz16">地址：</div>
+                            <div class="ftz16">{{formInfo?.clientOrder?.toAddress}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="bgcFFF p5" *ngFor="let x of formData.packageJson;let i = index">
+                    <div class="cardAreaTit">包裹{{i+1}}</div>
+                    <div class="cardAreaTit bgc05B73B" (click)="clickAdd('big')">新增包裹</div>
+                    <div class="cardAreaCon">
+                        <ion-card *ngFor="let y of x['packageList'];let m = index">
+                            <ion-card-content no-padding>
+                                <div class="w100p bgcFFF disFlex justConSB p10">
+                                    <div class="flexGrow1">
+                                        <div class="tal ftz16">小包名称:{{y?.deliveryPackageName}}</div>
+                                        <div class="tal ftz16">小包号:{{y?.deliveryPackageNo}}</div>
+                                        <div class="tal ftz16">品名:{{y?.goodsName}}</div>
+                                    </div>
+                                    <div class="disFlex flexDirC justConSA w40 mr20">
+                                        <div class="tac" (click)="clickDel('small',i,m)">
+                                            <div>
+                                                <ion-icon name="ios-trash" class="ftz26 colorPri"></ion-icon>
+                                            </div>
+                                            <div class="ftz14">删除</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ion-card-content>
+                        </ion-card>
+                        <button ion-button color="main" full (click)="openMenu(i)">选择小包</button>
+                        <div class="triangle-topright" *ngIf="i > 0" (click)="clickDel('big',i)">
+                            <i class="iconfont icon-Jian ftz20 colorLig posUp"></i>
+                        </div>
+                        <!-- <div class="triangle-bottomright">
+                            <i class="iconfont icon-ChaZhao ftz23 colorLig posDown"></i>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div>
+                <ion-row no-padding class="mt10">
+                    <ion-col text-center no-padding>
+                        <button ion-button color="main" class="w90p" (click)="saveForm()">打包完成</button>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<!-- 页面内容区域End -->

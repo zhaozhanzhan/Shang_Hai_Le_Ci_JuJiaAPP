@@ -1,0 +1,11 @@
+{
+    "android": {
+        "release": {
+            "keystore": "mirrortech.keystore.jks",
+            "alias": "mirrortech",
+            "storePassword": "mirrortech001",
+            "password": "mirrortech001",
+            "keystoreType": "jks"
+        }
+    }
+}

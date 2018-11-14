@@ -1,0 +1,138 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="orange" hideBackButton="true">
+        <ion-title>服务对象</ion-title>
+        <ion-buttons start>
+            <button ion-button class="pl10" (click)="backHome()">
+                <!-- <span color="primary" showWhen="ios">返回</span> -->
+                <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button class="pr10" (click)="navCtrl.pop()">
+                <span showWhen="android,windows,ios">返回</span>
+                <!-- <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon> -->
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 页面内容区域 Begin -->
+<ion-content>
+    <div>
+        <div class="p10">
+            <div>
+                <div class="posRel h200 w100p">
+                    <div class="w100p h100p posAbs zIndex1 cardBgImg"></div>
+                    <div class="w100p h100p posAbs zIndex2">
+                        <div class="w100p h100p borRadius10 p10">
+                            <div class="w100p h100p posRel">
+                                <div class="disFlex aligIteC">
+                                    <div class="w40 h40 bgcF00 borSDBDFE6">
+                                        <img class="h100p w100p" src="https://via.placeholder.com/40">
+                                    </div>
+                                    <div class="ml10">
+                                        <span class="ftz24">张三三</span>
+                                    </div>
+                                    <div class="ml20">
+                                        <span class="ftz16">00100001</span>
+                                    </div>
+                                </div>
+                                <div class="mt5">
+                                    <span class="ftz18 colorFFF">居家养老服务卡</span>
+                                </div>
+                                <div class="mt5">
+                                    <div>
+                                        <span class="">时长信息</span>
+                                    </div>
+                                    <div class="disFlex mt5">
+                                        <div>
+                                            <span class="ftz14">应服务:800分钟</span>
+                                        </div>
+                                        <div class="ml10">
+                                            <span class="ftz14">剩于时长:300分钟</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt10">
+                                    <div>
+                                        <span class="">金额信息</span>
+                                    </div>
+                                    <div class="disFlex mt5">
+                                        <div>
+                                            <span class="ftz14">服务金额:300元</span>
+                                        </div>
+                                        <div class="ml10">
+                                            <span class="ftz14">剩于金额:100元</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt20">
+                    <div>
+                        <div class="borBBox">
+                            <div class="disFlex justConSB h26 aligItec pl10 pr10">
+                                <span class="ftz16 color999">联系电话：</span>
+                                <span class="ftz16">15907291311</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt10">
+                        <div class="borBBox">
+                            <div class="disFlex justConSB h26 aligItec pl10 pr10">
+                                <span class="ftz16 color999">紧急联系人</span>
+                            </div>
+                        </div>
+                        <div class="mt5">
+                            <div class="disFlex justConSB h26 aligItec pl30 pr10">
+                                <span class="ftz16">张三</span>
+                                <span class="ftz16">15907291311</span>
+                            </div>
+                            <div class="disFlex justConSB h26 aligItec pl30 pr10">
+                                <span class="ftz16">张三</span>
+                                <span class="ftz16">15907291311</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt10">
+                        <div class="borBBox">
+                            <div class="disFlex justConSB h26 aligItec pl10 pr10">
+                                <span class="ftz16 color999">居住地址</span>
+                            </div>
+                        </div>
+                        <div class="mt5">
+                            <div class="disFlex justConSB h26 aligItec pl30 pr10">
+                                <span class="ftz16">1、上海市静安区宝山路</span>
+                            </div>
+                            <div class="disFlex justConSB h26 aligItec pl30 pr10">
+                                <span class="ftz16">2、上海市静安区宝山路街道宝昌路</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt10">
+                        <div class="borBBox">
+                            <div class="disFlex justConSB h26 aligItec pl10 pr10">
+                                <span class="ftz16 color999">当月服务情况</span>
+                            </div>
+                        </div>
+                        <div class="mt5">
+                            <div class="disFlex justConSB h26 aligItec pl30 pr10">
+                                <span class="ftz16">已服务时长</span>
+                                <span class="ftz16">500&nbsp;分钟</span>
+                            </div>
+                            <div class="disFlex justConSB h26 aligItec pl30 pr10">
+                                <span class="ftz16">已服务金额</span>
+                                <span class="ftz16">200&nbsp;元</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<!-- 页面内容区域 End -->

@@ -1,0 +1,59 @@
+page-order-edit {
+    select:focus {
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+    .cardAreaTit {
+        color: #fff;
+        height: 27px;
+        line-height: 30px;
+        text-align: center;
+        background: #0388FE;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        margin-top: 10px;
+        margin-right: 5px;
+        padding: 0 10px;
+        display: inline-block;
+    }
+    .cardAreaCon {
+        border: 1px solid #0388FE;
+        position: relative;
+    }
+    // 右下角三角
+    .triangle-bottomright {
+        position: absolute;
+        width: 0;
+        height: 0;
+        right: 0;
+        bottom: 0;
+        border-bottom: 50px solid #0388FE;
+        border-left: 50px solid transparent;
+    }
+    // 右下三角里面图标
+    .posDown {
+        position: relative;
+        right: 26px;
+        top: 22px;
+    }
+    // 右上角三角
+    .triangle-topright {
+        position: absolute;
+        width: 0;
+        height: 0;
+        right: 0;
+        top: 0;
+        border-top: 50px solid red;
+        border-left: 50px solid transparent;
+    }
+    // 右上三角里面图标
+    .posUp {
+        position: relative;
+        right: 26px;
+        top: -50px;
+    }
+    // 背景颜色
+    .green {
+        background-color: #6bba70;
+    }
+}

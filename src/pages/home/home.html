@@ -1,0 +1,181 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="orange">
+        <!-- <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button> -->
+        <ion-title>主页</ion-title>
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 页面内容区域 Begin -->
+<ion-content no-padding>
+    <div class="h100p">
+        <div class="h100 pt5">
+            <ion-row>
+                <ion-col class="h100p">
+                    <div class="w100p h100p">
+                        <div class="disFlex justConC aligIteC h100p">
+                            <div class="bgcFFF w70">
+                                <img src="assets/imgs/logo.png">
+                            </div>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div>
+        <div class="disFlex justConC">
+            <div class="disFlex aligIteC">
+                <span>
+                    <i class="iconfont icon-TiXing ftz22 colorF8D714"></i>
+                </span>
+                <span>您有服务正在进行中...</span>
+            </div>
+        </div>
+        <div class="w100p pl10 pr10 mt5 h75p">
+            <div class="h100p">
+                <div class="h100p">
+                    <div class="disFlex flexDirR flexWrapW justConSA aligConSA h100p w80p m0a">
+                        <div class="w120 h110 borRadius20 bgcFF9261 p15" (click)="jumpPage('PersonInfoPage')">
+                            <div class="w100p h100p disFlex flexDirC justConSB aligIteC">
+                                <div>
+                                    <i class="iconfont icon-PersonInfo ftz50 colorFFF"></i>
+                                </div>
+                                <div>
+                                    <span class="ftz16 ftwB colorFFF">个人信息</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w120 h110 borRadius20 bgc99D6FF p15" (click)="jumpPage('UserListPage')">
+                            <div class="w100p h100p disFlex flexDirC justConSB aligIteC">
+                                <div>
+                                    <i class="iconfont icon-UserInfo ftz50 colorFFF"></i>
+                                </div>
+                                <div>
+                                    <span class="ftz16 ftwB colorFFF">用户信息</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w120 h110 borRadius20 bgc99EB99 p15">
+                            <div class="w100p h100p disFlex flexDirC justConSB aligIteC">
+                                <div>
+                                    <i class="iconfont icon-ServiceConfig ftz50 colorFFF"></i>
+                                </div>
+                                <div>
+                                    <span class="ftz16 ftwB colorFFF">服务配置</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w120 h110 borRadius20 bgcE6E699 p15">
+                            <div class="w100p h100p disFlex flexDirC justConSB aligIteC">
+                                <div>
+                                    <i class="iconfont icon-ZongHe1 ftz50 colorFFF"></i>
+                                </div>
+                                <div>
+                                    <span class="ftz16 ftwB colorFFF">综合查询</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w120 h110 borRadius20 bgcFFB3E6 p15">
+                            <div class="w100p h100p disFlex flexDirC justConSB aligIteC">
+                                <div>
+                                    <i class="iconfont icon-HuiYi ftz50 colorFFF"></i>
+                                </div>
+                                <div>
+                                    <span class="ftz16 ftwB colorFFF">培训会议</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w120 h110 borRadius20 bgcC2C2C2 p15">
+                            <div class="w100p h100p disFlex flexDirC justConSB aligIteC">
+                                <div>
+                                    <i class="iconfont icon-XinXi ftz50 colorFFF"></i>
+                                </div>
+                                <div>
+                                    <span class="ftz16 ftwB colorFFF">信息公告</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="w100p pl10 pr10 mt5">
+            <ion-row class="">
+                <ion-col col-3 class="h100p" (click)="jumpPage('MyTaskPage')">
+                    <div class="tac mb10 posRel">
+                        <i class="iconfont icon-Task2 ftz35 iconColor1"></i>
+                        <div class="posAbs w20 h20 borRadius50p bgcF00 t0 r15 ftz12 disFlex justConC aligIteC colorFFF" *ngIf="noHandleOrderNum && noHandleOrderNum > 0">{{noHandleOrderNum}}</div>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 color161616">我的任务</span>
+                    </div>
+                </ion-col>
+
+                <ion-col col-3 class="h100p" (click)="jumpPage('PackageListPage')">
+                    <div class="tac mb10">
+                        <i class="iconfont icon-Scan7 ftz35 iconColor3"></i>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 color161616">扫描接包</span>
+                    </div>
+                </ion-col>
+                <ion-col col-3 class="h100p" (click)="jumpPage('ScanCollagePage')">
+                    <div class="tac mb10">
+                        <i class="iconfont icon-Scan6 ftz35 iconColor4"></i>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 color161616">扫描拼包</span>
+                    </div>
+                </ion-col>
+                <ion-col col-3 class="h100p" (click)="jumpPage('SelectCollagePage')">
+                    <div class="tac mb10">
+                        <i class="iconfont icon-MultiSelection6 ftz35 iconColor5"></i>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 color161616">多选拼包</span>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-row class="" justify-content-between>
+                <ion-col col-3 class="h100p" (click)="jumpPage('WaybillListPage')">
+                    <div class="tac mb10">
+                        <i class="iconfont icon-YunDan ftz35 iconColor7"></i>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 color161616">运单列表</span>
+                    </div>
+                </ion-col>
+                <ion-col col-3 class="h100p" (click)="jumpPage('StatiSummaryPage')">
+                    <div class="tac mb10">
+                        <i class="iconfont icon-Statistics3 ftz35 iconColor2"></i>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 color161616">统计汇总</span>
+                    </div>
+                </ion-col>
+                <ion-col col-3 class="h100p" (click)="jumpPage('WalletPage')">
+                    <div class="tac mb10">
+                        <i class="iconfont icon-QianBao ftz35 iconColor6"></i>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 color161616">我的钱包</span>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div>
+        <div class="w100p h100 pl10 pr10 posAbs b20">
+            <div class="h100p w100 m0a">
+                <div class="h100p w100p borRadius50p" [ngClass]="{'recOrderDef': !recOrderState, 'recOrderRun': recOrderState}" (click)="toggleRevOrderState()">
+                    <div class="recCircleOut"></div>
+                    <div class="recCircleIn disFlex justConC aligIteC">
+                        <span class="ftz22" [hidden]="recOrderState">接单</span>
+                        <span class="ftz22" [hidden]="!recOrderState">接单中</span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</ion-content>
+<!-- 页面内容区域 End -->

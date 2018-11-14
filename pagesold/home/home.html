@@ -1,0 +1,159 @@
+<ion-header>
+    <ion-navbar color="main">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>主页</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content no-padding>
+    <div class="h100p">
+        <div class="h130">
+            <ion-slides class="h100p" pager="true" autoplay="2000" loop="true" zoom="false" speed="500">
+                <ion-slide class="h100p">
+                    <div class="">
+                        <img class="" src="assets/imgs/slide1.jpg">
+                    </div>
+                </ion-slide>
+                <ion-slide class="h100p">
+                    <div class="">
+                        <img class="" src="assets/imgs/slide2.jpg">
+                    </div>
+                </ion-slide>
+                <ion-slide class="h100p">
+                    <div class="">
+                        <img class="" src="assets/imgs/slide3.jpg">
+                    </div>
+                </ion-slide>
+                <!-- <ion-slide class="h100p">
+                    <div class="">
+                        <img class="" src="https://via.placeholder.com/800x360/E8117F/00FF00">
+                    </div>
+                </ion-slide>
+                <ion-slide class="h100p">
+                    <div class="">
+                        <img class="" src="https://via.placeholder.com/800x360/E8117F/000000">
+                    </div>
+                </ion-slide> -->
+            </ion-slides>
+        </div>
+        <div class="w100p pl10 pr10 mt5">
+            <ion-row class="">
+                <!-- <ion-col col-3 class="h100p" (click)="jumpPage('OrderEditPage')">
+                    <div class="tac mb10">
+                        <i class="iconfont icon-XiaDan1 ftz35 iconColor1"></i>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 color161616">代客下单</span>
+                    </div>
+                </ion-col> -->
+                <ion-col col-3 class="h100p" (click)="jumpPage('MyTaskPage')">
+                    <div class="tac mb10 posRel">
+                        <i class="iconfont icon-Task2 ftz35 iconColor1"></i>
+                        <div class="posAbs w20 h20 borRadius50p bgcF00 t0 r15 ftz12 disFlex justConC aligIteC colorFFF" *ngIf="noHandleOrderNum && noHandleOrderNum > 0">{{noHandleOrderNum}}</div>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 color161616">我的任务</span>
+                    </div>
+                </ion-col>
+
+                <ion-col col-3 class="h100p" (click)="jumpPage('PackageListPage')">
+                    <div class="tac mb10">
+                        <i class="iconfont icon-Scan7 ftz35 iconColor3"></i>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 color161616">扫描接包</span>
+                    </div>
+                </ion-col>
+                <ion-col col-3 class="h100p" (click)="jumpPage('ScanCollagePage')">
+                    <div class="tac mb10">
+                        <i class="iconfont icon-Scan6 ftz35 iconColor4"></i>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 color161616">扫描拼包</span>
+                    </div>
+                </ion-col>
+                <ion-col col-3 class="h100p" (click)="jumpPage('SelectCollagePage')">
+                    <div class="tac mb10">
+                        <i class="iconfont icon-MultiSelection6 ftz35 iconColor5"></i>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 color161616">多选拼包</span>
+                    </div>
+                </ion-col>
+                <!-- <ion-col col-3 class="h100p" (click)="jumpPage('PackageListPage')">
+                    <div class="tac mb10">
+                        <i class="iconfont icon-YaoQing ftz35 iconColor4"></i>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 color161616">我的邀请</span>
+                    </div>
+                </ion-col> -->
+            </ion-row>
+            <ion-row class="" justify-content-between>
+
+                <ion-col col-3 class="h100p" (click)="jumpPage('WaybillListPage')">
+                    <div class="tac mb10">
+                        <i class="iconfont icon-YunDan ftz35 iconColor7"></i>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 color161616">运单列表</span>
+                    </div>
+                </ion-col>
+                <ion-col col-3 class="h100p" (click)="jumpPage('StatiSummaryPage')">
+                    <div class="tac mb10">
+                        <i class="iconfont icon-Statistics3 ftz35 iconColor2"></i>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 color161616">统计汇总</span>
+                    </div>
+                </ion-col>
+                <ion-col col-3 class="h100p" (click)="jumpPage('WalletPage')">
+                    <div class="tac mb10">
+                        <i class="iconfont icon-QianBao ftz35 iconColor6"></i>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 color161616">我的钱包</span>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div>
+        <!-- <div class="w100p h80 pl10 pr10 mt20">
+            <ion-row class="h100p walletBg borRadius6" justify-content-between>
+                <ion-col col-4 class="h100p disFlex flexDirC justConSB">
+                    <div class="tac mb10">
+                        <i class="iconfont icon-QianBao ftz35 colorFFF"></i>
+                    </div>
+                    <div class="tac">
+                        <span class="ftz16 colorFFF">我的钱包</span>
+                    </div>
+                </ion-col>
+                <ion-col col-6 class="h100p disFlex flexDirC justConC">
+                    <div class="tac mt8">
+                        <div class="ftz16 colorFFF">余额：<span class="ftz20">100.00</span> 元</div>
+                    </div>
+                    <div class="">
+                        <div class="w80 m0a tac borSFFF vh28 borRadius20">
+                            <span class="ftz16 colorFFF">提现</span>
+                        </div>
+                        <div class="w80 m0a tac borSFFF vh28 borRadius20" (click)="jumpPage('WalletPage')">
+                            <span class="ftz16 colorFFF">查看</span>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div> -->
+        <div class="w100p h100 pl10 pr10 posAbs b20">
+            <div class="h100p w100 m0a">
+                <div class="h100p w100p borRadius50p" [ngClass]="{'recOrderDef': !recOrderState, 'recOrderRun': recOrderState}" (click)="toggleRevOrderState()">
+                    <div class="recCircleOut"></div>
+                    <div class="recCircleIn disFlex justConC aligIteC">
+                        <span class="ftz22" [hidden]="recOrderState">接单</span>
+                        <span class="ftz22" [hidden]="!recOrderState">接单中</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

@@ -1,0 +1,26 @@
+<!-- <ion-menu [content]="content">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>Menu</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        {{p.title}}
+      </button>
+        </ion-list>
+    </ion-content>
+</ion-menu> -->
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<!-- #content swipeBackEnabled="false" -->
+
+<!-- 必须使用“root”属性设置为根页面 -->
+<!-- name	string	nav元素的唯一名称 -->
+<!-- root	Page	要作为此导航中的根页面加载的Page组件 -->
+<!-- rootParams	object	任何nav-params传递到此导航的根页面 -->
+
+<!-- 设置根路由Begin -->
+<ion-nav [root]="rootPage"></ion-nav>
+<!-- 设置根路由End -->

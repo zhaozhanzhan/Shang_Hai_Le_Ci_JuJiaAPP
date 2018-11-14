@@ -1,0 +1,72 @@
+<!-- 导航条区域Begin -->
+<ion-header>
+    <ion-navbar color="main">
+        <ion-title>运单详情</ion-title>
+        <!-- <ion-buttons end>
+          <button ion-button class="ftz22 w40 tac">
+              <ion-icon name="md-add"></ion-icon>
+          </button>
+      </ion-buttons> -->
+        <!-- <ion-buttons start text-center class="w44">
+          <button ion-button>
+              <span color="primary" showWhen="ios">取消</span>
+              <ion-icon name="close" showWhen="android,windows"></ion-icon>
+          </button>
+      </ion-buttons> -->
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域End -->
+
+<!-- 页面内容区域Begin -->
+<ion-content>
+    <div>
+        <div>
+            <div>
+                <ion-item-divider no-padding class="pl10">
+                    <span class="ftz14">订单号：{{formInfo?.orderNum}}</span>
+                </ion-item-divider>
+                <div class="borBSCCC pb10">
+                    <div class="pt10 pb10 pl10">
+                        <span class="ftz14">收货人信息</span>
+                    </div>
+                    <div>
+                        <div class="disFlex justConSB pl20 pr15">
+                            <div class="disFlex justConFS aligIteFS color262127">
+                                <div class="flexShrink0 ftz16">姓名：</div>
+                                <div class="ftz16">{{formInfo?.toPerson}}</div>
+                            </div>
+                            <div class="disFlex justConFS aligIteFS color262127">
+                                <div class="flexShrink0 ftz16">电话：</div>
+                                <div class="ftz16">{{formInfo?.toPhone}}</div>
+                            </div>
+                        </div>
+                        <div class="disFlex justConFS aligIteFS pl20 mt5 color262127">
+                            <div class="flexShrink0 ftz16">地址：</div>
+                            <div class="ftz16">{{formInfo?.toAddress}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="bgcFFF p5" *ngFor="let x of formInfo.packageList;let i = index">
+                    <div class="cardAreaTit">{{x.packageName}}</div>
+                    <div class="cardAreaTit bgc05B73B">{{x.packageNum}}</div>
+                    <div class="cardAreaCon">
+                        <ion-card *ngFor="let y of x['deliveryPackageList'];let m = index">
+                            <ion-card-content no-padding>
+                                <div class="w100p bgcFFF disFlex justConSB p10">
+                                    <div class="flexGrow1">
+                                        <div class="tal ftz16">小包名称：{{y.deliveryPackageName}}</div>
+                                        <div class="tal ftz16">小包号：{{y.deliveryPackageNo}}</div>
+                                        <!-- <div class="tal ftz16">品名：{{y.goodsName}}</div> -->
+                                    </div>
+                                </div>
+                            </ion-card-content>
+                        </ion-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<!-- 页面内容区域End -->

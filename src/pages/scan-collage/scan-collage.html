@@ -1,0 +1,69 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="main">
+        <ion-title>扫码拼包</ion-title>
+        <ion-buttons end (click)="jumpPage('ScanTwoPage',{'scanType':'small'},{'animate':false})">
+            <button ion-button>
+                <!-- <span class="ftz20" color="primary" showWhen="ios,android,windows,browser">扫码</span> -->
+                <!-- <ion-icon class="ftz28" name="qr-scanner" showWhen="ios,android,windows,browser"></ion-icon> -->
+                <ion-icon class="ftz28" name="md-qr-scanner"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+    <!-- <ion-toolbar>
+        <ion-segment color="main" mode="md" [(ngModel)]="segModel" (ionChange)="segChange($event)">
+            <ion-segment-button [value]="x" *ngFor="let x of segArr;let i = index">
+                <span class="ftz16">{{segTitObj[x]}}</span>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar> -->
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 页面内容区域 Begin -->
+<ion-content>
+    <div class="bgcEEE pb45">
+        <div>
+            <div>
+                <div class="w100p bgcEEE pt5 minH500">
+                    <div class="w100p bgcEEE">
+                        <div class="w100p" *ngFor="let x of dataList;let i = index" (press)="longTapDelSmall(x.id,i)">
+                            <div class="p5">
+                                <ion-card no-padding class="borRadius6 m0 w100p">
+                                    <ion-card-header>
+                                        <div class="w100p tal">
+                                            <span>小包号:</span>
+                                            <span class="">{{x.deliveryPackageNo}}</span>
+                                        </div>
+                                    </ion-card-header>
+                                    <ion-card-content>
+                                        <div class="w100p">
+                                            <div class="pb5 w100p disFlex flexDirR flexWrapN justConSB">
+                                                <div class="color262127 disFlex">
+                                                    <div class="ftz16 tal">收货人：</div>
+                                                    <div class="ftz16">{{x.buyerClientOrder?.toPerson}}</div>
+                                                </div>
+                                                <div class="color262127 disFlex">
+                                                    <div class="ftz16 tal">电话：</div>
+                                                    <div class="ftz16">{{x.buyerClientOrder?.toPhone}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ion-card-content>
+                                </ion-card>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <div class="w100p" text-center>
+            <button ion-button color="main" class="w90p" (click)="saveForm()">拼包确认</button>
+        </div>
+    </ion-toolbar>
+</ion-footer>
+<!-- 页面内容区域 End -->

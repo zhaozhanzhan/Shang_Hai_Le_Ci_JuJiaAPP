@@ -1,0 +1,105 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="orange">
+        <ion-title>我的钱包</ion-title>
+        <ion-buttons end>
+            <button ion-button class="ftz20 w40 tac" (click)="jumpPage('TransListPage')">
+                <ion-icon name="ios-list-box-outline" showWhen="android,windows,ios"></ion-icon>
+                <!-- <ion-icon ios="ios-add" md="md-add"></ion-icon>
+              <span color="primary">查询</span> -->
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 页面内容区域 Begin -->
+<ion-content no-padding>
+    <div>
+        <div>
+            <div class="h200 amountMoneyBg disFlex flexDirC">
+                <div class="">
+                    <div class="tac colorFFF pt20">
+                        <span class="mr3">账户余额&nbsp;(&nbsp;元&nbsp;)&nbsp;</span>
+                        <!-- <span>
+                            <i class="iconfont icon-HollowEye ftz20 colorFFF posRel t3"></i>
+                        </span> -->
+                    </div>
+                </div>
+                <div class="flexGrow1 disFlex aligIteC justConC">
+                    <div>
+                        <span class="ftz30 colorFFF" *ngIf="(formInfo.canUseAmount || formInfo.canUseAmount == 0)">{{formInfo?.canUseAmount | currency:'￥'}}</span>
+                        <span class="ftz20 colorFFF" *ngIf="!(formInfo.canUseAmount || formInfo.canUseAmount == 0)">未签约银行</span>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!(formInfo.canUseAmount || formInfo.canUseAmount == 0)">
+                <div class="p10 w100p mt20">
+                    <div class="w100p h100 bor2D519CFF borRadius5 disFlex justConC aligIteC">
+                        <div (click)="jumpPage('BankCardEditPage',{state:'add'})">
+                            <div class="color519CFF tac">
+                                <span>
+                                    <ion-icon name="md-add" class="ftz30"></ion-icon>
+                                </span>
+                            </div>
+                            <div class="color519CFF tac">
+                                <span class="ftz16">绑定银行卡</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="(formInfo.canUseAmount || formInfo.canUseAmount == 0)">
+                <div class="w100p p10 mt20">
+                    <div class="cardBg borRadius6">
+                        <div class="disFlex flexDirR h100 justConSB">
+                            <!-- <div class="borRadius6 h100p">
+                                <div class="w100p"></div>
+                            </div> -->
+                            <div class="disFlex flexDirC aligConSB ml10">
+                                <div class="h50p mt10">
+                                    <div>
+                                        <span class="colorFFF ftz18">{{formInfo?.payBankName}}</span>
+                                    </div>
+                                    <div>
+                                        <span class="colorFFF ftz14">{{formInfo?.clearAcctName}}</span>
+                                    </div>
+                                </div>
+                                <div class="h50p disFlex aligIteC">
+                                    <span class="colorFFF ftz20">{{formInfo?.clearAcct}}</span>
+                                </div>
+                            </div>
+                            <div class="borRadius6 h100p mr10 flexBasis40">
+                                <div class="w100p disFlex justConC aligIteC h100p">
+                                    <span class="colorFFF" (click)="jumpPage('BankCardEditPage',{state:'edit'})">
+                                        <ion-icon class="ftz30" name="ios-create-outline"></ion-icon>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<!-- 页面内容区域 End -->
+
+<!-- 页面底部区域 Begin -->
+<ion-footer>
+    <div class="p0 h50">
+        <div class="disFlex flexDirR h100p">
+            <div class="flexGrow1 h100p" (click)="jumpPage('RollOutPage')">
+                <div class="disFlex justConC aligIteC w100p h100p">
+                    <span class="ftz22">转出</span>
+                </div>
+            </div>
+            <div class="flexGrow1 h100p" (click)="jumpPage('RollInPage')">
+                <div class="disFlex justConC aligIteC w100p h100p bgc09F">
+                    <span class="ftz22 colorFFF">转入</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-footer>
+<!-- 页面内容区域 End -->

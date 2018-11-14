@@ -1,0 +1,72 @@
+<!-- 导航条区域Begin -->
+<ion-header>
+    <ion-navbar color="main">
+        <ion-title *ngIf="pageMode == 'add'">发货人添加</ion-title>
+        <ion-title *ngIf="pageMode == 'edit'">发货人修改</ion-title>
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域End -->
+
+<!-- 页面内容区域Begin -->
+<ion-content padding>
+    <ion-grid no-padding margin-top [formGroup]="formData">
+        <ion-row>
+            <ion-col class="disFlex justConC">
+                <div class="w95p">
+                    <div class="">
+                        <ion-row no-padding>
+                            <ion-col col-12 no-padding>
+                                <ion-item no-padding>
+                                    <ion-label class="w50 ftz15">姓名</ion-label>
+                                    <ion-input formControlName="name" class="ftz15" placeholder="请输入姓名"></ion-input>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-12>
+                                <span class="colorDan" [hidden]="!(formData.get('name').dirty && formData.get('name').errors)">姓名长度小于&nbsp;2&nbsp;位或包含非法字符</span>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                    <div class="">
+                        <ion-row no-padding>
+                            <ion-col col-12 no-padding>
+                                <ion-item no-padding>
+                                    <ion-label class="w50 ftz15">手机号</ion-label>
+                                    <ion-input formControlName="phone" class="ftz15" placeholder="请输入手机号码"></ion-input>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-12>
+                                <span class="colorDan" [hidden]="!(formData.get('phone').dirty && formData.get('phone').errors)">请输入正确的手机号</span>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                    <div class="">
+                        <ion-row no-padding>
+                            <ion-col col-12 no-padding>
+                                <ion-item no-padding>
+                                    <ion-label class="w50 ftz15">地址</ion-label>
+                                    <ion-input formControlName="address" class="ftz15" placeholder="请输入地址"></ion-input>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-12>
+                                <span class="colorDan" [hidden]="!(formData.get('address').dirty && formData.get('address').errors)">请输入正确的地址,5 ~ 50个字符</span>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row class="mt10">
+            <ion-col text-center>
+                <button ion-button color="main" class="w95p" (click)="saveForm()">保存</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+<!-- 页面内容区域End -->

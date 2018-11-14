@@ -1,0 +1,79 @@
+<!-- 导航条区域Begin -->
+<ion-header>
+    <ion-navbar color="main">
+        <ion-title>上传身份证</ion-title>
+        <!-- <ion-buttons start>
+          <button ion-button>
+          <span color="primary" showWhen="ios">返回</span>
+          <ion-icon name="close" showWhen="android,windows"></ion-icon>
+        </button>
+      </ion-buttons> -->
+        <!-- <ion-buttons end>
+          <button ion-button>
+          <span color="primary" showWhen="ios">完成</span>
+          <ion-icon name="md-checkmark" showWhen="core,android,windows"></ion-icon>
+        </button>
+      </ion-buttons> -->
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域End -->
+
+<!-- 页面内容区域Begin -->
+<ion-content class="bgcEEE">
+    <ion-grid no-padding margin-top>
+        <ion-row>
+            <ion-col class="disFlex justConC">
+                <div class="w90p">
+                    <div class="">
+                        <ion-row no-padding>
+                            <ion-col col-12 no-padding class="posRel bgcFFF borRadius10 h200">
+                                <div class="w100p h100p disFlex flexDirR justConC aligIteC posAbs zIndex5" [hidden]="imgArr[0].fileFullPath">
+                                    <img class="w50p h50p" src="assets/imgs/IdCardFront.png">
+                                </div>
+                                <div class="w100p h100p disFlex flexDirR justConC aligIteC posAbs zIndex10" [hidden]="imgArr[0].fileFullPath">
+                                    <div class="w50 h50 borRadius50p bgcF00Tran50 tac pt8" (click)="clickCamera(0)">
+                                        <i class="iconfont icon-XiangJi_Full colorFFF ftz30"></i>
+                                    </div>
+                                </div>
+                                <div class="w100p h100p disFlex flexDirR justConC aligIteC posAbs zIndex20" [hidden]="!imgArr[0].fileFullPath">
+                                    <img class="w100p h100p" [src]="imgArr[0].fileFullPath">
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-12 text-center>
+                                <span class="colorDar">请选择或拍摄本人身份证正面照</span>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row no-padding margin-top>
+                            <ion-col col-12 no-padding class="posRel bgcFFF borRadius10 h200">
+                                <div class="w100p h100p disFlex flexDirR justConC aligIteC posAbs zIndex5" [hidden]="imgArr[1].fileFullPath">
+                                    <img class="w50p h50p" src="assets/imgs/IdCardAfter.png">
+                                </div>
+                                <div class="w100p h100p disFlex flexDirR justConC aligIteC posAbs zIndex10" [hidden]="imgArr[1].fileFullPath">
+                                    <div class="w50 h50 borRadius50p bgcF00Tran50 tac pt8" (click)="clickCamera(1)">
+                                        <i class="iconfont icon-XiangJi_Full colorFFF ftz30"></i>
+                                    </div>
+                                </div>
+                                <div class="w100p h100p disFlex flexDirR justConC aligIteC posAbs zIndex20" [hidden]="!imgArr[1].fileFullPath">
+                                    <img class="w100p h100p" [src]="imgArr[1].fileFullPath">
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-12 text-center>
+                                <span class="colorDar">请选择或拍摄本人身份证反面照</span>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row class="mt10">
+            <ion-col text-center>
+                <button ion-button color="main" class="w90p" (click)="uploadImg()">提交</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+<!-- 页面内容区域End -->

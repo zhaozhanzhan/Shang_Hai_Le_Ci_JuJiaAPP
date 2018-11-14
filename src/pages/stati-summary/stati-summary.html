@@ -1,0 +1,135 @@
+<!-- 导航条区域Begin -->
+<ion-header>
+    <ion-navbar color="main">
+        <ion-title>统计汇总</ion-title>
+        <ion-buttons end (click)="search(reqUrl,sendData)">
+            <button ion-button class="ftz20 w40 tac">
+                <!-- <ion-icon name="md-add"></ion-icon> -->
+                <!-- <ion-icon ios="ios-add" md="md-add"></ion-icon> -->
+                <span color="primary">查询</span>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar no-padding>
+        <div>
+            <ion-row no-padding>
+                <ion-col col-6>
+                    <ion-item>
+                        <!-- <ion-label>Date</ion-label> -->
+                        <ion-datetime [(ngModel)]="sendData.startDate" displayFormat="YYYY/MM/DD" cancelText="取消" doneText="确认" placeholder="开始日期"></ion-datetime>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-6>
+                    <ion-item>
+                        <ion-datetime [(ngModel)]='sendData.endDate' displayFormat="YYYY/MM/DD" cancelText="取消" doneText="确认" placeholder="结束日期"></ion-datetime>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </div>
+        <div class="pt5 pb5 pl10 pr10">
+            <div class="disFlex flexWrapW justConSB">
+                <div class="pr5">
+                    <span>推送单：{{totalObj?.countIsSystem}}</span>
+                </div>
+                <div class="pr5">
+                    <span>已接单：{{totalObj?.countIsOrder}}</span>
+                </div>
+                <div class="pr5">
+                    <span>未接单：{{totalObj?.countIsOrderNo}}</span>
+                </div>
+                <div class="pr5">
+                    <span>待提货单：{{totalObj?.countIsOrderWait}}</span>
+                </div>
+                <div class="pr5">
+                    <span>完成单：{{totalObj?.countIsOrderOk}}</span>
+                </div>
+                <div class="pr5">
+                    <span>已结算劳务费：{{totalObj?.sumAllpriceForWorker}}</span>
+                </div>
+            </div>
+        </div>
+    </ion-toolbar>
+</ion-header>
+<!-- 导航条区域End -->
+
+<!-- 页面内容区域Begin -->
+<ion-content>
+    <!-- 下拉刷新控制元素Begin -->
+    <ion-refresher (ionRefresh)="downRefresh($event,reqUrl,sendData)">
+        <ion-refresher-content pullingIcon="arrow-down" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="正在加载">
+        </ion-refresher-content>
+    </ion-refresher>
+    <!-- 下拉刷新控制元素End -->
+    <ion-card class="cardBg" *ngFor="let x of dataList;let i = index;">
+        <!-- <ion-card-header class="p5 pb0">
+            <span class="ftz24">{{i+1}}.{{x.orderNum}}</span>
+        </ion-card-header> -->
+        <ion-card-content class="p10">
+            <div>
+                <div>
+                    <div class="disFlex justConSB">
+                        <div>
+                            <span>订单号：{{x?.orderNum}}</span>
+                        </div>
+                        <div>
+                            <span>件数：{{x?.packageNum}}</span>
+                        </div>
+                    </div>
+                    <div class="disFlex justConSB">
+                        <div>
+                            <span>下单时间：{{x?.createDate}}</span>
+                        </div>
+                    </div>
+                    <div class="disFlex justConSB">
+                        <div>
+                            <span>到达站：{{x?.toCity}}</span>
+                        </div>
+                    </div>
+                    <div class="disFlex justConFE">
+                        <!-- <div>
+                            <p>劳务费：￥&nbsp;<span class="colorDan ftz20">{{x?.servicePrice}}</span>&nbsp;元</p>
+                        </div> -->
+                        <div>
+                            <span>订单状态：{{x?.packageState | orderState}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="disFlex justConFS aligIteFS color262127">
+                <div class="flexShrink0 flexBasis40 ftz16">电话:</div>
+                <div class="ftz16">{{x.consigneePhone}}</div>
+            </div>
+            <div class="disFlex justConFS aligIteFS color262127">
+                <div class="flexShrink0 flexBasis40 ftz16">地址:</div>
+                <div class="ftz16">{{x.consigneeAddress}}</div>
+            </div> -->
+        </ion-card-content>
+        <!-- <div class="borTBox">
+            <ion-row>
+                <ion-col no-padding text-center>
+                    <button ion-button icon-start clear small class="ftz16 colorFFF" (click)="clickDelBtn(x.id,dataList,i)">
+                        <ion-icon name="trash"></ion-icon>
+                        <div>删除</div>
+                    </button>
+                </ion-col>
+                <ion-col no-padding text-center>
+                    <button ion-button icon-start clear small class="ftz16 colorFFF" (click)="jumpPage('ConsigneeAddPage',{state:'edit',id:x.id})">
+                        <ion-icon name="create"></ion-icon>
+                        <div>编辑</div>
+                    </button>
+                </ion-col>
+            </ion-row>
+        </div> -->
+    </ion-card>
+    <!-- 上拉加载控制元素Begin -->
+    <ion-infinite-scroll (ionInfinite)="upLoad($event,reqUrl,sendData)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载更多数据..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <ion-row [hidden]="!isShowNoData" padding-bottom>
+        <ion-col col-12 text-center>
+            <span class="ftz16">没有更多数据</span>
+        </ion-col>
+    </ion-row>
+    <!-- 上拉加载控制元素End -->
+</ion-content>
+<!-- 页面内容区域End -->

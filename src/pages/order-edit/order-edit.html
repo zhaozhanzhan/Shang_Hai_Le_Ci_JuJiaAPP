@@ -1,0 +1,334 @@
+<!-- 导航条区域Begin -->
+<ion-header>
+    <ion-navbar color="main">
+        <ion-title>代客下单</ion-title>
+        <!-- <ion-buttons start>
+          <button ion-button>
+          <span color="primary" showWhen="ios">返回</span>
+          <ion-icon name="close" showWhen="android,windows"></ion-icon>
+        </button>
+      </ion-buttons> -->
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域End -->
+
+<!-- 页面内容区域Begin -->
+<ion-content>
+    <div class="p10" [formGroup]="formData" novalidate>
+        <div class="">
+            <div class="">
+                <ion-row no-padding>
+                    <ion-col col-12 no-padding>
+                        <ion-item no-padding>
+                            <ion-label class="ftz15">发往(省):</ion-label>
+                            <ion-select interface="popover" okText="确认" cancelText="取消" formControlName="toProvince" (ionChange)="selPro()">
+                                <ion-option *ngFor="let x of proData;let i = index;" [value]="x.provinceid">{{x.province}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                        <span class="colorDan" [hidden]="!(formData.get('toProvince').dirty && formData.get('toProvince').errors)">发往省份不能为空</span>
+
+                        <ion-item no-padding>
+                            <ion-label class="ftz15">发往(市):</ion-label>
+                            <ion-select interface="popover" [hidden]="!formData.get('toProvince').value" okText="确认" cancelText="取消" formControlName="toCity" (ionChange)="selCity()">
+                                <ion-option *ngFor="let x of cityData;let i = index;" [value]="x.cityid">{{x.city}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                        <span class="colorDan" [hidden]="!(formData.get('toCity').dirty && formData.get('toCity').errors)">发往城市不能为空</span>
+
+                        <ion-item no-padding>
+                            <ion-label class="ftz15">发往(区):</ion-label>
+                            <ion-select interface="popover" [hidden]="!formData.get('toCity').value" okText="确认" cancelText="取消" formControlName="toArea" (ionChange)="selArea()">
+                                <ion-option *ngFor="let x of areaData;let i = index;" [value]="x.areaid">{{x.area}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                        <span class="colorDan" [hidden]="!(formData.get('toArea').dirty && formData.get('toArea').errors)">发往地区不能为空</span>
+                        <!-- <ion-multi-picker placeholder="请选择" item-content [multiPickerColumns]="cityData" [cancelText]="'取消'" [doneText]="'完成'" [(ngModel)]="selCityStr" [ngModelOptions]="{standalone: true}"></ion-multi-picker> -->
+
+                        <ion-item no-padding>
+                            <ion-label class="ftz15">物流/快递公司:</ion-label>
+                            <ion-select interface="popover" okText="确认" cancelText="取消" formControlName="commonCarrierId" (ionChange)="selExpre()">
+                                <ion-option *ngFor="let x of expreArr;let i = index;" [value]="x?.commonCarrier?.id">{{x?.commonCarrier?.commonCarrierName}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                        <span class="colorDan" [hidden]="!(formData.get('commonCarrierId').dirty && formData.get('commonCarrierId').errors)">物流/快递公司不能为空</span>
+                        <!-- <ion-item no-padding>
+                            <div>
+                                <p>
+                                    <span>运费信息：</span>
+                                </p>
+                            </div>
+                            <div class="pl10">
+                                <div *ngIf="trunkObj?.matching == 1">
+                                    <ion-row no-padding *ngFor="let x of freInfoArr;let i = index;">
+                                        <ion-col no-padding>
+                                            <span class="ftz14">承运运线：{{x.trunkName}}</span>
+                                        </ion-col>
+                                        <ion-col no-padding>
+                                            <span class="ftz14">运费标准：{{x.moneyStr}}</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </div>
+                                <div *ngIf="trunkObj?.matching == 0">
+                                    <ion-row no-padding>
+                                        <ion-col no-padding>
+                                            <span class="ftz14">该物流没有发往该城市的干线,请重新选择</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </div>
+                            </div>
+                        </ion-item> -->
+                        <ion-item no-padding>
+                            <ion-label class="ftz15">拉包工：</ion-label>
+                            <ion-input class="ftz15" placeholder="拉包工信息" formControlName="workerName" readonly></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </div>
+            <!-- 发货人信息区域 Begin -->
+            <div>
+                <div class="bgcFFF" formGroupName="merchantJson">
+                    <div class="cardAreaTit">发货人</div>
+                    <div class="cardAreaTit bgc05B73B" (click)="clickAdd()">新增发货人</div>
+                    <div class="cardAreaCon">
+                        <ion-row>
+                            <ion-col col-1 class="pt15">
+                                <i class="iconfont icon-FaHuoYuan ftz25 colorPri"></i>
+                            </ion-col>
+                            <ion-col col-4>
+                                <ion-input class="ftz16" formControlName="merchantName" placeholder="姓名"></ion-input>
+                            </ion-col>
+                            <ion-col col-1 class="pt15">
+                                <i class="iconfont icon-ShouJi ftz25 colorPri"></i>
+                            </ion-col>
+                            <ion-col col-6>
+                                <ion-input class="ftz16" formControlName="merchantPhone" placeholder="手机"></ion-input>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-1 class="pt15">
+                                <i class="iconfont icon-DingWei ftz25 colorPri"></i>
+                            </ion-col>
+                            <ion-col>
+                                <ion-input class="ftz16" formControlName="merchantAddress" placeholder="地址"></ion-input>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-12>
+                                <ion-item no-padding>
+                                    <ion-label class="ftz15">类型:</ion-label>
+                                    <ion-select interface="popover" okText="确认" cancelText="取消" formControlName="goodsName">
+                                        <ion-option value="服装">服装</ion-option>
+                                        <ion-option value="箱包">箱包</ion-option>
+                                        <ion-option value="汽配">汽配</ion-option>
+                                        <ion-option value="鞋子">鞋子</ion-option>
+                                        <ion-option value="皮具">皮具</ion-option>
+                                        <ion-option value="普货">普货</ion-option>
+                                        <ion-option value="布条">布条</ion-option>
+                                        <ion-option value="化妆品">化妆品</ion-option>
+                                        <ion-option value="其他">其他</ion-option>
+                                    </ion-select>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-12>
+                                <ion-item no-padding>
+                                    <ion-label class="ftz15">件数：</ion-label>
+                                    <ion-input class="ftz15" placeholder="件数" formControlName="goodsNum"></ion-input>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                        <div class="triangle-bottomright" (click)="jumpPage('SelectPersonPage',{'key':'merchantJson'})">
+                            <i class="iconfont icon-ChaZhao ftz23 colorLig posDown"></i>
+                        </div>
+                        <p class="colorDan p0 m0" [hidden]="!(formData.get('merchantJson').get('merchantName').dirty && formData.get('merchantJson').get('merchantName').errors)">姓名长度小于&nbsp;2&nbsp;位或包含非法字符</p>
+                        <p class="colorDan p0 m0" [hidden]="!(formData.get('merchantJson').get('merchantPhone').dirty && formData.get('merchantJson').get('merchantPhone').errors)">请输入正确的手机号</p>
+                        <p class="colorDan p0 m0" [hidden]="!(formData.get('merchantJson').get('merchantAddress').dirty && formData.get('merchantJson').get('merchantAddress').errors)">请输入正确的地址</p>
+                        <p class="colorDan p0 m0" [hidden]="!(formData.get('merchantJson').get('goodsName').dirty && formData.get('merchantJson').get('goodsName').errors)">请输入正确的类型</p>
+                        <p class="colorDan p0 m0" [hidden]="!(formData.get('merchantJson').get('goodsNum').dirty && formData.get('merchantJson').get('goodsNum').errors)">请输入正确的件数</p>
+                    </div>
+                </div>
+                <div formArrayName="merchantOtherJson">
+                    <div *ngFor="let x of formData.get('merchantOtherJson')['controls']; let i=index;" [formGroupName]="i">
+                        <div class="bgcFFF">
+                            <div class="cardAreaTit">发货人</div>
+                            <div class="cardAreaCon">
+                                <ion-row>
+                                    <ion-col col-1 class="pt15">
+                                        <i class="iconfont icon-FaHuoYuan ftz25 colorPri"></i>
+                                    </ion-col>
+                                    <ion-col col-4>
+                                        <ion-input class="ftz16" formControlName="merchantName" placeholder="姓名"></ion-input>
+                                    </ion-col>
+                                    <ion-col col-1 class="pt15">
+                                        <i class="iconfont icon-ShouJi ftz25 colorPri"></i>
+                                    </ion-col>
+                                    <ion-col col-6>
+                                        <ion-input class="ftz16" formControlName="merchantPhone" placeholder="手机"></ion-input>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col col-1 class="pt15">
+                                        <i class="iconfont icon-DingWei ftz25 colorPri"></i>
+                                    </ion-col>
+                                    <ion-col>
+                                        <ion-input class="ftz16" formControlName="merchantAddress" placeholder="地址"></ion-input>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col col-12>
+                                        <ion-item no-padding>
+                                            <ion-label class="ftz15">类型:</ion-label>
+                                            <ion-select interface="popover" okText="确认" cancelText="取消" formControlName="goodsName">
+                                                <ion-option value="服装">服装</ion-option>
+                                                <ion-option value="箱包">箱包</ion-option>
+                                                <ion-option value="汽配">汽配</ion-option>
+                                                <ion-option value="鞋子">鞋子</ion-option>
+                                                <ion-option value="皮具">皮具</ion-option>
+                                                <ion-option value="普货">普货</ion-option>
+                                                <ion-option value="布条">布条</ion-option>
+                                                <ion-option value="化妆品">化妆品</ion-option>
+                                                <ion-option value="其他">其他</ion-option>
+                                            </ion-select>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col col-12>
+                                        <ion-item no-padding>
+                                            <ion-label class="ftz15">件数：</ion-label>
+                                            <ion-input class="ftz15" placeholder="件数" formControlName="goodsNum"></ion-input>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <div class="triangle-topright" (click)="clickDel(i)">
+                                    <i class="iconfont icon-Jian ftz23 colorLig posUp"></i>
+                                </div>
+                                <div class="triangle-bottomright" (click)="jumpPage('SelectPersonPage',{'key':'merchantOtherJson','index':i})">
+                                    <i class="iconfont icon-ChaZhao ftz23 colorLig posDown"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="colorDan p0 m0" [hidden]="!(formData.get('merchantOtherJson')['controls'][i].get('merchantName').dirty && formData.get('merchantOtherJson')['controls'][i].get('merchantName').errors)">姓名长度小于&nbsp;2&nbsp;位或包含非法字符</p>
+                        <p class="colorDan p0 m0" [hidden]="!(formData.get('merchantOtherJson')['controls'][i].get('merchantPhone').dirty && formData.get('merchantOtherJson')['controls'][i].get('merchantPhone').errors)">请输入正确的手机号</p>
+                        <p class="colorDan p0 m0" [hidden]="!(formData.get('merchantOtherJson')['controls'][i].get('merchantAddress').dirty && formData.get('merchantOtherJson')['controls'][i].get('merchantAddress').errors)">请输入正确的地址</p>
+                        <p class="colorDan p0 m0" [hidden]="!(formData.get('merchantOtherJson')['controls'][i].get('goodsName').dirty && formData.get('merchantOtherJson')['controls'][i].get('goodsName').errors)">请输入正确的地址</p>
+                        <p class="colorDan p0 m0" [hidden]="!(formData.get('merchantOtherJson')['controls'][i].get('goodsNum').dirty && formData.get('merchantOtherJson')['controls'][i].get('goodsNum').errors)">请输入正确的地址</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 发货人信息区域 End -->
+
+            <!-- 收货人信息区域 Begin -->
+            <div class="bgcFFF mt10" formGroupName="toPersonJson">
+                <div class="cardAreaTit bgc0CBEBB">收货人</div>
+                <!-- <div class="cardAreaTit bgc05B73B">新增发货人</div> -->
+                <div class="cardAreaCon">
+                    <ion-row>
+                        <ion-col col-1 class="pt15">
+                            <i class="iconfont icon-KuaiDiYuan ftz30 colorPri"></i>
+                        </ion-col>
+                        <ion-col col-4>
+                            <ion-input class="ftz16" formControlName="toPerson" placeholder="姓名"></ion-input>
+                        </ion-col>
+                        <ion-col col-1 class="pt15">
+                            <i class="iconfont icon-ShouJi ftz25 colorPri"></i>
+                        </ion-col>
+                        <ion-col col-6>
+                            <ion-input class="ftz16" formControlName="toPhone" placeholder="手机"></ion-input>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-1 class="pt15">
+                            <i class="iconfont icon-DingWei ftz25 colorPri"></i>
+                        </ion-col>
+                        <ion-col>
+                            <ion-input class="ftz16" formControlName="toAddress" placeholder="地址"></ion-input>
+                        </ion-col>
+                    </ion-row>
+                    <div class="triangle-bottomright" (click)="jumpPage('SelectPersonPage',{'key':'toPersonJson'})">
+                        <i class="iconfont icon-ChaZhao ftz23 colorLig posDown"></i>
+                    </div>
+                    <p class="colorDan p0 m0" [hidden]="!(formData.get('toPersonJson').get('toPerson').dirty && formData.get('toPersonJson').get('toPerson').errors)">姓名长度小于&nbsp;2&nbsp;位或包含非法字符</p>
+                    <p class="colorDan p0 m0" [hidden]="!(formData.get('toPersonJson').get('toPhone').dirty && formData.get('toPersonJson').get('toPhone').errors)">请输入正确的手机号</p>
+                    <p class="colorDan p0 m0" [hidden]="!(formData.get('toPersonJson').get('toAddress').dirty && formData.get('toPersonJson').get('toAddress').errors)">请输入正确的地址</p>
+                </div>
+            </div>
+            <!-- 收货人信息区域 End -->
+            <!-- <div>
+                <div>
+                    <p>
+                        <span>包裹信息：</span>
+                    </p>
+                </div>
+                <div>
+                    <ion-row>
+                        <ion-col col-6>
+                            <ion-item no-padding>
+                                <ion-label class="w50 ftz15">件数：</ion-label>
+                                <ion-input type="number" class="ftz15" formControlName="packageNum" placeholder="请输入件数"></ion-input>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col col-6>
+                            <ion-item no-padding>
+                                <ion-label class="w50 ftz15">重量：</ion-label>
+                                <ion-input type="number" class="ftz15" formControlName="weight" placeholder="请输入重量"></ion-input>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-12>
+                            <span class="colorDan" [hidden]="!(formData.get('packageNum').dirty && formData.get('packageNum').errors)">件数不能为空</span>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-12>
+                            <span class="colorDan" [hidden]="!(formData.get('weight').dirty && formData.get('weight').errors)">重量不能为空</span>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-12>
+                            <ion-item no-padding>
+                                <ion-label class="w50 ftz15">劳务费:</ion-label>
+                                <ion-input class="ftz15" formControlName="weight" placeholder="请输入劳务费"></ion-input>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-12>
+                            <span class="colorDan" [hidden]="!(formData.get('weight').dirty && formData.get('weight').errors)">劳务费不能为空</span>
+                        </ion-col>
+                    </ion-row>
+                </div>
+                <div></div>
+            </div> -->
+            <div>
+                <ion-item no-padding>
+                    <ion-label class="ftz15">配送方式:</ion-label>
+                    <ion-select interface="popover" formControlName="connectType">
+                        <ion-option>自提</ion-option>
+                        <ion-option>配送</ion-option>
+                        <ion-option>市场配送</ion-option>
+                    </ion-select>
+                </ion-item>
+                <span class="colorDan" [hidden]="!(formData.get('connectType').dirty && formData.get('connectType').errors)">配送方式不能为空</span>
+                <ion-item no-padding>
+                    <ion-label class="ftz15">付款方式:</ion-label>
+                    <ion-select interface="popover" formControlName="payType">
+                        <ion-option>现付</ion-option>
+                        <ion-option>到付</ion-option>
+                    </ion-select>
+                </ion-item>
+                <span class="colorDan" [hidden]="!(formData.get('payType').dirty && formData.get('payType').errors)">付款方式不能为空</span>
+            </div>
+            <div>
+                <ion-row no-padding class="mt10">
+                    <ion-col text-center no-padding>
+                        <button ion-button color="main" class="w100p" (click)="saveForm()">提交</button>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<!-- 页面内容区域End -->

@@ -1,0 +1,66 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar>
+        <ion-title>扫一扫</ion-title>
+        <ion-buttons start (click)="navCtrl.pop({'animate': false})">
+            <button ion-button>
+                <span color="primary" showWhen="ios,android,windows">返回</span>
+                <!-- <ion-icon name="ios-arrow-back" showWhen="ios,android,windows"></ion-icon> -->
+            </button>
+        </ion-buttons>
+        <!-- <ion-buttons start>
+          <button ion-button>
+          <span color="primary" showWhen="ios">返回</span>
+          <ion-icon name="close" showWhen="android,windows"></ion-icon>
+        </button>
+      </ion-buttons> -->
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域 End -->
+
+
+<!-- 页面内容区域 Begin -->
+<ion-content no-paddingt class="h100p">
+    <div class="h100p w100p">
+        <div class="w100p h100p posRel">
+            <div class="posAbs w220 h220 l0 r0 t0 b0 ma overflowH">
+                <div class="posRel h100p w100p disFlex flexWrapW aligConSB">
+                    <div class="w100p h20 disFlex justConSB">
+                        <div class="w20 h100p bor2TSFFF bor2LSFFF"></div>
+                        <div class="w20 h100p bor2TSFFF bor2RSFFF"></div>
+                    </div>
+                    <div class="w100p h20 disFlex justConSB">
+                        <div class="w20 h100p bor2BSFFF bor2LSFFF"></div>
+                        <div class="w20 h100p bor2BSFFF bor2RSFFF"></div>
+                    </div>
+                </div>
+                <div class="posAbs scanLine"></div>
+            </div>
+            <div class="posAbs w100p b30 disFlex justConC aligIteC">
+                <div class="" (click)="toggleLight()">
+                    <div class="h40 w40 iconBg disFlex justConC aligIteC borRadius50p" [ngClass]="{'active':isOpenLight}">
+                        <span class="ftz30">
+                            <ion-icon class="iconColor" name="ios-flash"></ion-icon>
+                        </span>
+                    </div>
+                    <div class="mt5 tac">
+                        <span class="colorFFF ftz14">闪光灯</span>
+                    </div>
+                </div>
+                <!-- <div class="w100p disFlex justConSB">
+                    <div class="" (click)="toggleContinue()">
+                        <div class="h40 w40 iconBg disFlex justConC aligIteC borRadius50p" [ngClass]="{'active':isContinuity}">
+                            <span class="ftz30">
+                                <ion-icon class="iconColor ftz26 iconfont icon-Scan2"></ion-icon>
+                            </span>
+                        </div>
+                        <div class="mt5 tac">
+                            <span class="colorFFF ftz14">连扫</span>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</ion-content>
+<!-- 页面内容区域 End -->

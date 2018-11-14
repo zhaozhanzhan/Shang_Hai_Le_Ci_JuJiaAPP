@@ -1,0 +1,72 @@
+<!-- 导航条区域Begin -->
+<ion-header>
+    <ion-navbar color="main">
+        <ion-title>发货人管理</ion-title>
+        <!-- <ion-buttons start>
+            <button ion-button>
+            <span color="primary" showWhen="ios">返回</span>
+            <ion-icon name="close" showWhen="android,windows"></ion-icon>
+          </button>
+        </ion-buttons> -->
+        <ion-buttons end (click)="jumpPage('ConsignorAddPage',{state:'add'})">
+            <button ion-button class="ftz22 w40 tac">
+                <ion-icon name="md-add"></ion-icon>
+                <!-- <span color="primary" showWhen="ios">完成</span> -->
+                <!-- <ion-icon ios="ios-add" md="md-add"></ion-icon> -->
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域End -->
+
+<!-- 页面内容区域Begin -->
+<ion-content>
+    <!-- 下拉刷新控制元素Begin -->
+    <ion-refresher (ionRefresh)="downRefresh($event,reqUrl,sendData)">
+        <ion-refresher-content pullingIcon="arrow-down" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="正在加载">
+        </ion-refresher-content>
+    </ion-refresher>
+    <!-- 下拉刷新控制元素End -->
+    <ion-card class="cardBg" *ngFor="let x of dataList;let i = index;">
+        <ion-card-header class="p5 pb0">
+            <span class="ftz24">{{i+1}}.{{x.consigneeName}}</span>
+        </ion-card-header>
+        <ion-card-content class="p5">
+            <div class="disFlex justConFS aligIteFS color262127">
+                <div class="flexShrink0 flexBasis40 ftz16">电话:</div>
+                <div class="ftz16">{{x.consigneePhone}}</div>
+            </div>
+            <div class="disFlex justConFS aligIteFS color262127">
+                <div class="flexShrink0 flexBasis40 ftz16">地址:</div>
+                <div class="ftz16">{{x.consigneeAddress}}</div>
+            </div>
+        </ion-card-content>
+        <div class="borTBox">
+            <ion-row>
+                <ion-col no-padding text-center>
+                    <button ion-button icon-start clear small class="ftz16 colorFFF" (click)="clickDelBtn(x.id,dataList,i)">
+                        <ion-icon name="trash"></ion-icon>
+                        <div>删除</div>
+                    </button>
+                </ion-col>
+                <ion-col no-padding text-center>
+                    <button ion-button icon-start clear small class="ftz16 colorFFF" (click)="jumpPage('ConsignorAddPage',{state:'edit',id:x.id})">
+                        <ion-icon name="create"></ion-icon>
+                        <div>编辑</div>
+                    </button>
+                </ion-col>
+            </ion-row>
+        </div>
+    </ion-card>
+    <!-- 上拉加载控制元素Begin -->
+    <ion-infinite-scroll (ionInfinite)="upLoad($event,reqUrl,sendData)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载更多数据..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <ion-row [hidden]="!isShowNoData" padding-bottom>
+        <ion-col col-12 text-center>
+            <span class="ftz16">没有更多数据</span>
+        </ion-col>
+    </ion-row>
+    <!-- 上拉加载控制元素End -->
+</ion-content>
+<!-- 页面内容区域End -->

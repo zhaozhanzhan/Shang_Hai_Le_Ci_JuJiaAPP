@@ -1,0 +1,97 @@
+<!-- 导航条区域Begin -->
+<ion-header>
+    <ion-navbar color="main">
+        <ion-title>运单列表</ion-title>
+        <!-- <ion-buttons start>
+            <button ion-button>
+            <span color="primary" showWhen="ios">返回</span>
+            <ion-icon name="close" showWhen="android,windows"></ion-icon>
+          </button>
+        </ion-buttons> -->
+        <!-- <ion-buttons end (click)="jumpPage('ConsigneeAddPage',{state:'add'})">
+            <button ion-button class="ftz22 w40 tac">
+                <ion-icon name="md-add"></ion-icon>
+                <span color="primary" showWhen="ios">完成</span>
+                <ion-icon ios="ios-add" md="md-add"></ion-icon>
+            </button>
+        </ion-buttons> -->
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域End -->
+
+<!-- 页面内容区域Begin -->
+<ion-content>
+    <!-- 下拉刷新控制元素Begin -->
+    <ion-refresher (ionRefresh)="downRefresh($event,reqUrl,sendData)">
+        <ion-refresher-content pullingIcon="arrow-down" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="正在加载">
+        </ion-refresher-content>
+    </ion-refresher>
+    <div class="w100p bgcEEE">
+        <div class="w100p bgcFFF disFlex justConSB p10 mb5" *ngFor="let x of dataList;let i = index;">
+            <!-- (click)="jumpDetailPage(x.btnType,'MergePackageDetailPage',{'id':x?.buyerClientOrder?.id})" -->
+            <div class="flexGrow1" (click)="jumpDetailPage(x.btnType,'MergePackageDetailPage',{'id':x.id})">
+                <div class="w100p disFlex justConSB">
+                    <div class="color999 ftz14">运单号:{{x.orderNum}}</div>
+                    <!-- <div class="color999 ftz14" *ngIf="x.status == 1">状态:<span class="color09F">提货中</span></div>
+                    <div class="color999 ftz14" *ngIf="x.status == 2">状态:<span class="colorEF6D23">已取货</span></div>
+                    <div class="color999 ftz14" *ngIf="x.status == 3">状态:<span class="colorSec">拼包中</span></div> -->
+                </div>
+                <div class="tal color999 ftz14">创建时间:{{x.createDate}}</div>
+                <div class="disFlex justConSB mt10">
+                    <div class="disFlex flexDirC tac">
+                        <div class="ftz20 tac">常熟市</div>
+                        <div class="color999 ftz16">{{x.merchantName}}</div>
+                        <div class="color999 ftz16">{{x.merchantPhone}}</div>
+                    </div>
+                    <div class="disFlex flexDirC justConC">
+                        <i class="iconfont icon-JianTou ftz70 colorCCC"></i>
+                    </div>
+                    <div class="disFlex flexDirC tac">
+                        <div class="ftz20 tac">{{x.toCity}}</div>
+                        <div class="color999 ftz16">{{x.toPerson}}</div>
+                        <div class="color999 ftz16">{{x.toPhone}}</div>
+                    </div>
+                </div>
+                <div class="tal ftz16 mt10">发货点:{{x.merchantAddress}}</div>
+            </div>
+            <div class="disFlex flexDirC justConSA w70 tac">
+                <!-- (click)="jumpPage('PickupGoodsPage',{'id':x?.buyerClientOrder?.id})" -->
+                <div *ngIf="x.btnType == 0" (click)="clickDelBtn(x.id,dataList,i)">
+                    <div>
+                        <ion-icon name="trash" class="ftz30 colorDan"></ion-icon>
+                        <!-- <ion-icon name="ios-timer-outline" class="ftz35 colorPri"></ion-icon> -->
+                    </div>
+                    <div class="ftz16">删除</div>
+                </div>
+                <!-- (click)="jumpPage('MergePackagePage',{'id':x?.buyerClientOrder?.id})" -->
+                <!-- <div *ngIf="x.btnType == 1">
+                    <div>
+                        <i class="iconfont icon-PinBao ftz35 colorPri"></i>
+                        <ion-icon name="ios-timer-outline" class="ftz35 colorPri"></ion-icon>
+                    </div>
+                    <div class="ftz16">已取货</div>
+                </div> -->
+                <!-- (click)="openQRCodeModal('QrcodeModalPage',x.clientOrder?.orderNum)" -->
+                <div *ngIf="x.btnType == 1" (click)="openQRCodeModal('QrcodeModalPage',x.orderNum)">
+                    <div>
+                        <i class="iconfont icon-QRCode ftz30 colorPri"></i>
+                        <!-- <ion-icon name="ios-timer-outline" class="ftz35 colorPri"></ion-icon> -->
+                    </div>
+                    <div class="ftz16">二维码</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 上拉加载控制元素Begin -->
+    <ion-infinite-scroll (ionInfinite)="upLoad($event,reqUrl,sendData)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载更多数据..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <ion-row [hidden]="!isShowNoData" padding-bottom>
+        <ion-col col-12 text-center>
+            <span class="ftz16">没有更多数据</span>
+        </ion-col>
+    </ion-row>
+    <!-- 上拉加载控制元素End -->
+    <!-- 下拉刷新控制元素End -->
+</ion-content>
+<!-- 页面内容区域End -->

@@ -1,0 +1,151 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="main" #mainContent>
+        <ion-title *ngIf="pageMode == 'add'">添加银行卡</ion-title>
+        <ion-title *ngIf="pageMode == 'edit'">修改银行卡</ion-title>
+        <!-- <ion-buttons end>
+          <button ion-button class="ftz20 w40 tac">
+              <ion-icon name="md-add"></ion-icon>
+              <ion-icon ios="ios-add" md="md-add"></ion-icon>
+              <span color="primary">查询</span>
+          </button>
+      </ion-buttons> -->
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 侧滑菜单 Begin -->
+<ion-menu id="selBankNum" side="right" persistent="true" swipeEnabled="false" type="overlay" [content]="mainContent">
+    <ion-toolbar color="main" no-padding class="posRel">
+        <ion-searchbar type="search" mode="ios" placeholder="搜索银行" [(ngModel)]="sendData.bankName" (ionInput)="serInput($event)"></ion-searchbar>
+    </ion-toolbar>
+    <ion-content class="h100p">
+        <div>
+            <div class="mt44">
+                <ion-list>
+                    <ion-item *ngFor="let x of dataList;let i = index;" (click)="clickSel($event,x.id,x)">
+                        <div class="checkbox-wrap disFlex">
+                            <div class="flexBasis20">
+                                <div class="checkbox-box" [ngClass]="{'active': isSelected(x.id)}">
+                                    <div class="checkbox-box-inner" [ngClass]="{' checkbox-box-check': isSelected(x.id)}"></div>
+                                </div>
+                                <input type="checkbox" class="checkbox-base" />
+                            </div>
+                            <div class="checkbox-label flexGrow1">
+                                <div class="disFlex justConSB pl10 pr10">
+                                    <div>
+                                        <p class="ftz14 wordWrap">{{x.bankName}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </div>
+    </ion-content>
+    <!-- <ion-footer>
+        <ion-toolbar>
+            <div class="w100p" text-center>
+                <button ion-button color="main" class="w90p">确认选择</button>
+            </div>
+        </ion-toolbar>
+    </ion-footer> -->
+</ion-menu>
+<!-- 侧滑菜单 End -->
+
+<!-- 页面内容区域 Begin -->
+<ion-content padding>
+    <ion-grid no-padding margin-top [formGroup]="formData">
+        <ion-row>
+            <ion-col class="disFlex justConC">
+                <div class="w100p">
+                    <div class="">
+                        <ion-row no-padding>
+                            <ion-col col-12 no-padding>
+                                <ion-item no-padding>
+                                    <ion-label class="w60 ftz15">银行</ion-label>
+                                    <ion-select interface="popover" okText="确认" cancelText="取消" formControlName="isOutBank" (ionChange)="selBank()">
+                                        <ion-option value="0">华夏银行</ion-option>
+                                        <ion-option value="1">非华夏银行</ion-option>
+                                    </ion-select>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-12>
+                                <span class="colorDan" [hidden]="!(formData.get('isOutBank').dirty && formData.get('isOutBank').errors)">请选择银行</span>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                    <div class="" *ngIf="formData.get('isOutBank').value == 1">
+                        <ion-row no-padding>
+                            <ion-col col-12 no-padding (tap)="openMenu()">
+                                <ion-item no-padding>
+                                    <ion-label class="w60 ftz15">支付行</ion-label>
+                                    <ion-input formControlName="payBankName" readonly class="ftz15" placeholder="请选择支付系统行号"></ion-input>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-12>
+                                <span class="colorDan" [hidden]="!(formData.get('payBankName').dirty && formData.get('payBankName').errors)">请选择支付系统行</span>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                    <div class="">
+                        <ion-row no-padding>
+                            <ion-col col-12 no-padding>
+                                <ion-item no-padding>
+                                    <ion-label class="w60 ftz15">银行卡号</ion-label>
+                                    <ion-input type="text" formControlName="clearAcct" class="ftz15" placeholder="请输入银行卡号" (keyup)="inputBankNum($event)"></ion-input>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-12>
+                                <span class="colorDan" [hidden]="!(formData.get('clearAcct').dirty && formData.get('clearAcct').errors)">请输入正确的银行卡号</span>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                    <div class="">
+                        <ion-row no-padding>
+                            <ion-col col-12 no-padding>
+                                <ion-item no-padding>
+                                    <ion-label class="w60 ftz15">姓名</ion-label>
+                                    <ion-input type="text" formControlName="clearAcctName" class="ftz15" placeholder="请输入银行卡所属人姓名"></ion-input>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-12>
+                                <span class="colorDan" [hidden]="!(formData.get('clearAcctName').dirty && formData.get('clearAcctName').errors)">请输入正确的银行卡所属人姓名</span>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                    <div class="" [hidden]="pageMode == 'edit'">
+                        <ion-row no-padding>
+                            <ion-col col-12 no-padding>
+                                <ion-item no-padding>
+                                    <ion-label class="w60 ftz15">邮箱</ion-label>
+                                    <ion-input type="email" formControlName="email" class="ftz15" placeholder="请输入正确的个人邮箱"></ion-input>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-12>
+                                <span class="colorDan" [hidden]="!(formData.get('email').dirty && formData.get('email').errors)">请输入正确的邮箱</span>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row class="mt10">
+            <ion-col text-center>
+                <button ion-button color="main" class="w100p" (click)="saveForm()">完成</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+<!-- 页面内容区域 End -->

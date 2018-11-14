@@ -1,0 +1,124 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="main">
+        <ion-title>扫码接包</ion-title>
+        <ion-buttons end (click)="jumpPage('ScanPage',null,{'animate':false})">
+            <button ion-button>
+                <!-- <span class="ftz20" color="primary" showWhen="ios,android,windows,browser">扫码</span> -->
+                <!-- <ion-icon class="ftz28" name="qr-scanner" showWhen="ios,android,windows,browser"></ion-icon> -->
+                <ion-icon class="ftz28" name="md-qr-scanner"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar>
+        <ion-segment color="main" mode="md" [(ngModel)]="segModel" (ionChange)="segChange($event)">
+            <ion-segment-button [value]="x" *ngFor="let x of segArr;let i = index">
+                <span class="ftz16">{{segTitObj[x]}}</span>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 页面内容区域 Begin -->
+<ion-content>
+    <!-- 下拉刷新控制元素 Begin -->
+    <ion-refresher (ionRefresh)="downRefresh($event,reqUrl,pageArr[pageIndex]['sendData'])">
+        <ion-refresher-content pullingIcon="arrow-down" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="正在加载">
+        </ion-refresher-content>
+    </ion-refresher>
+    <!-- 下拉刷新控制元素 End -->
+    <div class="bgcEEE">
+        <div>
+            <ion-slides #swiperPanel (ionSlideDidChange)="slideChanged()">
+                <ion-slide>
+                    <!-- 大包列表 Begin -->
+                    <div>
+                        <div class="w100p bgcEEE minH500">
+                            <div class="w100p">
+                                <div class="w100p" *ngFor="let x of pageArr[0]['dataList'];let i = index">
+                                    <div class="p5">
+                                        <ion-card no-padding class="borRadius6 m0 w100p">
+                                            <ion-card-header>
+                                                <div class="w100p tal">
+                                                    <span>{{i + 1}}.大包号:</span>
+                                                    <span class="color0388FE" (click)="jumpPage('CancleCollagePage',{'id':x.id})">{{x.packageNum}}</span>
+                                                </div>
+                                            </ion-card-header>
+                                            <ion-card-content>
+                                                <div class="w100p">
+                                                    <div class="pb5 w100p disFlex flexDirR flexWrapN justConSB">
+                                                        <div class="color262127 disFlex">
+                                                            <div class="ftz16 tal">收货人：</div>
+                                                            <div class="ftz16">{{x.toPerson}}</div>
+                                                        </div>
+                                                        <div class="color262127 disFlex">
+                                                            <div class="ftz16 tal">电话：</div>
+                                                            <div class="ftz16">{{x.toPhone}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pb5 w100p disFlex justConFS aligIteFS color262127">
+                                                        <div class="flexShrink0 ftz16 tal">小包数：</div>
+                                                        <div class="ftz16">{{x.packageCount}}</div>
+                                                    </div>
+                                                </div>
+                                            </ion-card-content>
+                                        </ion-card>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 大包列表 End -->
+                </ion-slide>
+                <ion-slide>
+                    <!-- 小包列表 Begin -->
+                    <div>
+                        <div class="w100p bgcEEE pt5 minH500">
+                            <div class="w100p bgcEEE">
+                                <div class="w100p" *ngFor="let x of pageArr[1]['dataList'];let i = index" (press)="longTapDelSmall(x.id,i)">
+                                    <div class="p5">
+                                        <ion-card no-padding class="borRadius6 m0 w100p">
+                                            <ion-card-header>
+                                                <div class="w100p tal">
+                                                    <span>{{i + 1}}.小包号:</span>
+                                                    <span class="">{{x.deliveryPackageNo}}</span>
+                                                </div>
+                                            </ion-card-header>
+                                            <ion-card-content>
+                                                <div class="w100p">
+                                                    <div class="pb5 w100p disFlex flexDirR flexWrapN justConSB">
+                                                        <div class="color262127 disFlex">
+                                                            <div class="ftz16 tal">收货人：</div>
+                                                            <div class="ftz16">{{x.buyerClientOrder?.toPerson}}</div>
+                                                        </div>
+                                                        <div class="color262127 disFlex">
+                                                            <div class="ftz16 tal">电话：</div>
+                                                            <div class="ftz16">{{x.buyerClientOrder?.toPhone}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ion-card-content>
+                                        </ion-card>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 小包列表 End -->
+                </ion-slide>
+            </ion-slides>
+        </div>
+    </div>
+    <!-- 上拉加载控制元素 Begin -->
+    <ion-infinite-scroll class="bgcEEE" (ionInfinite)="upLoad($event,reqUrl,pageArr[pageIndex]['sendData'])">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载更多数据..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <ion-row class="bgcEEE" *ngFor="let x of segArr;let i = index" padding-bottom>
+        <ion-col class="bgcEEE" col-12 text-center *ngIf="i == pageIndex" [hidden]="!pageArr[pageIndex]['isShowNoData']">
+            <span class="ftz16">没有更多数据</span>
+        </ion-col>
+    </ion-row>
+    <!-- 上拉加载控制元素 End -->
+</ion-content>
+<!-- 页面内容区域 End -->

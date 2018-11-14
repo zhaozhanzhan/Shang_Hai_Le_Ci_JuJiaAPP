@@ -1,0 +1,69 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="main">
+        <ion-title>转出到银行卡</ion-title>
+        <!-- <ion-buttons end>
+          <button ion-button class="ftz20 w40 tac">
+              <ion-icon name="md-add"></ion-icon>
+              <ion-icon ios="ios-add" md="md-add"></ion-icon>
+              <span color="primary">查询</span>
+          </button>
+      </ion-buttons> -->
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 页面内容区域Begin -->
+<ion-content no-padding>
+    <div [formGroup]="formData">
+        <div>
+            <div class="borBBox">
+                <div class="h60 disFlex flexDirC justConSA pl10">
+                    <div class="pt10">
+                        <span class="ftz18">{{formInfo?.payBankName}}</span>
+                    </div>
+                    <div>
+                        <span class="ftz16 color999">{{formInfo?.clearAcct}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="pl10">
+                <div class="pt20">
+                    <span class="ftz18 color999">转出金额（元）</span>
+                </div>
+                <div class="disFlex aligIteC">
+                    <div class="flexGrow1">
+                        <ion-item class="pl0">
+                            <ion-label color="dark">
+                                <span class="ftz22">￥</span>
+                            </ion-label>
+                            <ion-input type="number" formControlName="money" placeholder="请输入转出金额" (input)="calSerCharge()" (blur)="handleMoney()"></ion-input>
+                        </ion-item>
+                    </div>
+                </div>
+                <div class="mt5">
+                    <span class="colorDan">转出手续费：{{serviceCharge}}</span>
+                </div>
+                <div class="mt5">
+                    <span class="colorDan" [hidden]="!(formData.get('money').dirty && formData.get('money').errors)">请输入正确的金额</span>
+                </div>
+                <div>
+                    <ion-item no-padding class="pl0">
+                        <ion-input class="" formControlName="remark" placeholder="添加备注（50字以内）"></ion-input>
+                    </ion-item>
+                </div>
+                <div class="mt5">
+                    <span class="colorDan mt5" [hidden]="!(formData.get('remark').dirty && formData.get('remark').errors)">备注最大为 50 个字符</span>
+                </div>
+            </div>
+            <div>
+                <ion-row no-padding class="mt20">
+                    <ion-col text-center no-padding>
+                        <button ion-button color="main" class="w95p" (click)="saveForm()">确认转出</button>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<!-- 页面内容区域End -->

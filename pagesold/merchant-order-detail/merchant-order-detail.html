@@ -1,0 +1,107 @@
+<!-- 导航条区域Begin -->
+<ion-header>
+    <ion-navbar color="main">
+        <ion-title>商户订单详情</ion-title>
+        <!-- <ion-buttons end>
+          <button ion-button class="ftz22 w40 tac">
+              <ion-icon name="md-add"></ion-icon>
+          </button>
+      </ion-buttons> -->
+        <!-- <ion-buttons start text-center class="w44">
+          <button ion-button>
+              <span color="primary" showWhen="ios">取消</span>
+              <ion-icon name="close" showWhen="android,windows"></ion-icon>
+          </button>
+      </ion-buttons> -->
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域End -->
+
+
+<ion-content>
+    <div>
+        <div>
+            <!-- <div>
+                <ion-item-divider no-padding class="pl10">
+                    <span class="ftz14">订单号：{{formInfo?.orderNum}}</span>
+                </ion-item-divider>
+                <div class="borBSCCC pb10">
+                    <div class="pt10 pb10 pl10">
+                        <span class="ftz14">收货人信息</span>
+                    </div>
+                    <div>
+                        <div class="disFlex justConSB pl20 pr15">
+                            <div class="disFlex justConFS aligIteFS color262127">
+                                <div class="flexShrink0 ftz16">姓名：</div>
+                                <div class="ftz16">{{formInfo?.toPerson}}</div>
+                            </div>
+                            <div class="disFlex justConFS aligIteFS color262127">
+                                <div class="flexShrink0 ftz16">电话：</div>
+                                <div class="ftz16">{{formInfo?.toPhone}}</div>
+                            </div>
+                        </div>
+                        <div class="disFlex justConFS aligIteFS pl20 mt5 color262127">
+                            <div class="flexShrink0 ftz16">地址：</div>
+                            <div class="ftz16">{{formInfo?.toAddress}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div>
+                <div class="bgcFFF p5" *ngFor="let x of formInfo;let i = index">
+                    <div class="p5">
+                        <ion-card no-padding class="borRadius6 m0 w100p">
+                            <ion-card-header>
+                                <div class="w100p">
+                                    <div class="pb5 w100p disFlex flexDirR flexWrapN justConSB">
+                                        <div class="color262127 disFlex">
+                                            <div class="ftz16 tal">小包号：</div>
+                                            <div class="ftz16">{{x.deliveryPackageNo}}</div>
+                                        </div>
+                                        <div class="color262127 disFlex">
+                                            <div class="ftz16 tal">小包名：</div>
+                                            <div class="ftz16">{{x.deliveryPackageName}}</div>
+                                        </div>
+                                    </div>
+                                    <!-- <span>小包号:</span>
+                                    <span class="">{{x.deliveryPackageNo}}</span> -->
+                                </div>
+                            </ion-card-header>
+                            <ion-card-content>
+                                <div class="w100p">
+                                    <div class="pb5 w100p disFlex flexDirR flexWrapN justConSB">
+                                        <div class="color262127 disFlex">
+                                            <div class="ftz16 tal">物品名称：</div>
+                                            <div class="ftz16">{{x.deliveryGoodsName}}</div>
+                                        </div>
+                                        <div class="color262127 disFlex">
+                                            <div class="ftz16 tal">包裹状态：</div>
+                                            <div class="ftz16" [ngClass]="{'colorEF6D23': x.packageState == 0,'color1890FF': x.packageState == 1,'colorC612EB': x.packageState == 2,'colorSec': x.packageState == 3,'colorDan': x.packageState == -1}">{{ x.packageState | merchantOrderState}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="pb5 w100p disFlex flexDirR flexWrapN justConSB">
+                                        <div class="color262127 disFlex">
+                                            <div class="ftz16 tal">下单时间：</div>
+                                            <div class="ftz16">{{x.createDate}}</div>
+                                        </div>
+                                        <!-- <div class="color262127 disFlex">
+                                            <div class="ftz16 tal">：</div>
+                                            <div class="ftz16">{{x.buyerClientOrder?.toPhone}}</div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </ion-card-content>
+                        </ion-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ion-footer *ngIf="paramStatus == 1">
+        <ion-toolbar>
+            <div class="w100p" text-center>
+                <button ion-button color="main" class="w90p" (click)="saveForm()">确认接包</button>
+            </div>
+        </ion-toolbar>
+    </ion-footer>
+</ion-content>

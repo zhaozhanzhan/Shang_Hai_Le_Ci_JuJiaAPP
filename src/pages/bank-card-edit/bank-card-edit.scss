@@ -1,0 +1,65 @@
+page-bank-card-edit {
+    .toolbar-ios-main .searchbar-ios .searchbar-clear-icon,.searchbar-ios .searchbar-clear-icon{
+        background-image:none!important;
+    }
+    /* 自定义CheckBox Begin */
+    .checkbox-wrap {
+        .checkbox-base {
+            opacity: 0;
+            width: 20px;
+            height: 16px;
+        }
+        .checkbox-box {
+            position: absolute;
+            width: 19px;
+            height: 19px;
+            border: 1px solid #DDDDDD;
+            border-radius: 50%;
+            &-inner {
+                position: absolute;
+                top: 3px;
+                left: 3px;
+                width: 12px;
+                height: 6px;
+                opacity: 0;
+                transform: rotateZ(-50deg) scale(0.1);
+                transition: transform .1s ease-out;
+            }
+            &-check {
+                // 利用border来呈现对勾√
+                border-width: 0 0 2px 2px;
+                opacity: 1;
+                border-style: solid;
+                border-color: #FFF;
+                transform: rotateZ(-50deg) scale(1);
+                // 在对勾后用伪类加个扩散动效
+                &::after {
+                    content: "";
+                    position: absolute;
+                    left: -6px;
+                    top: -6px;
+                    opacity: 0;
+                    width: 19px;
+                    height: 19px;
+                    border-radius: 50%;
+                    background: rgba(255, 100, 100, .2);
+                    animation: ripple .2s ease-out;
+                }
+                @keyframes ripple {
+                    0% {
+                        opacity: 1;
+                        transform: scale(0.0);
+                    }
+                    100% {
+                        opacity: 1;
+                        transform: scale(1.8);
+                    }
+                }
+            }
+            &.active {
+                background-color: #0388FE;
+            }
+        }
+    }
+    /* 自定义CheckBox End */
+}
