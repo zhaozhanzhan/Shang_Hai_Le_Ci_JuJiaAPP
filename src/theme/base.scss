@@ -1,0 +1,129 @@
+/*初始化样式begin*/
+
+html,
+body,
+div,
+p,
+ul,
+li,
+dl,
+dt,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+form,
+input,
+select,
+button,
+textarea,
+iframe,
+table,
+th,
+td {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    -webkit-tap-highlight-color: transparent;
+    // font-size: 62.5%;
+}
+
+img {
+    border: 0 none;
+    vertical-align: top;
+}
+
+ul,
+li {
+    list-style-type: none;
+}
+
+
+/* body {
+    font-size: 12px;
+    font-size: 1.2rem;
+}
+
+input,
+select,
+button,
+textarea {
+    font-size: 1.2rem !important;
+    font-family: "微软雅黑", arial, Tahoma, Geneva, sans-serif;
+}
+
+textarea {
+    font-size: 1.2rem !important;
+    font-family: "微软雅黑", arial, Tahoma, Geneva, sans-serif;
+}
+
+button {
+    cursor: pointer;
+} */
+
+a,
+a:hover {
+    text-decoration: none;
+}
+
+.fl {
+    display: inline;
+    float: left;
+}
+
+.fr {
+    display: inline;
+    float: right;
+}
+
+.fixed {
+    display: block;
+    min-height: 1%;
+}
+
+.fixed:after {
+    content: ".";
+    display: block;
+    clear: both;
+    height: 0;
+    visibility: hidden;
+}
+
+
+/* @media only screen and (min-width: 0px) {
+    html {
+        font-size: 50% !important;
+    }
+}
+
+@media only screen and (min-width: 320px) {
+    html {
+        font-size: 62.5% !important;
+    }
+}
+
+@media only screen and (min-width: 640px) {
+    html {
+        font-size: 100% !important;
+    }
+}
+
+@media only screen and (min-width: 750px) {
+    html {
+        font-size: 110% !important;
+    }
+}
+
+@media only screen and (min-width: 1242px) {
+    html {
+        font-size: 120% !important;
+    }
+} */
+
+
+/*初始化样式end*/

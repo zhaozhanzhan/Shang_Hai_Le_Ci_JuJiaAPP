@@ -7,5 +7,6 @@ $colors: (primary: #488aff, secondary: #32db64, danger: #f53d3d, light: #f4f4f4,
 @import "roboto";
 @import "noto-sans";
 @import "iconfont"; // 阿里图标
+@import "base"; // 自定义基础标签样式初始化文件
 @import "common"; // 自定义公共样式文件
 $alert-ios-message-font-size:16px; // 弹出Alert框的消息字体大小

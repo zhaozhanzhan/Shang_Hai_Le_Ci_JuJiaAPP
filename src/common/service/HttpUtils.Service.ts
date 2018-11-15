@@ -32,8 +32,8 @@ export class HttpReqService {
   private defHeaders: Headers = new Headers({
     // "Content-Type": "application/json",
     // Accept: "application/json",
-    token: "",
-    app: "2" // 1：商户app，2：拉包工app
+    // token: "",
+    // app: "2" // 1：商户app，2：拉包工app
   });
   // private defHeaders = new Headers({
   //   "Content-Type": "application/json",

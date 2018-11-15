@@ -2,12 +2,12 @@
 <ion-header>
     <ion-navbar color="orange" hideBackButton="true">
         <ion-title>服务对象</ion-title>
-        <ion-buttons start>
+        <!-- <ion-buttons start>
             <button ion-button class="pl10" (click)="backHome()">
-                <!-- <span color="primary" showWhen="ios">返回</span> -->
+                <span color="primary" showWhen="ios">返回</span>
                 <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon>
             </button>
-        </ion-buttons>
+        </ion-buttons> -->
         <ion-buttons end>
             <button ion-button class="pr10" (click)="navCtrl.pop()">
                 <span showWhen="android,windows,ios">返回</span>
@@ -22,7 +22,7 @@
 <ion-content>
     <div>
         <div class="p10">
-            <div>
+            <div class="mt20">
                 <div class="posRel h200 w100p">
                     <div class="w100p h100p posAbs zIndex1 cardBgImg"></div>
                     <div class="w100p h100p posAbs zIndex2">
@@ -83,53 +83,51 @@
                     </div>
                     <div class="mt10">
                         <div class="borBBox">
-                            <div class="disFlex justConSB h26 aligIteC pl10 pr10">
-                                <span class="ftz16 color999">紧急联系人</span>
-                            </div>
-                        </div>
-                        <div class="mt5">
-                            <div class="disFlex justConSB h26 aligIteC pl30 pr10">
-                                <span class="ftz16">张三</span>
-                                <span class="ftz16">15907291311</span>
-                            </div>
-                            <div class="disFlex justConSB h26 aligIteC pl30 pr10">
-                                <span class="ftz16">张三</span>
-                                <span class="ftz16">15907291311</span>
+                            <div class="disFlex justConSB pl10 pr10">
+                                <div class="flexShrink0">
+                                    <span class="ftz16 color999">签入地址：</span>
+                                </div>
+                                <div class="flexShrink1">
+                                    <span class="ftz16">上海市静安区宝山路</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="mt10">
                         <div class="borBBox">
                             <div class="disFlex justConSB h26 aligIteC pl10 pr10">
-                                <span class="ftz16 color999">居住地址</span>
+                                <span class="ftz16 color999">当前服务内容：</span>
                             </div>
                         </div>
                         <div class="mt5">
                             <div class="disFlex justConSB h26 aligIteC pl30 pr10">
-                                <span class="ftz16">1、上海市静安区宝山路</span>
-                            </div>
-                            <div class="disFlex justConSB h26 aligIteC pl30 pr10">
-                                <span class="ftz16">2、上海市静安区宝山路街道宝昌路</span>
+                                <span class="ftz18">生活系统>助餐>上门做餐</span>
                             </div>
                         </div>
                     </div>
                     <div class="mt10">
                         <div class="borBBox">
                             <div class="disFlex justConSB h26 aligIteC pl10 pr10">
-                                <span class="ftz16 color999">当月服务情况</span>
-                            </div>
-                        </div>
-                        <div class="mt5">
-                            <div class="disFlex justConSB h26 aligIteC pl30 pr10">
-                                <span class="ftz16">已服务时长</span>
-                                <span class="ftz16">500&nbsp;分钟</span>
-                            </div>
-                            <div class="disFlex justConSB h26 aligIteC pl30 pr10">
-                                <span class="ftz16">已服务金额</span>
-                                <span class="ftz16">200&nbsp;元</span>
+                                <span class="ftz16 color999">签入时间：</span>
+                                <span class="ftz16">2018/07/31 13:16</span>
                             </div>
                         </div>
                     </div>
+                    <div class="mt20">
+                        <div class="">
+                            <div class="disFlex justConC h26 aligIteC pl10 pr10">
+                                <span class="ftz40 color093">00:20:51</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt30">
+                    <div text-center>
+                        <button ion-button round class="w90p" color="danger">结束服务</button>
+                    </div>
+                    <!-- <div class="mt20" text-center>
+                        <button ion-button round class="w90p" color="dark">取消</button>
+                    </div> -->
                 </div>
             </div>
         </div>

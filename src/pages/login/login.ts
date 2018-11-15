@@ -16,7 +16,7 @@ import { FormValidService } from "../../common/service/FormValid.Service";
 import { JsUtilsService } from "../../common/service/JsUtils.Service";
 import { GlobalMethod } from "./../../common/service/GlobalMethod";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
-import { loginInfo } from "../../common/config/BaseConfig";
+import { loginInfo, desConfig } from "../../common/config/BaseConfig";
 import { ForgetPasswordPage } from "./../forget-password/forget-password"; // 忘记密码
 import { FastLoginPage } from "../fast-login/fast-login"; // 快速登录
 import { PushService } from "../../common/service/Push.Service";
@@ -52,10 +52,10 @@ export class LoginPage {
     });
 
     this.formData = this.fb.group({
-      phone: ["", [Validators.required, FormValidService.mobileValid]], // 手机
+      phone: ["", [Validators.required]], // 手机
       password: [
         "",
-        [Validators.required, Validators.minLength(6), Validators.maxLength(16)]
+        [Validators.required, Validators.minLength(5), Validators.maxLength(16)]
       ] // 密码
     });
   }
@@ -207,6 +207,18 @@ export class LoginPage {
     }
 
     const loading = this.gloService.showLoading("正在登录，请稍候...");
+    // const testObj: any = {};
+    // testObj.__login = true;
+    // testObj.__ajax = "json";
+    // testObj.username = window["DesUtils"].encode(formData.phone, desConfig.key);
+    // testObj.password = window["DesUtils"].encode(
+    //   formData.password,
+    //   desConfig.key
+    // );
+
+    // this.httpReq.get("home/a/login", testObj, data => {
+    //   console.error("加密测试返回信息");
+    // });
     this.httpReq.post("workerUser/workerUserLogin", null, formData, data => {
       if (data["status"] == 200) {
         if (data["code"] == 0) {

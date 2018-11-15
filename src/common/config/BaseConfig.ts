@@ -7,8 +7,9 @@
  */
 
 //================= 服务器IP + 端口配置 Begin =================//
-
+// http://139.196.204.226:8980/home/a/login?__login=true&__ajax=json&username=F3EDC7D2C193E0B8DCF554C726719ED2&password=235880C505ACCDA5C581A4F4CDB81DA0
 // const ip = "180.103.210.106:8081";// 公网IP+端口
+// const ip = "139.196.204.226:8980"; // 公网IP+端口 测试服
 const ip = "180.103.210.106:8088"; // 公网IP+端口 测试服
 const ipDownload = "180.103.210.106:8888"; // 下载文件 测试服
 // const ip = "192.168.1.129:9999"; // 内网IP+端口
@@ -37,6 +38,12 @@ export const loginInfo = {
   UserInfo: null // 后台返回用户信息对象
 };
 //================= 登录信息配置对象 End =================//
+
+//================= 登录加密密钥配置对象 Begin =================//
+export const desConfig = {
+  key: "thinkgem,jeesite,com"
+};
+//================= 登录加密密钥配置对象 End =================//
 
 //================= 分页参数配置对象 Begin =================//
 export const pageObj = {
