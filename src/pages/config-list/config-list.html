@@ -21,8 +21,8 @@
 <!-- 页面内容区域 Begin -->
 <ion-content>
     <div>
-        <div class="mt20">
-            <div class="borTBox">
+        <div class="mt20 parentBox">
+            <div class="borTBox" [ngClass]="{'childListHide': !isActive, 'childListShow': isActive}" (click)="toggleAnimation()">
                 <div class="h60 w100p borBBox">
                     <div class="disFlex aligIteS h100p pl10 pr10">
                         <div class="w60 p5">
@@ -42,8 +42,8 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div>
+                <div class="childListCtrl">
+                    <div class="">
                         <ul class="p5">
                             <li class="h40 bgcFFEBE0 pl10 pr10 disFlex justConSB aligIteC">
                                 <div>
@@ -62,6 +62,47 @@
                                 </div>
                             </li>
                             <li class="h40 bgcFFEBE0 pl10 pr10 disFlex justConSB aligIteC">
+                                <div>
+                                    <span class="ftz16 color999">上门做餐</span>
+                                </div>
+                                <div>
+                                    <span class="ftz16 color999">21元/小时</span>
+                                </div>
+                            </li>
+                            <li class="h40 bgcFFF pl10 pr10 disFlex justConSB aligIteC">
+                                <div>
+                                    <span class="ftz16 color999">上门做餐</span>
+                                </div>
+                                <div>
+                                    <span class="ftz16 color999">21元/小时</span>
+                                </div>
+                            </li>
+                            <li class="h40 bgcFFF pl10 pr10 disFlex justConSB aligIteC">
+                                <div>
+                                    <span class="ftz16 color999">上门做餐</span>
+                                </div>
+                                <div>
+                                    <span class="ftz16 color999">21元/小时</span>
+                                </div>
+                            </li>
+                            <li class="h40 bgcFFF pl10 pr10 disFlex justConSB aligIteC">
+                                <div>
+                                    <span class="ftz16 color999">上门做餐</span>
+                                </div>
+                                <div>
+                                    <span class="ftz16 color999">21元/小时</span>
+                                </div>
+                            </li>
+                            <li class="h40 bgcFFF pl10 pr10 disFlex justConSB aligIteC">
+                                <div>
+                                    <span class="ftz16 color999">上门做餐</span>
+                                </div>
+                                <div>
+                                    <span class="ftz16 color999">21元/小时</span>
+                                </div>
+                            </li>
+
+                            <li class="h40 bgcFFF pl10 pr10 disFlex justConSB aligIteC">
                                 <div>
                                     <span class="ftz16 color999">上门做餐</span>
                                 </div>

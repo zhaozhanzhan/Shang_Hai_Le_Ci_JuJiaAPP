@@ -26,6 +26,8 @@ import _ from "underscore";
   templateUrl: "config-list.html"
 })
 export class ConfigListPage {
+  public isActive: boolean = false;
+
   constructor(
     // private fb: FormBuilder, // 响应式表单
     // private jsUtil: JsUtilsService, // 自定义JS工具类
@@ -70,5 +72,10 @@ export class ConfigListPage {
         this.navCtrl.push(pageName);
       }
     }
+  }
+
+  public toggleAnimation() {
+    this.isActive = !this.isActive;
+    console.error(this.isActive);
   }
 }
