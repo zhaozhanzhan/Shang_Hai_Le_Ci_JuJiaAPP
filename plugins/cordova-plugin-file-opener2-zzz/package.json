@@ -1,0 +1,69 @@
+{
+  "_from": "cordova-plugin-file-opener2-zzz@^3.0.0",
+  "_id": "cordova-plugin-file-opener2-zzz@3.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-u1vLptnF6OJiOVSCc4aTnYtKXl1aIEp3rRzeC091lo0XcjLkefnGo3SagWRf0KHhIbMlGkVQzT36SBjidHAH0Q==",
+  "_location": "/cordova-plugin-file-opener2-zzz",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "cordova-plugin-file-opener2-zzz@^3.0.0",
+    "name": "cordova-plugin-file-opener2-zzz",
+    "escapedName": "cordova-plugin-file-opener2-zzz",
+    "rawSpec": "^3.0.0",
+    "saveSpec": null,
+    "fetchSpec": "^3.0.0"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-file-opener2-zzz/-/cordova-plugin-file-opener2-zzz-3.0.0.tgz",
+  "_shasum": "f184ae5fc1fc55cb223c186b0622ed0bd3a073ff",
+  "_spec": "cordova-plugin-file-opener2-zzz@^3.0.0",
+  "_where": "F:\\AppWorkspace\\JuJiaAPP",
+  "author": {
+    "name": "799316652@qq.com"
+  },
+  "bugs": {
+    "url": "https://github.com/zhaozhanzhan/cordova-plugin-file-opener2-zzz/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-file-opener2-zzz",
+    "platforms": [
+      "android",
+      "ios",
+      "wp8",
+      "windows"
+    ]
+  },
+  "deprecated": false,
+  "description": "A File Opener Plugin for Cordova. (The Original Version)",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "homepage": "https://github.com/zhaozhanzhan/cordova-plugin-file-opener2-zzz#readme",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova-wp8",
+    "cordova-windows"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "cordova-plugin-file-opener2-zzz",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhaozhanzhan/cordova-plugin-file-opener2-zzz.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "3.0.0"
+}

@@ -15,7 +15,7 @@ import { Storage } from "@ionic/storage";
 import { GlobalService } from "../../common/service/GlobalService";
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
-// import { JsUtilsService } from "../../common/service/JsUtils.Service";
+import { JsUtilsService } from "../../common/service/JsUtils.Service";
 // import { GlobalMethod } from "../../common/service/GlobalMethod";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
 import _ from "underscore";
@@ -26,11 +26,12 @@ import _ from "underscore";
   templateUrl: "config-list.html"
 })
 export class ConfigListPage {
-  public isActive: boolean = false;
+  public dataList: any = []; // 数据列表
+  // public isActive: boolean = false;
 
   constructor(
     // private fb: FormBuilder, // 响应式表单
-    // private jsUtil: JsUtilsService, // 自定义JS工具类
+    private jsUtil: JsUtilsService, // 自定义JS工具类
     private httpReq: HttpReqService, // Http请求服务
     private ionicStorage: Storage, // IonicStorage
     public navCtrl: NavController, // 导航控制器
@@ -41,7 +42,20 @@ export class ConfigListPage {
     public platform: Platform, // 获取平台信息
     public alertCtrl: AlertController, // Alert消息弹出框
     public nativeAudio: NativeAudio // 音频播放
-  ) {}
+  ) {
+    const dataList = this.jsUtil.deepClone(this.navParams.get("dataList"));
+    if (_.isArray(dataList) && dataList.length > 0) {
+      for (let i = 0; i < dataList.length; i++) {
+        dataList[i]["isActive"] = false;
+      }
+      this.dataList = this.jsUtil.deepClone(dataList);
+    } else {
+      this.dataList = [];
+    }
+    // this.dataList = this.navParams.get("dataList");
+
+    console.error("this.dataList=====", this.dataList);
+  }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad ConfigListPage");
@@ -74,8 +88,23 @@ export class ConfigListPage {
     }
   }
 
-  public toggleAnimation() {
-    this.isActive = !this.isActive;
-    console.error(this.isActive);
+  /**
+   * 切换菜单展开状态
+   * @param {boolean} isActive
+   * @param {*} obj
+   * @param {number} i
+   * @memberof ConfigListPage
+   */
+  public menuOpenToggle(isActive: boolean, obj: any, i: number) {
+    if (isActive) {
+      // 展开
+      obj["isActive"] = !isActive;
+    } else {
+      // 关闭
+      for (let i = 0; i < this.dataList.length; i++) {
+        this.dataList[i]["isActive"] = false;
+      }
+      obj["isActive"] = !isActive;
+    }
   }
 }

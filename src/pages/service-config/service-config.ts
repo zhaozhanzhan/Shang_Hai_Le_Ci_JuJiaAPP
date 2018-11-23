@@ -26,6 +26,8 @@ import _ from "underscore";
   templateUrl: "service-config.html"
 })
 export class ServiceConfigPage {
+  public infoWay: string = ""; // 定义表单对象
+  public formInfo: Array<any> = []; // 定义表单对象
   constructor(
     // private fb: FormBuilder, // 响应式表单
     // private jsUtil: JsUtilsService, // 自定义JS工具类
@@ -39,7 +41,23 @@ export class ServiceConfigPage {
     public platform: Platform, // 获取平台信息
     public alertCtrl: AlertController, // Alert消息弹出框
     public nativeAudio: NativeAudio // 音频播放
-  ) {}
+  ) {
+    const sendData: any = {};
+    this.httpReq.get(
+      "home/a/server/homeServerItems/listTree",
+      sendData,
+      data => {
+        if (_.isArray(data["data"]) && data["data"].length > 0) {
+          this.formInfo = data["data"];
+        } else {
+          this.formInfo = [];
+        }
+      }
+    );
+
+    this.infoWay = this.navParams.get("intoWay");
+    console.error(this.infoWay);
+  }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad ServiceConfigPage");
@@ -63,7 +81,7 @@ export class ServiceConfigPage {
    * @param {*} pageName 页面组件类名称
    * @param {*} obj 页面组件类名称
    * @param {*} opts 转场动画
-   * @memberof UserListPage
+   * @memberof ServiceConfigPage
    */
   public jumpPage(pageName: any, obj?: any, opts?: any): void {
     if (_.isObject(obj) && !_.isEmpty(obj)) {
@@ -74,6 +92,21 @@ export class ServiceConfigPage {
       } else {
         this.navCtrl.push(pageName);
       }
+    }
+  }
+
+  /**
+   * 进入配置列表
+   * @param {*} obj 页面组件类名称
+   * @memberof ServiceConfigPage
+   */
+  public gotoConfigList(obj?: any) {
+    if (this.infoWay == "jumpInto") {
+      this.jumpPage("ConfigListPage", obj);
+    } else if (this.infoWay == "nfcScanInto") {
+      this.jumpPage("ConfigListTwoPage", obj);
+    } else {
+      this.gloService.showMsg("未获取到进入配置列表时的状态！");
     }
   }
 }

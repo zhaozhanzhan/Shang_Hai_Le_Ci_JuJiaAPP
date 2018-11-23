@@ -151,9 +151,9 @@ export class FastLoginPage {
             loginInfo.UserName = formData.phone; // 用户名
             // loginInfo.Password = formData.password; // 用户密码
             loginInfo.UserInfo = data["data"]; // 后台返回用户信息对象
-            if (data["data"] && data["data"]["token"]) {
-              loginInfo.Token = data["data"]["token"]; // 登录者Token
-            }
+            // if (data["data"] && data["data"]["token"]) {
+            //   loginInfo.Token = data["data"]["token"]; // 登录者Token
+            // }
             this.ionicStorage.set("loginInfo", loginInfo); // 登录信息配置对象
             this.ionicStorage.set("userInfo", data["data"]); //
             this.jGPush.setTags(); // 极光推送设置标签 IOS或Android

@@ -15,7 +15,7 @@ import _ from "underscore"; // underscore工具类
 import { GlobalService } from "../../common/service/GlobalService";
 import { GlobalMethod } from "../../common/service/GlobalMethod";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
-import { pageObj } from "../../common/config/BaseConfig";
+import { pageObj, loginInfo } from "../../common/config/BaseConfig";
 import { ParamService } from "../../common/service/Param.Service";
 // import { JsUtilsService } from "../../common/service/JsUtils.Service";
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
@@ -27,8 +27,9 @@ import { ParamService } from "../../common/service/Param.Service";
   templateUrl: "user-list.html"
 })
 export class UserListPage {
-  public reqUrl: string = "consignee/listForWorker"; // 请求数据URL
+  public reqUrl: string = "home/a/person/homeServerPerson/set.json"; // 请求数据URL
   public sendData: any = {}; // 定义请求数据时的对象
+  public formInfo: any = {}; // 数据列表
   public dataList: Array<any> = []; // 数据列表
   public isShowNoData: boolean = false; // 给客户提示没有更多数据
   public infiniteScroll: InfiniteScroll = null; // 上拉加载事件对象
@@ -49,6 +50,24 @@ export class UserListPage {
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad UserListPage");
+    // this.sendData.page = pageObj.currentPage; // 定义当前页码
+    // this.sendData.size = pageObj.everyItem; // 定义当前页面请求条数
+    // this.sendData.totalPage = pageObj.totalPage; // 定义当前页面请求条数
+    this.sendData.id = loginInfo.LoginId;
+    // 请求列表数据
+    this.reqData(
+      this.reqUrl,
+      this.sendData,
+      res => {
+        // 请求数据成功
+        this.dataList = this.dataList.concat(res);
+        console.error("this.sendData", this.sendData);
+      },
+      err => {
+        // 请求数据失败
+        this.dataList = this.dataList.concat(err);
+      }
+    );
   }
 
   /**
@@ -91,24 +110,43 @@ export class UserListPage {
    * @memberof UserListPage
    */
   public reqData(url: string, reqObj: any, suc: Function, err: Function) {
-    this.httpReq.post(url, null, reqObj, data => {
-      if (data["status"] == 200) {
-        if (data["code"] == 0) {
-          this.sendData.totalPage = GlobalMethod.calTotalPage(
-            data["data"]["objectMap"]["count"],
-            this.sendData.size
-          ); //定义当前总页数
-          suc(data["data"]["list"]);
-          // this.dataList = this.dataList.concat(data["data"]);
+    this.httpReq.get(url, reqObj, data => {
+      console.error("data======", data);
+      if (data["data"] && data["data"]["archiveList"]) {
+        if (_.isObject(data["data"]["homeServerPerson"])) {
+          this.formInfo = data["data"]["homeServerPerson"];
         } else {
-          this.gloService.showMsg(data["message"], null, 3000);
-          err([]);
+          this.formInfo = {};
+        }
+
+        if (_.isArray(data["data"]["archiveList"])) {
+          suc(data["data"]["archiveList"]);
+        } else {
+          suc([]);
         }
       } else {
-        // this.gloService.showMsg("请求服务器出错", null, 3000);
+        this.gloService.showMsg(data["message"], null, 3000);
         err([]);
       }
     });
+    // this.httpReq.post(url, null, reqObj, data => {
+    //   if (data["status"] == 200) {
+    //     if (data["code"] == 0) {
+    //       this.sendData.totalPage = GlobalMethod.calTotalPage(
+    //         data["data"]["objectMap"]["count"],
+    //         this.sendData.size
+    //       ); //定义当前总页数
+    //       suc(data["data"]["list"]);
+    //       // this.dataList = this.dataList.concat(data["data"]);
+    //     } else {
+    //       this.gloService.showMsg(data["message"], null, 3000);
+    //       err([]);
+    //     }
+    //   } else {
+    //     // this.gloService.showMsg("请求服务器出错", null, 3000);
+    //     err([]);
+    //   }
+    // });
   }
 
   /**

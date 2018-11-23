@@ -21,24 +21,24 @@
 <!-- 页面内容区域 Begin -->
 <ion-content>
     <!-- 下拉刷新控制元素Begin -->
-    <ion-refresher (ionRefresh)="downRefresh($event,reqUrl,sendData)">
+    <!-- <ion-refresher (ionRefresh)="downRefresh($event,reqUrl,sendData)">
         <ion-refresher-content pullingIcon="arrow-down" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="正在加载">
         </ion-refresher-content>
-    </ion-refresher>
+    </ion-refresher> -->
     <!-- 下拉刷新控制元素End -->
     <div class="bgcEEE">
         <div class="p10">
-            <div class="w100p h190 borRadius10 p10 bgcFFF mb10" (click)="jumpPage('UserDetailPage')">
+            <div class="w100p h200 borRadius10 p10 bgcFFF mb10" *ngFor="let x of dataList;let i = index;" (click)="jumpPage('UserDetailPage',{id:x.archiveId})">
                 <div class="w100p h100p posRel">
                     <div class="disFlex aligIteC">
-                        <div class="w40 h40 bgcF00 borSDBDFE6">
+                        <div class="w40 h40 borSDBDFE6">
                             <img class="h100p w100p" src="https://via.placeholder.com/40">
                         </div>
                         <div class="ml10">
-                            <span class="ftz24">张三三</span>
+                            <span class="ftz20">{{x.homeUserArchives?.userName}}</span>
                         </div>
                         <div class="ml30">
-                            <span class="ftz20">00100001</span>
+                            <span class="ftz18">{{x.homeUserArchives?.userCode}}</span>
                         </div>
                     </div>
                     <div class="mt10 pl10">
@@ -68,51 +68,7 @@
                         </div>
                     </div>
                     <div class="posAbs b0 tac w100p">
-                        <span>上海静安区宝山路街道居家养老居务中心</span>
-                    </div>
-                </div>
-            </div>
-            <div class="w100p h190 borRadius10 p10 bgcFFF mb10">
-                <div class="w100p h100p posRel">
-                    <div class="disFlex aligIteC">
-                        <div class="w40 h40 bgcF00 borSDBDFE6">
-                            <img class="h100p w100p" src="https://via.placeholder.com/40">
-                        </div>
-                        <div class="ml10">
-                            <span class="ftz24">张三三</span>
-                        </div>
-                        <div class="ml30">
-                            <span class="ftz20">00100001</span>
-                        </div>
-                    </div>
-                    <div class="mt10 pl10">
-                        <div>
-                            <span>时长信息</span>
-                        </div>
-                        <div class="disFlex mt5">
-                            <div>
-                                <span class="ftz16">应服务：800&nbsp;分钟</span>
-                            </div>
-                            <div class="ml20">
-                                <span class="ftz16">剩于时长：300&nbsp;分钟</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt10 pl10">
-                        <div>
-                            <span>金额信息</span>
-                        </div>
-                        <div class="disFlex mt5">
-                            <div>
-                                <span class="ftz16">服务金额：300&nbsp;元</span>
-                            </div>
-                            <div class="ml20">
-                                <span class="ftz16">剩于金额：100&nbsp;元</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="posAbs b0 tac w100p">
-                        <span>上海静安区宝山路街道居家养老居务中心</span>
+                        <span>{{formInfo.station?.caption}}</span>
                     </div>
                 </div>
             </div>
@@ -152,14 +108,14 @@
     </ion-card> -->
 
     <!-- 上拉加载控制元素Begin -->
-    <ion-infinite-scroll (ionInfinite)="upLoad($event,reqUrl,sendData)">
+    <!-- <ion-infinite-scroll (ionInfinite)="upLoad($event,reqUrl,sendData)">
         <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载更多数据..."></ion-infinite-scroll-content>
     </ion-infinite-scroll>
     <ion-row [hidden]="!isShowNoData" padding-bottom>
         <ion-col col-12 text-center>
             <span class="ftz16">没有更多数据</span>
         </ion-col>
-    </ion-row>
+    </ion-row> -->
     <!-- 上拉加载控制元素End -->
 </ion-content>
 <!-- 页面内容区域 End -->

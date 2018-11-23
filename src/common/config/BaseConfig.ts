@@ -7,15 +7,16 @@
  */
 
 //================= 服务器IP + 端口配置 Begin =================//
-// http://139.196.204.226:8980/home/a/login?__login=true&__ajax=json&username=F3EDC7D2C193E0B8DCF554C726719ED2&password=235880C505ACCDA5C581A4F4CDB81DA0
+// http://127.0.0.1:8980/home/a/login?__login=true&__ajax=json&username=F3EDC7D2C193E0B8DCF554C726719ED2&password=235880C505ACCDA5C581A4F4CDB81DA0
 // const ip = "180.103.210.106:8081";// 公网IP+端口
 // const ip = "139.196.204.226:8980"; // 公网IP+端口 测试服
-const ip = "180.103.210.106:8088"; // 公网IP+端口 测试服
+// const ip = "180.103.210.106:8088"; // 公网IP+端口 测试服
 const ipDownload = "180.103.210.106:8888"; // 下载文件 测试服
 // const ip = "192.168.1.129:9999"; // 内网IP+端口
 // const ip = "192.168.1.118:8081"; // 内网IP+端口
 // const ip = "192.168.1.118:8088"; // 内网IP+端口
 // const ip = "192.168.1.222:8088"; // 内网IP+端口
+const ip = "192.168.1.128:8980"; // 内网IP+端口
 
 //================= 服务器IP + 端口配置 End =================//
 
@@ -34,7 +35,8 @@ export const loginInfo = {
   LoginTime: null, // 登录时间
   UserName: null, // 用户名
   Password: null, // 用户密码
-  Token: null, // 登录者Token
+  LoginId: null, // 登录者Token
+  SessionId: null, // 登录者Token
   UserInfo: null // 后台返回用户信息对象
 };
 //================= 登录信息配置对象 End =================//

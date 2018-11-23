@@ -1,15 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.yunqi.workerapp" version="1.6.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.mirrortech.jujiaapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>拉包工APP</name>
     <description>镜子信息技术有限公司拉包工APP</description>
     <author email="799316652@qq.com" href="http://ionicframework.com/">ZZZ</author>
-    <chcp>
-        <config-file url="http://180.103.210.106:8888/LaBaoGongUpdate/chcp.json" />
-        <auto-download enabled="true" />
-        <auto-install enabled="true" />
-        <local-development enabled="true" />
-        <native-interface version="8" />
-    </chcp>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -124,5 +117,6 @@
     <plugin name="cordova-plugin-qrscanner-zzz" spec="^2.7.1" />
     <plugin name="cordova-plugin-file-opener2-zzz" spec="^3.0.0" />
     <engine name="browser" spec="5.0.4" />
-    <engine name="android" spec="7.0.0" />
+    <plugin name="phonegap-nfc" spec="^1.0.3" />
+    <engine name="android" spec="~7.0.0" />
 </widget>

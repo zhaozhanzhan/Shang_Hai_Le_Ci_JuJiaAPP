@@ -29,12 +29,12 @@
                                 <i class="iconfont icon-User2 ftz30 color333"></i>
                             </ion-col>
                             <ion-col col-10>
-                                <ion-input formControlName="phone" class="ftz16" type="text" placeholder="账号"></ion-input>
+                                <ion-input formControlName="username" class="ftz16" type="text" placeholder="账号"></ion-input>
                             </ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col col-12>
-                                <span class="colorDan" [hidden]="!(formData.get('phone').dirty && formData.get('phone').errors)">请输入正确的手机号</span>
+                                <span class="colorDan" [hidden]="!(formData.get('username').dirty && formData.get('username').errors)">请输入正确用户名</span>
                             </ion-col>
                         </ion-row>
                     </div>
@@ -49,7 +49,7 @@
                         </ion-row>
                         <ion-row>
                             <ion-col col-12>
-                                <span class="colorDan" [hidden]="!(formData.get('password').dirty && formData.get('password').errors)">密码长度为 6 ~ 16位</span>
+                                <span class="colorDan" [hidden]="!(formData.get('password').dirty && formData.get('password').errors)">密码长度为 5 ~ 16位</span>
                             </ion-col>
                         </ion-row>
                     </div>

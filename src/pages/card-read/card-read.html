@@ -33,10 +33,10 @@
                                         <img class="h100p w100p" src="https://via.placeholder.com/40">
                                     </div>
                                     <div class="ml10">
-                                        <span class="ftz24">张三三</span>
+                                        <span class="ftz24">{{formInfo.userName}}</span>
                                     </div>
                                     <div class="ml20">
-                                        <span class="ftz16">00100001</span>
+                                        <span class="ftz16">{{formInfo.userCode}}</span>
                                     </div>
                                 </div>
                                 <div class="mt5">
@@ -48,10 +48,10 @@
                                     </div>
                                     <div class="disFlex mt5">
                                         <div>
-                                            <span class="ftz14">应服务:800分钟</span>
+                                            <span class="ftz14">应服务:{{formInfo?.homeArchiveWorktime?.workTime}}&nbsp;分钟</span>
                                         </div>
                                         <div class="ml10">
-                                            <span class="ftz14">剩于时长:300分钟</span>
+                                            <span class="ftz14">剩于时长:{{formInfo?.homeArchiveWorktime?.workTime}}&nbsp;分钟</span>
                                         </div>
                                     </div>
                                 </div>
@@ -61,10 +61,10 @@
                                     </div>
                                     <div class="disFlex mt5">
                                         <div>
-                                            <span class="ftz14">服务金额:300元</span>
+                                            <span class="ftz14">服务金额:{{formInfo?.homeArchiveWorktime?.workMoney}}&nbsp;元</span>
                                         </div>
                                         <div class="ml10">
-                                            <span class="ftz14">剩于金额:100元</span>
+                                            <span class="ftz14">剩于金额:{{formInfo?.homeArchiveWorktime?.workTime}}&nbsp;元</span>
                                         </div>
                                     </div>
                                 </div>
@@ -96,10 +96,10 @@
                 </div>
                 <div class="mt30">
                     <div text-center>
-                        <button ion-button round class="w90p" color="danger">服务内容选择</button>
+                        <button ion-button round class="w90p" color="danger" (click)="jumpPage('ServiceConfigPage',{'intoWay':'nfcScanInto'})">服务内容选择</button>
                     </div>
                     <div class="mt20" text-center>
-                        <button ion-button round class="w90p" color="dark">取消</button>
+                        <button ion-button round class="w90p" color="dark" (click)="navCtrl.pop()">取消</button>
                     </div>
                 </div>
             </div>

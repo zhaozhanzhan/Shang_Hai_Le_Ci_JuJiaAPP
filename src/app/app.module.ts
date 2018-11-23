@@ -13,6 +13,7 @@ import { FileTransfer } from "@ionic-native/file-transfer"; // 文件上传
 import { FileOpener } from "@ionic-native/file-opener"; // 文件打开
 import { JPush } from "@jiguang-ionic/jpush"; // 极光推送
 import { Geolocation } from "@ionic-native/geolocation"; // GPS定位
+import { NFC } from "@ionic-native/nfc"; // NFC
 import { LocalNotifications } from "@ionic-native/local-notifications"; // 本地通知
 import { NativeAudio } from "@ionic-native/native-audio"; // 音频播放
 import { Vibration } from "@ionic-native/vibration"; // 震动插件
@@ -70,6 +71,7 @@ import { FastLoginPage } from "../pages/fast-login/fast-login"; // 快速登录
     NativeAudio, // 音频播放
     Vibration, // 震动插件
     QRScanner, // 条码、二维码扫描
+    NFC, // NFC
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

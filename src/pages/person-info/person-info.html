@@ -26,11 +26,11 @@
                 </div>
                 <div class="h100p disFlex flexDirC justConSA pt10 pb10">
                     <div>
-                        <span class="ftz20">李四</span>
-                        <span class="ml20">女</span>
+                        <span class="ftz20">{{formInfo?.caption}}</span>
+                        <span class="ml20">{{formInfo?.userSex | sexState}}</span>
                     </div>
                     <div>
-                        <span>工号：1002</span>
+                        <span>工号：{{formInfo?.personCode}}</span>
                     </div>
                 </div>
             </div>
@@ -45,22 +45,22 @@
         <div>
             <div class="p10">
                 <div class="h30 disFlex aligItec">
-                    <span class="ftz16">上海市静安区宝山路街道服务站</span>
+                    <span class="ftz16">{{formInfo?.station?.caption}}</span>
                 </div>
                 <div class="disFlex justConSB h30 aligItec">
                     <div>
-                        <span class="ftz16">年龄：34岁</span>
+                        <span class="ftz16">年龄：{{formInfo?.userAge}}岁</span>
                     </div>
                     <div>
-                        <span class="ftz16">电话：15907291311</span>
+                        <span class="ftz16">电话：{{formInfo?.telephone}}</span>
                     </div>
                 </div>
                 <div class="disFlex justConSB h30 aligItec">
                     <div>
-                        <span class="ftz16">文化程度：初中</span>
+                        <span class="ftz16">文化程度：{{formInfo?.culture | educationLevelState}}</span>
                     </div>
                     <div>
-                        <span class="ftz16">政治面貌：群众</span>
+                        <span class="ftz16">政治面貌：{{formInfo?.culture | politicalState}}</span>
                     </div>
                 </div>
                 <div class="disFlex">
@@ -68,7 +68,7 @@
                         <span class="ftz16">居住地：</span>
                     </div>
                     <div class="flexShrink1">
-                        <span class="ftz16">上海市静安区宝山路</span>
+                        <span class="ftz16">{{formInfo?.address}}</span>
                     </div>
                 </div>
             </div>
@@ -103,4 +103,11 @@
         </div>
     </div>
 </ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <div class="w100p" text-center>
+            <button ion-button round class="w90p" color="danger" (click)="exit('login')">退出登录</button>
+        </div>
+    </ion-toolbar>
+</ion-footer>
 <!-- 页面内容区域 End -->

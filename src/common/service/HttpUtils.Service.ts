@@ -30,7 +30,7 @@ const baseUrl: String = reqObj.baseUrl;
 @Injectable()
 export class HttpReqService {
   private defHeaders: Headers = new Headers({
-    // "Content-Type": "application/json",
+    // "Content-Type": "application/x-www-form-urlencoded"
     // Accept: "application/json",
     // token: "",
     // app: "2" // 1：商户app，2：拉包工app
@@ -94,16 +94,16 @@ export class HttpReqService {
    * @memberof HttpReqService
    */
   private setToken() {
-    if (
-      !_.isNull(loginInfo.Token) &&
-      !_.isUndefined(loginInfo.Token) &&
-      loginInfo.Token.length > 0
-    ) {
-      // console.error("loginObj.Token==========", loginInfo.Token);
-      this.defOptions.headers.set("token", loginInfo.Token);
-    } else {
-      this.defOptions.headers.set("token", "");
-    }
+    // if (
+    //   !_.isNull(loginInfo.Token) &&
+    //   !_.isUndefined(loginInfo.Token) &&
+    //   loginInfo.Token.length > 0
+    // ) {
+    //   // console.error("loginObj.Token==========", loginInfo.Token);
+    //   this.defOptions.headers.set("token", loginInfo.Token);
+    // } else {
+    //   this.defOptions.headers.set("token", "");
+    // }
     // this.defOptions.headers.set("token", loginInfo.Token);
     // this.ionicStorage.get("loginInfo").then(loginObj => {
     //   if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
@@ -135,9 +135,17 @@ export class HttpReqService {
     const queParam = this.jsUtil.queryStr(queryParams);
     let reqUrl: string = "";
     if (queParam) {
-      reqUrl = ipUrl + "?" + this.jsUtil.queryStr(queryParams); // URL后拼接查询参数
+      const queryObj = this.jsUtil.deepClone(queryParams);
+      if (loginInfo.SessionId) {
+        queryObj.__sid = loginInfo.SessionId;
+      }
+      reqUrl = ipUrl + "?" + this.jsUtil.queryStr(queryObj); // URL后拼接查询参数
     } else {
-      reqUrl = ipUrl;
+      const queryObj: any = {};
+      if (loginInfo.SessionId) {
+        queryObj.__sid = loginInfo.SessionId;
+      }
+      reqUrl = ipUrl + "?" + this.jsUtil.queryStr(queryObj);
     }
 
     if (this.noConsoleUrlArr.indexOf(url) == -1) {
@@ -151,22 +159,24 @@ export class HttpReqService {
       );
     }
 
-    this.setToken(); // 设置更新Token
+    // this.setToken(); // 设置更新Token
     this.http
       .get(reqUrl, this.defOptions)
       .timeout(10000)
       .toPromise()
       .then((res: Response) => {
         let body = res["_body"];
-        // console.log("接口返回的成功信息：" + body)
+        // console.warn("接口返回的成功信息：", res);
+        // console.warn("接口返回的成功信息：", res.json());
+        // console.log("接口返回的成功信息：", res);
         if (body) {
           // 有数据返回
           const resObj = {
-            data: res.json().data || {},
-            code: res.json().code === 0 ? 0 : res.json().code || {},
-            message: res.json().message || {},
-            statusText: res.statusText,
-            status: res.status,
+            data: res.json() || {},
+            // code: res.json().code === 0 ? 0 : res.json().code || {},
+            message: res.json().message || "",
+            // statusText: res.statusText,
+            // status: res.status,
             success: true
           }; // 返回内容 // 返回code // 返回信息
           if (this.noConsoleUrlArr.indexOf(url) == -1) {
@@ -179,18 +189,18 @@ export class HttpReqService {
               this.jsUtil.deepClone(resObj)
             );
           }
-          if (resObj.code == -999) {
+          if (res.json() && res.json()["result"] == "login") {
             this.events.publish("exitLogin");
           }
           suc(resObj);
         } else {
           // 无数据返回
           const resObj = {
-            data: res.json().data || {},
-            code: res.json().code === 0 ? 0 : res.json().code || {},
-            message: res.json().message || {},
-            statusText: res.statusText,
-            status: res.status,
+            data: res.json() || {},
+            // code: res.json().code === 0 ? 0 : res.json().code || {},
+            message: res.json().message || "",
+            // statusText: res.statusText,
+            // status: res.status,
             success: true
           }; // 返回内容 // 返回code // 返回信息
 
@@ -205,7 +215,7 @@ export class HttpReqService {
             );
           }
 
-          if (resObj.code == -999) {
+          if (res.json() && res.json()["result"] == "login") {
             this.events.publish("exitLogin");
           }
           suc(resObj);
@@ -237,10 +247,10 @@ export class HttpReqService {
         // 无数据返回
         const resObj = {
           data: {},
-          code: -1,
+          // code: -1,
           message: "",
-          statusText: "服务器请求出错，请检查网络连接！",
-          status: -1,
+          // statusText: "服务器请求出错，请检查网络连接！",
+          // status: -1,
           success: false
         }; // 返回内容 // 返回code // 返回信息
         suc(resObj);
@@ -264,9 +274,17 @@ export class HttpReqService {
     const queParam = this.jsUtil.queryStr(queryParams);
     let reqUrl: string = "";
     if (queParam) {
-      reqUrl = ipUrl + "?" + this.jsUtil.queryStr(queryParams); // URL后拼接查询参数
+      const queryObj = this.jsUtil.deepClone(queryParams);
+      if (loginInfo.SessionId) {
+        queryObj.__sid = loginInfo.SessionId;
+      }
+      reqUrl = ipUrl + "?" + this.jsUtil.queryStr(queryObj); // URL后拼接查询参数
     } else {
-      reqUrl = ipUrl;
+      const queryObj: any = {};
+      if (loginInfo.SessionId) {
+        queryObj.__sid = loginInfo.SessionId;
+      }
+      reqUrl = ipUrl + "?" + this.jsUtil.queryStr(queryObj);
     }
     bodyParams = bodyParams || {};
     if (this.noConsoleUrlArr.indexOf(url) == -1) {
@@ -280,7 +298,7 @@ export class HttpReqService {
         this.jsUtil.deepClone(bodyParams)
       );
     }
-    this.setToken(); // 设置更新Token
+    // this.setToken(); // 设置更新Token
     this.http
       .post(reqUrl, bodyParams, this.defOptions)
       .timeout(10000)
@@ -290,11 +308,11 @@ export class HttpReqService {
         if (body) {
           // 有数据返回
           const resObj = {
-            data: res.json().data || {},
-            code: res.json().code === 0 ? 0 : res.json().code || {},
-            message: res.json().message || {},
-            statusText: res.statusText,
-            status: res.status,
+            data: res.json() || {},
+            // code: res.json().code === 0 ? 0 : res.json().code || {},
+            message: res.json().message || "",
+            // statusText: res.statusText,
+            // status: res.status,
             success: true
           }; // 返回内容 // 返回code // 返回信息
           if (this.noConsoleUrlArr.indexOf(url) == -1) {
@@ -307,18 +325,18 @@ export class HttpReqService {
               this.jsUtil.deepClone(resObj)
             );
           }
-          if (resObj.code == -999) {
+          if (res.json() && res.json()["result"] == "login") {
             this.events.publish("exitLogin");
           }
           suc(resObj);
         } else {
           // 无数据返回
           const resObj = {
-            data: res.json().data || {},
-            code: res.json().code === 0 ? 0 : res.json().code || {},
-            message: res.json().message || {},
-            statusText: res.statusText,
-            status: res.status,
+            data: res.json() || {},
+            // code: res.json().code === 0 ? 0 : res.json().code || {},
+            message: res.json().message || "",
+            // statusText: res.statusText,
+            // status: res.status,
             success: true
           }; // 返回内容 // 返回code // 返回信息
 
@@ -333,7 +351,7 @@ export class HttpReqService {
             );
           }
 
-          if (resObj.code == -999) {
+          if (res.json() && res.json()["result"] == "login") {
             this.events.publish("exitLogin");
           }
           suc(resObj);
@@ -365,10 +383,10 @@ export class HttpReqService {
         // 无数据返回
         const resObj = {
           data: {},
-          code: -1,
+          // code: -1,
           message: "",
-          statusText: "服务器请求出错，请检查网络连接！",
-          status: -1,
+          // statusText: "服务器请求出错，请检查网络连接！",
+          // status: -1,
           success: false
         }; // 返回内容 // 返回code // 返回信息
         suc(resObj);
@@ -393,10 +411,10 @@ export class HttpReqService {
           // 有数据返回
           const resObj = {
             data: res.json() || {},
-            code: res.json().code === 0 ? 0 : res.json().code || {},
-            message: res.json().message || {},
-            statusText: res.statusText,
-            status: res.status,
+            // code: res.json().code === 0 ? 0 : res.json().code || {},
+            message: res.json().message || "",
+            // statusText: res.statusText,
+            // status: res.status,
             success: true
           }; // 返回内容 // 返回code // 返回信息
           console.log(
@@ -412,10 +430,10 @@ export class HttpReqService {
           // 无数据返回
           const resObj = {
             data: res.json() || {},
-            code: res.json().code === 0 ? 0 : res.json().code || {},
-            message: res.json().message || {},
-            statusText: res.statusText,
-            status: res.status,
+            // code: res.json().code === 0 ? 0 : res.json().code || {},
+            message: res.json().message || "",
+            // statusText: res.statusText,
+            // status: res.status,
             success: true
           }; // 返回内容 // 返回code // 返回信息
           console.log(
@@ -447,10 +465,10 @@ export class HttpReqService {
         // 无数据返回
         const resObj = {
           data: {},
-          code: -1,
+          // code: -1,
           message: "",
-          statusText: "服务器请求出错，请检查网络连接！",
-          status: -1,
+          // statusText: "服务器请求出错，请检查网络连接！",
+          // status: -1,
           success: false
         }; // 返回内容 // 返回code // 返回信息
         suc(resObj);

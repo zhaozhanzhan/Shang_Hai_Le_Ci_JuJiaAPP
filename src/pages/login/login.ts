@@ -52,9 +52,9 @@ export class LoginPage {
     });
 
     this.formData = this.fb.group({
-      phone: ["", [Validators.required]], // 手机
+      username: ["duhongmei", [Validators.required]], // 账号
       password: [
-        "",
+        "123456",
         [Validators.required, Validators.minLength(5), Validators.maxLength(16)]
       ] // 密码
     });
@@ -85,21 +85,21 @@ export class LoginPage {
             }
             this.ionicStorage.set("loginInfo", loginInfo); // 登录信息配置对象
             this.ionicStorage.set("userInfo", loginInfo["UserInfo"]); // 后台返回用户信息对象
-            this.jGPush.setTags(); // 极光推送设置标签 IOS或Android
-            this.jGPush.setAlias(loginInfo["UserInfo"]["id"]); // 极光推送设置别名用户唯一
-            this.jGPush.getRegistrationId(); // 获取设备唯一标识RegistrationId
+            // this.jGPush.setTags(); // 极光推送设置标签 IOS或Android
+            // this.jGPush.setAlias(loginInfo["UserInfo"]["id"]); // 极光推送设置别名用户唯一
+            // this.jGPush.getRegistrationId(); // 获取设备唯一标识RegistrationId
 
-            this.updateUserInfo(
-              loginInfo["UserInfo"]["id"],
-              () => {
-                //  请求成功时
-                this.navCtrl.setRoot("MainPage"); // 跳转到主页
-              },
-              () => {
-                // 请求失败时
-                // this.navCtrl.setRoot(LoginPage); // 跳转到主页
-              }
-            ); // 更新用户信息数据
+            // this.updateUserInfo(
+            //   loginInfo["UserInfo"]["id"],
+            //   () => {
+            //     //  请求成功时
+            //     this.navCtrl.setRoot("MainPage"); // 跳转到主页
+            //   },
+            //   () => {
+            //     // 请求失败时
+            //     // this.navCtrl.setRoot(LoginPage); // 跳转到主页
+            //   }
+            // ); // 更新用户信息数据
 
             // this.app.getRootNav().push(MainPage); // 跳转到主页
             // this.viewCtrl.dismiss(); // 销毁当前视图
@@ -131,7 +131,7 @@ export class LoginPage {
         // 判断是否是空对象
         if (!_.isNull(loginObj.UserName)) {
           GlobalMethod.setForm(this.formData, {
-            phone: loginInfo["UserName"]
+            username: loginInfo["UserName"]
           }); // 重新设置表单
         }
       }
@@ -207,6 +207,18 @@ export class LoginPage {
     }
 
     const loading = this.gloService.showLoading("正在登录，请稍候...");
+
+    const newFormData: any = {};
+    newFormData.__login = true;
+    newFormData.__ajax = "json";
+    newFormData.username = window["DesUtils"].encode(
+      formData.username,
+      desConfig.key
+    );
+    newFormData.password = window["DesUtils"].encode(
+      formData.password,
+      desConfig.key
+    );
     // const testObj: any = {};
     // testObj.__login = true;
     // testObj.__ajax = "json";
@@ -216,43 +228,70 @@ export class LoginPage {
     //   desConfig.key
     // );
 
-    // this.httpReq.get("home/a/login", testObj, data => {
-    //   console.error("加密测试返回信息");
-    // });
-    this.httpReq.post("workerUser/workerUserLogin", null, formData, data => {
-      if (data["status"] == 200) {
-        if (data["code"] == 0) {
-          this.gloService.showMsg("登录成功", null, 1000);
-          loading.dismiss();
-          loginInfo.LoginState = "success"; // 登录状态
-          loginInfo.LoginTime = new Date().getTime(); // 登录时间
-          loginInfo.UserName = formData.phone; // 用户名
-          loginInfo.Password = formData.password; // 用户密码
-          loginInfo.UserInfo = data["data"]; // 后台返回用户信息对象
-          if (data["data"] && data["data"]["token"]) {
-            loginInfo.Token = data["data"]["token"]; // 登录者Token
-          }
-          this.ionicStorage.set("userInfo", data["data"]); // 后台返回用户信息对象
-          this.ionicStorage.set("loginInfo", loginInfo); // 登录信息配置对象
-          this.jGPush.setTags(); // 极光推送设置标签 IOS或Android
-          this.jGPush.setAlias(loginInfo["UserInfo"]["id"]); // 极光推送设置别名用户唯一
-          this.jGPush.getRegistrationId(); // 获取设备唯一标识RegistrationId
-          this.navCtrl.setRoot("MainPage"); // 跳转到主页
-          // this.app.getRootNav().push("MainPage"); // 跳转到主页
-          // this.viewCtrl.dismiss(); // 销毁当前视图
-        } else {
-          loading.dismiss();
-          this.gloService.showMsg(data["message"], null, 3000);
-          formData.password = ""; // 清除登录密码
-          GlobalMethod.setForm(this.formData, formData); // 重新设置表单
+    this.httpReq.get("home/a/login", newFormData, data => {
+      if (data["data"] && data["data"]["result"] == "true") {
+        this.gloService.showMsg("登录成功", null, 1000);
+        loading.dismiss();
+        loginInfo.LoginState = "success"; // 登录状态
+        loginInfo.LoginTime = new Date().getTime(); // 登录时间
+        loginInfo.UserName = formData.username; // 用户名
+        loginInfo.Password = formData.password; // 用户密码
+        loginInfo.UserInfo = data["data"]; // 后台返回用户信息对象
+        if (
+          data["data"] &&
+          data["data"]["user"] &&
+          data["data"]["user"]["extend"]
+        ) {
+          loginInfo.LoginId = data["data"]["user"]["extend"]["extendS1"]; // 登录者Token
         }
+        if (data["data"] && data["data"]["sessionid"]) {
+          loginInfo.SessionId = data["data"]["sessionid"]; // 登录者Token
+        }
+        this.ionicStorage.set("userInfo", data["data"]); // 后台返回用户信息对象
+        this.ionicStorage.set("loginInfo", loginInfo); // 登录信息配置对象
+        this.navCtrl.setRoot("MainPage"); // 跳转到主页
       } else {
         loading.dismiss();
-        this.gloService.showMsg("请求服务器出错", null, 3000);
+        this.gloService.showMsg(data["message"], null, 3000);
         formData.password = ""; // 清除登录密码
         GlobalMethod.setForm(this.formData, formData); // 重新设置表单
       }
     });
+
+    // this.httpReq.post("workerUser/workerUserLogin", null, formData, data => {
+    //   if (data["status"] == 200) {
+    //     if (data["code"] == 0) {
+    //       this.gloService.showMsg("登录成功", null, 1000);
+    //       loading.dismiss();
+    //       loginInfo.LoginState = "success"; // 登录状态
+    //       loginInfo.LoginTime = new Date().getTime(); // 登录时间
+    //       loginInfo.UserName = formData.phone; // 用户名
+    //       loginInfo.Password = formData.password; // 用户密码
+    //       loginInfo.UserInfo = data["data"]; // 后台返回用户信息对象
+    //       if (data["data"] && data["data"]["token"]) {
+    //         loginInfo.Token = data["data"]["token"]; // 登录者Token
+    //       }
+    //       this.ionicStorage.set("userInfo", data["data"]); // 后台返回用户信息对象
+    //       this.ionicStorage.set("loginInfo", loginInfo); // 登录信息配置对象
+    //       this.jGPush.setTags(); // 极光推送设置标签 IOS或Android
+    //       this.jGPush.setAlias(loginInfo["UserInfo"]["id"]); // 极光推送设置别名用户唯一
+    //       this.jGPush.getRegistrationId(); // 获取设备唯一标识RegistrationId
+    //       this.navCtrl.setRoot("MainPage"); // 跳转到主页
+    //       // this.app.getRootNav().push("MainPage"); // 跳转到主页
+    //       // this.viewCtrl.dismiss(); // 销毁当前视图
+    //     } else {
+    //       loading.dismiss();
+    //       this.gloService.showMsg(data["message"], null, 3000);
+    //       formData.password = ""; // 清除登录密码
+    //       GlobalMethod.setForm(this.formData, formData); // 重新设置表单
+    //     }
+    //   } else {
+    //     loading.dismiss();
+    //     this.gloService.showMsg("请求服务器出错", null, 3000);
+    //     formData.password = ""; // 清除登录密码
+    //     GlobalMethod.setForm(this.formData, formData); // 重新设置表单
+    //   }
+    // });
     console.error(formData);
   }
 
@@ -266,41 +305,41 @@ export class LoginPage {
   public updateUserInfo(id: string, suc: Function, err: Function) {
     const sendData: any = {};
     sendData.id = id; // 用户ID
-    this.httpReq.post("workerUser/getMessageForLogin", null, sendData, data => {
-      if (data["status"] == 200) {
-        if (data["code"] == 0) {
-          // this.gloService.showMsg("登录成功", null, 1000);
-          loginInfo.LoginState = "success"; // 登录状态
-          loginInfo.LoginTime = new Date().getTime(); // 登录时间
-          this.ionicStorage.get("loginInfo").then(loginObj => {
-            loginInfo.UserName = loginObj.UserName; // 用户名
-            loginInfo.Password = loginObj.Password; // 用户密码
-          });
-          loginInfo.UserInfo = data["data"]; // 后台返回用户信息对象
-          if (data["data"] && data["data"]["token"]) {
-            loginInfo.Token = data["data"]["token"]; // 登录者Token
-          }
-          this.ionicStorage.set("userInfo", data["data"]); // 后台返回用户信息对象
-          this.ionicStorage.set("loginInfo", loginInfo); // 登录信息配置对象
-          this.jGPush.setTags(); // 极光推送设置标签 IOS或Android
-          this.jGPush.setAlias(loginInfo["UserInfo"]["id"]); // 极光推送设置别名用户唯一
-          this.jGPush.getRegistrationId(); // 获取设备唯一标识RegistrationId
-          suc();
-          // this.navCtrl.setRoot("MainPage"); // 跳转到主页
-          // this.app.getRootNav().push("MainPage"); // 跳转到主页
-          // this.viewCtrl.dismiss(); // 销毁当前视图
-        } else {
-          this.gloService.showMsg(data["message"], null, 3000);
-          this.clearLogin(); // 清除登录信息
-          err();
-          // GlobalMethod.setForm(this.formData, formData); // 重新设置表单
-        }
-      } else {
-        this.clearLogin(); // 清除登录信息
-        err();
-        // this.gloService.showMsg("请求服务器出错", null, 3000);
-        // GlobalMethod.setForm(this.formData, formData); // 重新设置表单
-      }
-    });
+    // this.httpReq.post("workerUser/getMessageForLogin", null, sendData, data => {
+    //   if (data["status"] == 200) {
+    //     if (data["code"] == 0) {
+    //       // this.gloService.showMsg("登录成功", null, 1000);
+    //       loginInfo.LoginState = "success"; // 登录状态
+    //       loginInfo.LoginTime = new Date().getTime(); // 登录时间
+    //       this.ionicStorage.get("loginInfo").then(loginObj => {
+    //         loginInfo.UserName = loginObj.UserName; // 用户名
+    //         loginInfo.Password = loginObj.Password; // 用户密码
+    //       });
+    //       loginInfo.UserInfo = data["data"]; // 后台返回用户信息对象
+    //       if (data["data"] && data["data"]["token"]) {
+    //         loginInfo.Token = data["data"]["token"]; // 登录者Token
+    //       }
+    //       this.ionicStorage.set("userInfo", data["data"]); // 后台返回用户信息对象
+    //       this.ionicStorage.set("loginInfo", loginInfo); // 登录信息配置对象
+    //       this.jGPush.setTags(); // 极光推送设置标签 IOS或Android
+    //       this.jGPush.setAlias(loginInfo["UserInfo"]["id"]); // 极光推送设置别名用户唯一
+    //       this.jGPush.getRegistrationId(); // 获取设备唯一标识RegistrationId
+    //       suc();
+    //       // this.navCtrl.setRoot("MainPage"); // 跳转到主页
+    //       // this.app.getRootNav().push("MainPage"); // 跳转到主页
+    //       // this.viewCtrl.dismiss(); // 销毁当前视图
+    //     } else {
+    //       this.gloService.showMsg(data["message"], null, 3000);
+    //       this.clearLogin(); // 清除登录信息
+    //       err();
+    //       // GlobalMethod.setForm(this.formData, formData); // 重新设置表单
+    //     }
+    //   } else {
+    //     this.clearLogin(); // 清除登录信息
+    //     err();
+    //     // this.gloService.showMsg("请求服务器出错", null, 3000);
+    //     // GlobalMethod.setForm(this.formData, formData); // 重新设置表单
+    //   }
+    // });
   }
 }

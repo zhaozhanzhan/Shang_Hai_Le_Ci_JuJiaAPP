@@ -23,17 +23,19 @@
     <div>
         <div>
             <div>
-                <div class="mt10 h150 w100p borBox posRel">
+                <div class="mt10 h150 w100p borBox posRel" *ngFor="let x of formInfo;let i = index;">
                     <div class="posAbs zIndex1 w100p h100p">
                         <div class="h100p disFlex">
                             <div class="pt10 pb10 flexGrow1">
-                                <div class="h100p w100p bgcFFE1D2 borSD2BDB3 pl10 disFlex aligIteC">
-                                    <div class="h60 disFlex flexDirC justConSB" (click)="jumpPage('ConfigListPage')">
+                                <div class="h100p w100p borSD2BDB3 pl10 disFlex aligIteC" [ngClass]="{'bgcFFE1D2': i%3 == 0, 'bgcEBFFF5': i%3 == 1, 'bgcCCF5FF': i%3 == 2}">
+                                    <div class="h60 disFlex flexDirC justConSB" (click)="gotoConfigList({dataList:x.childList})">
                                         <div>
-                                            <span class="color666 ftz24">生活系统</span>
+                                            <span class="color666 ftz24">{{x.dictLabel}}</span>
                                         </div>
                                         <div>
-                                            <span class="color999">助餐 助行 助洁 助安 助急</span>
+                                            <span class="color999">
+                                                <span *ngFor="let y of x.childList;let j = index;">{{y.dictLabel}}&nbsp;</span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -54,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt10 h150 w100p borBox posRel">
+                <!-- <div class="mt10 h150 w100p borBox posRel">
                     <div class="posAbs zIndex1 w100p h100p">
                         <div class="h100p disFlex">
                             <div class="pt10 pb10 flexGrow1">
@@ -72,13 +74,11 @@
                             <div class="h100p w150 borBox">
                                 <div class="w100p h100p disFlex justConC aligIteC">
                                     <i class="iconfont icon-WuTu ftz120 colorCCC"></i> </div>
-                                <!-- <img class="h100p w100p" src="https://via.placeholder.com/160"> -->
                             </div>
                         </div>
                     </div>
                     <div class="posAbs zIndex2 h100p disFlex aligIteC r125">
                         <div class="w50 h50 bgcFFF borRadius50p bor3SE3E3E3 disFlex justConC aligIteC">
-                            <!-- <i class="iconfont icon-Gift ftz30"></i> -->
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-Gift"></use>
                             </svg>
@@ -103,21 +103,19 @@
                             <div class="h100p w150 borBox">
                                 <div class="w100p h100p disFlex justConC aligIteC">
                                     <i class="iconfont icon-WuTu ftz120 colorCCC"></i> </div>
-                                <!-- <img class="h100p w100p" src="https://via.placeholder.com/160"> -->
                             </div>
                         </div>
                     </div>
                     <div class="posAbs zIndex2 h100p disFlex aligIteC r125">
                         <div class="w50 h50 bgcFFF borRadius50p bor3SE3E3E3 disFlex justConC aligIteC">
-                            <!-- <i class="iconfont icon-Gift ftz30"></i> -->
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-Gift"></use>
                             </svg>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
 </ion-content>
-<!-- 页面内容区域 End -->
+<!-- 页面内容区域 End -->w

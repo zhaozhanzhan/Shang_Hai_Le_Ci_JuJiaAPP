@@ -171,9 +171,9 @@ export class MyApp implements AfterViewInit {
         }
       );
 
-      setInterval(() => {
-        this.getGpsInfo(); // 提交GPS信息给后台
-      }, 10000);
+      // setInterval(() => {
+      //   this.getGpsInfo(); // 提交GPS信息给后台
+      // }, 10000);
       //=================获取GPS权限处理 End=================//
 
       //=================获取通知权限处理 Begin=================//
