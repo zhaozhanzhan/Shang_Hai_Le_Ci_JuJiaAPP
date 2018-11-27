@@ -7,7 +7,8 @@ import {
   ActionSheetController,
   Platform,
   MenuController,
-  IonicPage
+  IonicPage,
+  ModalController
 } from "ionic-angular";
 import { NativeAudio } from "@ionic-native/native-audio";
 import { Storage } from "@ionic/storage";
@@ -19,6 +20,7 @@ import { JsUtilsService } from "../../common/service/JsUtils.Service";
 // import { GlobalMethod } from "../../common/service/GlobalMethod";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
 import _ from "underscore";
+import { ParamService } from "../../common/service/Param.Service";
 
 @IonicPage()
 @Component({
@@ -26,7 +28,9 @@ import _ from "underscore";
   templateUrl: "config-list-two.html"
 })
 export class ConfigListTwoPage {
+  public paramId: any = null; // 传过来的ID
   public dataList: any = []; // 数据列表
+  public userCode: any = null; // 用户ID
   // public isActive: boolean = false;
 
   constructor(
@@ -41,17 +45,59 @@ export class ConfigListTwoPage {
     public actionSheetCtrl: ActionSheetController, // 操作表控制器
     public platform: Platform, // 获取平台信息
     public alertCtrl: AlertController, // Alert消息弹出框
-    public nativeAudio: NativeAudio // 音频播放
+    public nativeAudio: NativeAudio, // 音频播放
+    public modalCtrl: ModalController // Modal弹出页控制器
   ) {
-    const dataList = this.jsUtil.deepClone(this.navParams.get("dataList"));
-    if (_.isArray(dataList) && dataList.length > 0) {
-      for (let i = 0; i < dataList.length; i++) {
-        dataList[i]["isActive"] = false;
+    this.paramId = this.navParams.get("id");
+    const sendData: any = {};
+    sendData.parentCode = this.paramId;
+    this.httpReq.get(
+      "home/a/server/homeServerItems/listSecondTree",
+      sendData,
+      data => {
+        console.error("服务配置二级列表", data);
+        if (
+          data["data"] &&
+          _.isArray(data["data"]["serverItemsSecondTreeObjList"])
+        ) {
+          this.dataList = data["data"]["serverItemsSecondTreeObjList"];
+        } else {
+          this.dataList = [];
+        }
       }
-      this.dataList = this.jsUtil.deepClone(dataList);
-    } else {
-      this.dataList = [];
-    }
+    );
+
+    console.error("ParamService.getParamNfc", ParamService.getParamNfc());
+    this.userCode = ParamService.getParamId();
+    // const nfcNum = ParamService.getParamNfc();
+    // const reqObj: any = {};
+    // if (nfcNum) {
+    //   reqObj.nfcNo = nfcNum;
+    //   this.httpReq.get(
+    //     "home/a/server/homeUserArchives/getByNfcNo",
+    //     reqObj,
+    //     data => {
+    //       if (data["data"] && data["data"]["homeUserArchives"]) {
+    //         this.userCode = data["data"]["homeUserArchives"]["id"];
+    //         // this.personInfo = data["data"]["homeArchiveAddress"];
+    //       } else {
+    //         this.gloService.showMsg("未获取到用户ID");
+    //         this.navCtrl.pop();
+    //         // this.formInfo = {};
+    //       }
+    //     }
+    //   );
+    // }
+
+    // const dataList = this.jsUtil.deepClone(this.navParams.get("dataList"));
+    // if (_.isArray(dataList) && dataList.length > 0) {
+    //   for (let i = 0; i < dataList.length; i++) {
+    //     dataList[i]["isActive"] = false;
+    //   }
+    //   this.dataList = this.jsUtil.deepClone(dataList);
+    // } else {
+    //   this.dataList = [];
+    // }
     // this.dataList = this.navParams.get("dataList");
 
     console.error("this.dataList=====", this.dataList);
@@ -105,6 +151,22 @@ export class ConfigListTwoPage {
         this.dataList[i]["isActive"] = false;
       }
       obj["isActive"] = !isActive;
+    }
+  }
+
+  /**
+   * 打开Modal框
+   * @param {string} pageName 页面
+   * @param {any} obj 传递对象
+   * @memberof ServiceConfigPage
+   */
+  public openModal(pageName: string, obj?: any) {
+    console.error("打开弹出层");
+    if (obj) {
+      obj.userCode = this.userCode;
+      this.modalCtrl.create(pageName, obj).present();
+    } else {
+      this.modalCtrl.create(pageName).present();
     }
   }
 }

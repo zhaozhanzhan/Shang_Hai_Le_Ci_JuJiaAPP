@@ -46,7 +46,6 @@ export class UserDetailPage {
     public platform: Platform, // 获取平台信息
     public alertCtrl: AlertController // Alert消息弹出框
   ) {
-    this.dataId = this.navParams.get("id");
     const sendData: any = {};
     sendData.id = this.dataId;
     this.httpReq.get(

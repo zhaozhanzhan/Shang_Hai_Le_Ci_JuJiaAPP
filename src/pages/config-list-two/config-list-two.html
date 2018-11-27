@@ -22,8 +22,8 @@
 <ion-content>
     <div>
         <div class="mt20 parentBox" *ngFor="let x of dataList;let i = index;">
-            <div class="borTBox" [ngClass]="{'childListHide': !x.isActive, 'childListShow': x.isActive}">
-                <div class="h60 w100p borBBox" (click)="menuOpenToggle(x.isActive,x,i)">
+            <div class="" [ngClass]="{'childListHide': !x.isActive, 'childListShow': x.isActive}">
+                <div class="h60 w100p borBSCCC" (click)="menuOpenToggle(x.isActive,x,i)">
                     <div class="disFlex aligIteS h100p pl10 pr10">
                         <div class="w60 p5">
                             <div class="w100p h100p">
@@ -32,7 +32,7 @@
                         </div>
                         <div class="flexGrow1 disFlex aligIteC pl30">
                             <div>
-                                <span class="ftz20 ftwB">{{x.dictLabel}}</span>
+                                <span class="ftz20 ftwB">{{x.label}}</span>
                             </div>
                         </div>
                         <div class="w30 disFlex aligIteC justConC">
@@ -46,9 +46,9 @@
                 <div class="childListCtrl">
                     <div class="">
                         <ul class="p5">
-                            <li class="h40 pl10 pr10 disFlex justConSB aligIteC" [ngClass]="{'bgcFFEBE0': j%2 == 0,'bgcFFF': j%2 == 1}" *ngFor="let y of x.childList;let j = index">
+                            <li class="h40 pl10 pr10 disFlex justConSB aligIteC" [ngClass]="{'bgcFFEBE0': j%2 == 0,'bgcFFF': j%2 == 1}" *ngFor="let y of x.homeServerItemsList;let j = index" (click)="openModal('SelProModalPage',{treeNames:x.treeNames,caption:y.caption,serverItemCode:x.id})">
                                 <div>
-                                    <span class="ftz16 color999">{{y.dictLabel}}</span>
+                                    <span class="ftz16 color999">{{y.caption}}</span>
                                 </div>
                                 <div>
                                     <span class="ftz16 color999">21元/小时</span>

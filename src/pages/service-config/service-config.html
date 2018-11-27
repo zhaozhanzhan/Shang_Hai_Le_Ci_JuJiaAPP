@@ -28,7 +28,7 @@
                         <div class="h100p disFlex">
                             <div class="pt10 pb10 flexGrow1">
                                 <div class="h100p w100p borSD2BDB3 pl10 disFlex aligIteC" [ngClass]="{'bgcFFE1D2': i%3 == 0, 'bgcEBFFF5': i%3 == 1, 'bgcCCF5FF': i%3 == 2}">
-                                    <div class="h60 disFlex flexDirC justConSB" (click)="gotoConfigList({dataList:x.childList})">
+                                    <div class="h60 disFlex flexDirC justConSB" (click)="gotoConfigList({id:x.id})">
                                         <div>
                                             <span class="color666 ftz24">{{x.dictLabel}}</span>
                                         </div>

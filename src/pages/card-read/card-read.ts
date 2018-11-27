@@ -20,6 +20,7 @@ import { GlobalService } from "../../common/service/GlobalService";
 // import { JsUtilsService } from "../../common/service/JsUtils.Service";
 // import { GlobalMethod } from "../../common/service/GlobalMethod";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
+import { ParamService } from "../../common/service/Param.Service";
 import { loginInfo } from "../../common/config/BaseConfig";
 
 @IonicPage()
@@ -29,6 +30,7 @@ import { loginInfo } from "../../common/config/BaseConfig";
 })
 export class CardReadPage {
   public formInfo: any = {}; // 数据信息
+  public personInfo: any = {}; // 人员信息
   constructor(
     // private fb: FormBuilder, // 响应式表单
     // private jsUtil: JsUtilsService, // 自定义JS工具类
@@ -46,6 +48,8 @@ export class CardReadPage {
     public events: Events // 事件发布与订阅
   ) {
     const nfcId = this.navParams.get("nfcId");
+    ParamService.setParamNfc(nfcId);
+    console.error("ParamService.getParamNfc", ParamService.getParamNfc());
     const sendData: any = {};
     sendData.nfcNo = nfcId;
     this.httpReq.get(
@@ -54,8 +58,12 @@ export class CardReadPage {
       data => {
         if (data["data"] && data["data"]["homeUserArchives"]) {
           this.formInfo = data["data"]["homeUserArchives"];
+          ParamService.setParamId(data["data"]["homeUserArchives"]["id"]);
+          this.personInfo = data["data"]["homeArchiveAddress"];
         } else {
           this.formInfo = {};
+          this.gloService.showMsg("未获取到用户信息！");
+          this.navCtrl.pop();
         }
       }
     );

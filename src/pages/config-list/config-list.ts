@@ -26,6 +26,7 @@ import _ from "underscore";
   templateUrl: "config-list.html"
 })
 export class ConfigListPage {
+  public paramId: any = null; // 传过来的ID
   public dataList: any = []; // 数据列表
   // public isActive: boolean = false;
 
@@ -43,15 +44,30 @@ export class ConfigListPage {
     public alertCtrl: AlertController, // Alert消息弹出框
     public nativeAudio: NativeAudio // 音频播放
   ) {
-    const dataList = this.jsUtil.deepClone(this.navParams.get("dataList"));
-    if (_.isArray(dataList) && dataList.length > 0) {
-      for (let i = 0; i < dataList.length; i++) {
-        dataList[i]["isActive"] = false;
+    this.paramId = this.navParams.get("id");
+    const sendData: any = {};
+    sendData.parentCode = this.paramId;
+    this.httpReq.get(
+      "home/a/server/homeServerItems/listSecondTree",
+      sendData,
+      data => {
+        console.error("服务配置二级列表",data);
+        if (data["data"] && _.isArray(data["data"]["serverItemsSecondTreeObjList"])) {
+          this.dataList = data["data"]["serverItemsSecondTreeObjList"];
+        } else {
+          this.dataList = [];
+        }
       }
-      this.dataList = this.jsUtil.deepClone(dataList);
-    } else {
-      this.dataList = [];
-    }
+    );
+    // const dataList = this.jsUtil.deepClone(this.navParams.get("dataList"));
+    // if (_.isArray(dataList) && dataList.length > 0) {
+    //   for (let i = 0; i < dataList.length; i++) {
+    //     dataList[i]["isActive"] = false;
+    //   }
+    //   this.dataList = this.jsUtil.deepClone(dataList);
+    // } else {
+    //   this.dataList = [];
+    // }
     // this.dataList = this.navParams.get("dataList");
 
     console.error("this.dataList=====", this.dataList);

@@ -20,6 +20,7 @@ import { GlobalService } from "../../common/service/GlobalService";
 // import { JsUtilsService } from "../../common/service/JsUtils.Service";
 // import { GlobalMethod } from "../../common/service/GlobalMethod";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
+import { ParamService } from "../../common/service/Param.Service";
 import _ from "underscore";
 import { loginInfo } from "../../common/config/BaseConfig";
 
@@ -124,6 +125,9 @@ export class HomePage {
     });
     //=================订阅NFC扫描成功事件 End=================//
 
+    ParamService.setParamNfc(null);
+    ParamService.setParamId(null);
+    console.error("ParamService.getParamNfc", ParamService.getParamNfc());
     // setTimeout(() => {
     //   this.navCtrl.push("MyTaskPage");
     // }, 3000);
@@ -329,7 +333,7 @@ export class HomePage {
               const upperTrans = new UpperCasePipe().transform(nfcId);
               if (loginInfo.LoginState == "success") {
                 // const nfcId = event.tag.id.join(":");
-                this.gloService.showMsg(upperTrans, null, 3000);
+                // this.gloService.showMsg(upperTrans, null, 3000);
                 this.events.publish("nfcScanSuc", upperTrans);
                 // this.jumpPage("CardReadPage");
               } else {
@@ -345,7 +349,7 @@ export class HomePage {
               const upperTrans = new UpperCasePipe().transform(nfcId);
               if (loginInfo.LoginState == "success") {
                 // const nfcId = event.tag.id.join(":");
-                this.gloService.showMsg(upperTrans, null, 3000);
+                // this.gloService.showMsg(upperTrans, null, 3000);
                 this.events.publish("nfcScanSuc", upperTrans);
                 // this.jumpPage("CardReadPage");
               } else {

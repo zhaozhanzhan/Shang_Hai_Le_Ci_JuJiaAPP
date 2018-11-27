@@ -7,7 +7,8 @@ import {
   ActionSheetController,
   Platform,
   MenuController,
-  IonicPage
+  IonicPage,
+  ModalController
 } from "ionic-angular";
 import { NativeAudio } from "@ionic-native/native-audio";
 import { Storage } from "@ionic/storage";
@@ -40,7 +41,8 @@ export class ServiceConfigPage {
     public actionSheetCtrl: ActionSheetController, // 操作表控制器
     public platform: Platform, // 获取平台信息
     public alertCtrl: AlertController, // Alert消息弹出框
-    public nativeAudio: NativeAudio // 音频播放
+    public nativeAudio: NativeAudio, // 音频播放
+    public modalCtrl: ModalController // Modal弹出页控制器
   ) {
     const sendData: any = {};
     this.httpReq.get(

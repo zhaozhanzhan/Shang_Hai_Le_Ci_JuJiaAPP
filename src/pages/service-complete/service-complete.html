@@ -45,11 +45,11 @@
                 </div>
                 <div class="mt30">
                     <div text-center>
-                        <button ion-button round class="w90p" color="danger">确定</button>
+                        <button ion-button round class="w90p" color="danger" (click)="backHome()">确定</button>
                     </div>
                 </div>
                 <div class="mt20 disFlex justConC">
-                    <span class="colorPri ftz16">本次服务完成详情</span>
+                    <span class="colorPri ftz16" (click)="jumpPage('ServiceDetailPage')">本次服务完成详情</span>
                 </div>
             </div>
         </div>

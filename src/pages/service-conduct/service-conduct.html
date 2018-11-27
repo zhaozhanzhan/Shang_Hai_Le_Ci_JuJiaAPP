@@ -2,18 +2,18 @@
 <ion-header>
     <ion-navbar color="orange" hideBackButton="true">
         <ion-title>服务对象</ion-title>
-        <!-- <ion-buttons start>
+        <ion-buttons start>
             <button ion-button class="pl10" (click)="backHome()">
-                <span color="primary" showWhen="ios">返回</span>
+                <!-- <span color="primary" showWhen="ios">返回</span> -->
+                <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon>
+            </button>
+        </ion-buttons>
+        <!-- <ion-buttons end>
+            <button ion-button class="pr10" (click)="navCtrl.pop()">
+                <span showWhen="android,windows,ios">返回</span>
                 <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon>
             </button>
         </ion-buttons> -->
-        <ion-buttons end>
-            <button ion-button class="pr10" (click)="navCtrl.pop()">
-                <span showWhen="android,windows,ios">返回</span>
-                <!-- <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon> -->
-            </button>
-        </ion-buttons>
     </ion-navbar>
 </ion-header>
 <!-- 导航条区域 End -->
@@ -123,7 +123,7 @@
                 </div>
                 <div class="mt30">
                     <div text-center>
-                        <button ion-button round class="w90p" color="danger">结束服务</button>
+                        <button ion-button round class="w90p" color="danger" (click)="closeServer()">结束服务</button>
                     </div>
                     <!-- <div class="mt20" text-center>
                         <button ion-button round class="w90p" color="dark">取消</button>

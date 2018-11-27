@@ -124,16 +124,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "jpush-phonegap-plugin": {
-    "source": {
-      "type": "registry",
-      "id": "jpush-phonegap-plugin@^3.4.7"
-    },
-    "is_top_level": true,
-    "variables": {
-      "APP_KEY": "ff259b3f7c1b69ebadffc25c"
-    }
-  },
   "cordova-plugin-jcore": {
     "source": {
       "type": "registry",

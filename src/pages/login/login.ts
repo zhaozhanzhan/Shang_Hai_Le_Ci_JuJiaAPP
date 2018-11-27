@@ -252,7 +252,7 @@ export class LoginPage {
         this.navCtrl.setRoot("MainPage"); // 跳转到主页
       } else {
         loading.dismiss();
-        this.gloService.showMsg(data["message"], null, 3000);
+        this.gloService.showMsg("登录失败", null, 3000);
         formData.password = ""; // 清除登录密码
         GlobalMethod.setForm(this.formData, formData); // 重新设置表单
       }

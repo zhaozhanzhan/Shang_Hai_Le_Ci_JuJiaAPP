@@ -31,7 +31,8 @@ const baseUrl: String = reqObj.baseUrl;
 export class HttpReqService {
   private defHeaders: Headers = new Headers({
     // "Content-Type": "application/x-www-form-urlencoded"
-    // Accept: "application/json",
+    // "Content-Type": "application/json"
+    // Accept: "application/json"
     // token: "",
     // app: "2" // 1：商户app，2：拉包工app
   });
@@ -152,7 +153,7 @@ export class HttpReqService {
       console.log(
         "%c %s",
         "color:#0012FC;",
-        "=====POST请求信息=====：" +
+        "=====GET请求信息=====：" +
           moment().format("YYYY-MM-DD HH:mm:ss:SSS") +
           " " +
           reqUrl

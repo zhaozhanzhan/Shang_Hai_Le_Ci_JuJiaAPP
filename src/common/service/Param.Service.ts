@@ -9,6 +9,7 @@ export class ParamService {
   public static _paramStr = null; // 定义参数字符串
   public static _paramObj = null; // 定义参数对象
   public static _paramId = null; // 定义参数ID
+  public static _paramNfc = null; // 定义参数NFC
   public static _paramFun = null; // 定义函数
   constructor() {}
 
@@ -50,6 +51,16 @@ export class ParamService {
   public static getParamId() {
     //获取传递的参数对象
     return this._paramId;
+  }
+  
+  public static setParamNfc(paramNfc) {
+    //设置传递的参数NFC码
+    this._paramNfc = paramNfc;
+  }
+
+  public static getParamNfc() {
+    //获取传递的参数NFC码
+    return this._paramNfc;
   }
 
   public static setParamFun(paramFun) {

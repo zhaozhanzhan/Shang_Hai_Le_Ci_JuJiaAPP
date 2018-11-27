@@ -32,7 +32,7 @@
                         </div>
                         <div class="flexGrow1 disFlex aligIteC pl30">
                             <div>
-                                <span class="ftz20 ftwB">{{x.dictLabel}}</span>
+                                <span class="ftz20 ftwB">{{x.label}}</span>
                             </div>
                         </div>
                         <div class="w30 disFlex aligIteC justConC">
@@ -46,9 +46,9 @@
                 <div class="childListCtrl">
                     <div class="">
                         <ul class="p5">
-                            <li class="h40 pl10 pr10 disFlex justConSB aligIteC" [ngClass]="{'bgcFFEBE0': j%2 == 0,'bgcFFF': j%2 == 1}" *ngFor="let y of x.childList;let j = index">
+                            <li class="h40 pl10 pr10 disFlex justConSB aligIteC" [ngClass]="{'bgcFFEBE0': j%2 == 0,'bgcFFF': j%2 == 1}" *ngFor="let y of x.homeServerItemsList;let j = index">
                                 <div>
-                                    <span class="ftz16 color999">{{y.dictLabel}}</span>
+                                    <span class="ftz16 color999">{{y.caption}}</span>
                                 </div>
                                 <div>
                                     <span class="ftz16 color999">21元/小时</span>
