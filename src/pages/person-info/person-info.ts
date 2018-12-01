@@ -1,6 +1,5 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component } from "@angular/core";
 import {
-  Slides,
   AlertController,
   NavController,
   NavParams,
@@ -11,16 +10,15 @@ import {
 } from "ionic-angular";
 import { NativeAudio } from "@ionic-native/native-audio";
 import { Storage } from "@ionic/storage";
-// import _ from "underscore"; // underscore工具类
 import { GlobalService } from "../../common/service/GlobalService";
+import { HttpReqService } from "../../common/service/HttpUtils.Service";
+import { LoginPage } from "../login/login";
+import { loginInfo } from "../../common/config/BaseConfig";
+// import _ from "underscore"; // underscore工具类
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
 // import { JsUtilsService } from "../../common/service/JsUtils.Service";
 // import { GlobalMethod } from "../../common/service/GlobalMethod";
-import { HttpReqService } from "../../common/service/HttpUtils.Service";
-import _ from "underscore";
-import { LoginPage } from "../login/login";
-import { loginInfo } from "../../common/config/BaseConfig";
 
 @IonicPage()
 @Component({

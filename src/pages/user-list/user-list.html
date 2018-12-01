@@ -28,17 +28,27 @@
     <!-- 下拉刷新控制元素End -->
     <div class="bgcEEE">
         <div class="p10">
-            <div class="w100p h200 borRadius10 p10 bgcFFF mb10" *ngFor="let x of dataList;let i = index;" (click)="jumpPage('UserDetailPage',{id:x.archiveId})">
+            <div class="w100p h200 borRadius10 p10 bgcFFF mb10" *ngFor="let x of dataList;let i = index;" (click)="jumpPage('UserDetailPage',{id:x.userID})">
                 <div class="w100p h100p posRel">
                     <div class="disFlex aligIteC">
                         <div class="w40 h40 borSDBDFE6">
-                            <img class="h100p w100p" src="https://via.placeholder.com/40">
+                            <div class="h100p w100p disFlex justConC aligIteC" [hidden]="(x?.sex == 1)">
+                                <svg class="colourIcon ftz50" aria-hidden="true">
+                                    <use xlink:href="#icon-Head2"></use>
+                                </svg>
+                            </div>
+                            <div class="h100p w100p disFlex justConC aligIteC" [hidden]="!(x?.sex == 1)">
+                                <svg class="colourIcon ftz50" aria-hidden="true">
+                                    <use xlink:href="#icon-Head1"></use>
+                                </svg>
+                            </div>
+                            <!-- <img class="h100p w100p" src="https://via.placeholder.com/40"> -->
                         </div>
                         <div class="ml10">
-                            <span class="ftz20">{{x.homeUserArchives?.userName}}</span>
+                            <span class="ftz20">{{x?.userName}}</span>
                         </div>
                         <div class="ml30">
-                            <span class="ftz18">{{x.homeUserArchives?.userCode}}</span>
+                            <span class="ftz18">{{x?.userCode}}</span>
                         </div>
                     </div>
                     <div class="mt10 pl10">
@@ -47,10 +57,10 @@
                         </div>
                         <div class="disFlex mt5">
                             <div>
-                                <span class="ftz16">应服务：800&nbsp;分钟</span>
+                                <span class="ftz16">应服务：{{x?.userWorktimeObj?.workTimeTotal}}&nbsp;分钟</span>
                             </div>
                             <div class="ml20">
-                                <span class="ftz16">剩于时长：300&nbsp;分钟</span>
+                                <span class="ftz16">剩于时长：{{x?.userWorktimeObj?.workTimeRest}}&nbsp;分钟</span>
                             </div>
                         </div>
                     </div>
@@ -60,15 +70,15 @@
                         </div>
                         <div class="disFlex mt5">
                             <div>
-                                <span class="ftz16">服务金额：300&nbsp;元</span>
+                                <span class="ftz16">服务金额：{{x?.userWorktimeObj?.workMoneyTotal}}&nbsp;元</span>
                             </div>
                             <div class="ml20">
-                                <span class="ftz16">剩于金额：100&nbsp;元</span>
+                                <span class="ftz16">剩于金额：{{x?.userWorktimeObj?.workMoneyRest}}&nbsp;元</span>
                             </div>
                         </div>
                     </div>
                     <div class="posAbs b0 tac w100p">
-                        <span>{{formInfo.station?.caption}}</span>
+                        <span>{{x?.station}}</span>
                     </div>
                 </div>
             </div>

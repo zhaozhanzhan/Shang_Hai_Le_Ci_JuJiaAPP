@@ -25,14 +25,15 @@
                 </ion-col>
             </ion-row>
         </div>
-        <!-- <div class="disFlex justConC">
-            <div class="disFlex aligIteC">
+        <div class="disFlex justConC">
+            <div class="disFlex aligIteC" *ngIf="isOpenSer" (click)="jumpPage('ServiceConductPage')">
                 <span>
                     <i class="iconfont icon-TiXing ftz22 colorF8D714"></i>
                 </span>
+                <!-- {{hours}}:{{minutes}}:{{seconds}} -->
                 <span>您有服务正在进行中...</span>
             </div>
-        </div> -->
+        </div>
         <div class="w100p pl10 pr10 mt5 h75p">
             <div class="h100p">
                 <div class="h100p">

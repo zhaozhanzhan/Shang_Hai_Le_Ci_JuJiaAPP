@@ -11,14 +11,17 @@
                                 </div>
                                 <div class="pl10">
                                     <span class="ftz18">{{hierarchy}}</span>
-                                </div>
+                                </div>          
                             </div>
-                            <div class="h50 bgc0FF w100p disFlex justConC aligIteC" (click)="selType($event,'hour')">
+                            <div class="h50 bgc0FF w100p disFlex justConC aligIteC" [ngClass]="{'bgc0FF':x.billingMethodValue == 1,'bgcEBFFF5':x.billingMethodValue == 2}"  *ngFor="let x of typeArr;let i = index;" (click)="selType($event,x.billingMethodValue==1?'hour':'number')">
+                              <span class="ftz22 ftwB">{{x.billingMethodLabel}}</span>
+                            </div>
+                            <!-- <div class="h50 bgc0FF w100p disFlex justConC aligIteC" (click)="selType($event,'hour')">
                                 <span class="ftz22 ftwB">计时</span>
                             </div>
                             <div class="h50 bgcEBFFF5 w100p disFlex justConC aligIteC" (click)="selType($event,'number')">
                                 <span class="ftz22 ftwB">项目化</span>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <!-- <div class="posAbs b-5 w100p">

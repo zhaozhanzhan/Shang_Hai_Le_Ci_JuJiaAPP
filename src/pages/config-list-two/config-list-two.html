@@ -27,7 +27,8 @@
                     <div class="disFlex aligIteS h100p pl10 pr10">
                         <div class="w60 p5">
                             <div class="w100p h100p">
-                                <img class="h100p w100p borRadius50p" src="https://via.placeholder.com/50">
+                                <img class="h100p w100p borRadius50p" src="assets/imgs/logo1.png">
+                                <!-- <img class="h100p w100p borRadius50p" src="https://via.placeholder.com/50"> -->
                             </div>
                         </div>
                         <div class="flexGrow1 disFlex aligIteC pl30">
@@ -46,12 +47,12 @@
                 <div class="childListCtrl">
                     <div class="">
                         <ul class="p5">
-                            <li class="h40 pl10 pr10 disFlex justConSB aligIteC" [ngClass]="{'bgcFFEBE0': j%2 == 0,'bgcFFF': j%2 == 1}" *ngFor="let y of x.homeServerItemsList;let j = index" (click)="openModal('SelProModalPage',{treeNames:x.treeNames,caption:y.caption,serverItemCode:x.id})">
+                            <li class="h40 pl10 pr10 disFlex justConSB aligIteC" [ngClass]="{'bgcFFEBE0': j%2 == 0,'bgcFFF': j%2 == 1}" *ngFor="let y of x.homeServerItemsList;let j = index" (click)="openModal('SelProModalPage',{treeNames:x.treeNames,caption:y.caption,serverItemCode:y.id,typeArr:y.billingMethodObjs})">
                                 <div>
                                     <span class="ftz16 color999">{{y.caption}}</span>
                                 </div>
                                 <div>
-                                    <span class="ftz16 color999">21元/小时</span>
+                                    <span class="ftz16 color999" *ngFor="let z of y.billingMethodObjs;let k = index;">{{z.billingMethodDetail}}<i *ngIf="!(k == y.billingMethodObjs.length-1)">&nbsp;</i></span>
                                 </div>
                             </li>
                         </ul>

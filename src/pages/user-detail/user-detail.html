@@ -29,14 +29,24 @@
                         <div class="w100p h100p borRadius10 p10">
                             <div class="w100p h100p posRel">
                                 <div class="disFlex aligIteC">
-                                    <div class="w40 h40 borSDBDFE6">
-                                        <img class="h100p w100p" src="https://via.placeholder.com/40">
+                                    <div class="w40 h40 borSDBDFE6 bgcFFF">
+                                        <div class="h100p w100p disFlex justConC aligIteC" [hidden]="(formInfo?.sex == 1)">
+                                            <svg class="colourIcon ftz50" aria-hidden="true">
+                                                <use xlink:href="#icon-Head2"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="h100p w100p disFlex justConC aligIteC" [hidden]="!(formInfo?.sex == 1)">
+                                            <svg class="colourIcon ftz50" aria-hidden="true">
+                                                <use xlink:href="#icon-Head1"></use>
+                                            </svg>
+                                        </div>
+                                        <!-- <img class="h100p w100p" src="https://via.placeholder.com/40"> -->
                                     </div>
                                     <div class="ml10">
-                                        <span class="ftz24">{{formInfo.userName}}</span>
+                                        <span class="ftz24">{{formInfo?.userName}}</span>
                                     </div>
                                     <div class="ml10">
-                                        <span class="ftz16">{{formInfo.userCode}}</span>
+                                        <span class="ftz16">{{formInfo?.userCode}}</span>
                                     </div>
                                 </div>
                                 <div class="mt5">
@@ -48,10 +58,10 @@
                                     </div>
                                     <div class="disFlex mt5">
                                         <div>
-                                            <span class="ftz14">应服务:800分钟</span>
+                                            <span class="ftz14">应服务:{{formInfo?.userWorktimeObj?.workTimeTotal}}&nbsp;分钟</span>
                                         </div>
                                         <div class="ml10">
-                                            <span class="ftz14">剩于时长:300分钟</span>
+                                            <span class="ftz14">剩于时长:{{formInfo?.userWorktimeObj?.workTimeRest}}&nbsp;分钟</span>
                                         </div>
                                     </div>
                                 </div>
@@ -61,10 +71,10 @@
                                     </div>
                                     <div class="disFlex mt5">
                                         <div>
-                                            <span class="ftz14">服务金额:300元</span>
+                                            <span class="ftz14">服务金额:{{formInfo?.userWorktimeObj?.workMoneyTotal}}&nbsp;元</span>
                                         </div>
                                         <div class="ml10">
-                                            <span class="ftz14">剩于金额:100元</span>
+                                            <span class="ftz14">剩于金额:{{formInfo?.userWorktimeObj?.workMoneyRest}}&nbsp;元</span>
                                         </div>
                                     </div>
                                 </div>
@@ -77,7 +87,7 @@
                         <div class="borBBox">
                             <div class="disFlex justConSB h26 aligIteC pl10 pr10">
                                 <span class="ftz16 color999">联系电话：</span>
-                                <span class="ftz16">{{formInfo.telphone}}</span>
+                                <span class="ftz16">{{formInfo?.telphone}}</span>
                             </div>
                         </div>
                     </div>
@@ -115,11 +125,11 @@
                         <div class="mt5">
                             <div class="disFlex justConSB h26 aligIteC pl30 pr10">
                                 <span class="ftz16">已服务时长</span>
-                                <span class="ftz16">500&nbsp;分钟</span>
+                                <span class="ftz16">{{formInfo?.userWorktimeObj?.workMoneyServed}}&nbsp;分钟</span>
                             </div>
                             <div class="disFlex justConSB h26 aligIteC pl30 pr10">
                                 <span class="ftz16">已服务金额</span>
-                                <span class="ftz16">200&nbsp;元</span>
+                                <span class="ftz16">{{formInfo?.userWorktimeObj?.workMoneyServed}}&nbsp;元</span>
                             </div>
                         </div>
                     </div>

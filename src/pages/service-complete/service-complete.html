@@ -36,10 +36,10 @@
                 <div class="w100p disFlex h60 mt20 justConC">
                     <div class="disFlex flexDirC justConSB h100p">
                         <div>
-                            <span class="color999 ftz18">本次服务时长：20&nbsp;分钟</span>
+                            <span class="color999 ftz18">本次服务时长：{{formInfo?.serverTime}}&nbsp;分钟</span>
                         </div>
                         <div>
-                            <span class="color999 ftz18">本次服务经费：10&nbsp;元</span>
+                            <span class="color999 ftz18">本次服务经费：{{formInfo?.serverCost}}&nbsp;元</span>
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="mt20 disFlex justConC">
-                    <span class="colorPri ftz16" (click)="jumpPage('ServiceDetailPage')">本次服务完成详情</span>
+                    <span class="colorPri ftz16" (click)="jumpPage('ServiceDetailPage',{'serviceId':paramId})">本次服务完成详情</span>
                 </div>
             </div>
         </div>

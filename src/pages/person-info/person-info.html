@@ -21,7 +21,17 @@
                 <div class="h100p w100">
                     <div class="w100p h100p disFlex justConC">
                         <!-- <img class="h100p borRadius50p" src="assets/imgs/logoback.png"> -->
-                        <img class="h100p borRadius50p" src="https://via.placeholder.com/150">
+                        <div class="h100p borRadius50p disFlex justConC aligIteC" [hidden]="(formInfo?.userSex == 1)">
+                            <svg class="colourIcon ftz50" aria-hidden="true">
+                                <use xlink:href="#icon-Head2"></use>
+                            </svg>
+                        </div>
+                        <div class="h100p borRadius50p disFlex justConC aligIteC" [hidden]="!(formInfo?.userSex == 1)">
+                            <svg class="colourIcon ftz50" aria-hidden="true">
+                                <use xlink:href="#icon-Head1"></use>
+                            </svg>
+                        </div>
+                        <!-- <img class="h100p borRadius50p" src="https://via.placeholder.com/150"> -->
                     </div>
                 </div>
                 <div class="h100p disFlex flexDirC justConSA pt10 pb10">
@@ -82,7 +92,12 @@
                         </div>
                         <div class="pt10">
                             <div class="w150 h150">
-                                <img class="h100p w100p" src="https://via.placeholder.com/150">
+                                <div class="h100p w100p disFlex justConC aligIteC borB7D8E0">
+                                    <svg class="colourIcon ftz60" aria-hidden="true">
+                                        <use xlink:href="#icon-Cert6"></use>
+                                    </svg>
+                                </div>
+                                <!-- <img class="h100p w100p" src="https://via.placeholder.com/150"> -->
                             </div>
                         </div>
                     </div>
@@ -94,7 +109,12 @@
                         </div>
                         <div class="pt10">
                             <div class="w150 h150">
-                                <img class="h100p w100p" src="https://via.placeholder.com/150">
+                                <div class="h100p w100p disFlex justConC aligIteC borB7D8E0">
+                                    <svg class="colourIcon ftz60" aria-hidden="true">
+                                        <use xlink:href="#icon-Cert3"></use>
+                                    </svg>
+                                </div>
+                                <!-- <img class="h100p w100p" src="https://via.placeholder.com/150"> -->
                             </div>
                         </div>
                     </div>

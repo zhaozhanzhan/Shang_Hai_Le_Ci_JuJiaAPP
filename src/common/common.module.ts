@@ -10,6 +10,7 @@ import { AppUpdateService } from "./service/AppUpdate.Service";
 import { SelectCityService } from "./service/SelectCity.Service";
 import { PipesModule } from "./pipe/pipes.module";
 import { ComponentsModule } from "./component/components.module";
+import { ServiceNotification } from "./service/ServiceNotification";
 @NgModule({
   imports: [PipesModule, ComponentsModule],
   declarations: [],
@@ -24,7 +25,8 @@ import { ComponentsModule } from "./component/components.module";
     ParamService,
     BackButtonService,
     AppUpdateService,
-    SelectCityService
+    SelectCityService,
+    ServiceNotification
   ]
 })
 export class CommonServiceModule {}

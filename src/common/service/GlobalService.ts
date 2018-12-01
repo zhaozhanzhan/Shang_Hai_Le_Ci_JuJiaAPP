@@ -34,7 +34,7 @@ export class GlobalService {
    */
   public showMsg(msg?: string, pos?: string, time?: any, fun?: Function): any {
     if (!msg) {
-      msg = "提示信息";
+      msg = "请求数据出错！";
     }
     if (_.isNaN(parseFloat(time)) || !_.isNumber(parseFloat(time))) {
       time = 3000;

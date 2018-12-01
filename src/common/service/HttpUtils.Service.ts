@@ -23,7 +23,7 @@ import { GlobalService } from "./GlobalService";
 import moment from "moment"; // 时间格式化插件
 import { Events } from "ionic-angular";
 import { Storage } from "@ionic/storage";
-import _ from "underscore";
+// import _ from "underscore";
 
 const baseUrl: String = reqObj.baseUrl;
 
@@ -94,7 +94,7 @@ export class HttpReqService {
    * @private
    * @memberof HttpReqService
    */
-  private setToken() {
+  // private setToken() {
     // if (
     //   !_.isNull(loginInfo.Token) &&
     //   !_.isUndefined(loginInfo.Token) &&
@@ -122,7 +122,7 @@ export class HttpReqService {
     //     this.defOptions.headers.set("token", "");
     //   }
     // });
-  }
+  // }
 
   /**
    * GET请求方法

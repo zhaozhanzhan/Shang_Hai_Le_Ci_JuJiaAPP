@@ -1,5 +1,4 @@
-import { reqObj } from "./../../common/config/BaseConfig";
-import { Component, ViewChild, ElementRef } from "@angular/core";
+import { Component } from "@angular/core";
 import {
   AlertController,
   NavController,
@@ -11,13 +10,12 @@ import {
   ViewController
 } from "ionic-angular";
 import _ from "underscore"; // 工具类
-// import { Storage } from "@ionic/storage";
-// import { FormBuilder } from "@angular/forms";
 import { GlobalService } from "../../common/service/GlobalService";
 import { JsUtilsService } from "../../common/service/JsUtils.Service";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
 import { ParamService } from "../../common/service/Param.Service";
-import { loginInfo } from "../../common/config/BaseConfig";
+// import { Storage } from "@ionic/storage";
+// import { FormBuilder } from "@angular/forms";
 
 @IonicPage()
 @Component({
@@ -47,21 +45,37 @@ export class SelectServicePage {
     delete this.paramObj["hierarchy"];
     console.error("this.paramObj", this.paramObj, this.hierarchy);
     const nfcId = ParamService.getParamNfc();
-    const sendData: any = {};
-    sendData.nfcNo = nfcId;
-    this.httpReq.get(
-      "home/a/server/homeUserArchives/getByNfcNo",
-      sendData,
-      data => {
-        if (data["data"] && data["data"]["homeUserArchives"]) {
-          this.formInfo = data["data"]["homeUserArchives"];
-          // ParamService.setParamId(data["data"]["homeUserArchives"]["id"]);
-          this.personInfo = data["data"]["homeArchiveAddress"];
-        } else {
-          this.formInfo = {};
+    if (_.isString(nfcId) && nfcId.length > 0) {
+      const sendData: any = {};
+      sendData.nfcNo = nfcId;
+      this.httpReq.get(
+        "home/a/server/homeUserArchives/getByNfcNo",
+        sendData,
+        data => {
+          if (data["data"] && data["data"]["result"] == 0) {
+            this.formInfo = data["data"]["userArchivesObj"];
+            ParamService.setParamId(data["data"]["userArchivesObj"]["userID"]);
+            console.error("ParamService.getParamId", ParamService.getParamId());
+          } else {
+            this.formInfo = {};
+            this.gloService.showMsg("获取信息失败！");
+          }
+          // if (data["data"] && data["data"]["homeUserArchives"]) {
+          //   this.formInfo = data["data"]["homeUserArchives"];
+          //   // ParamService.setParamId(data["data"]["homeUserArchives"]["id"]);
+          //   this.personInfo = data["data"]["homeArchiveAddress"];
+          // } else {
+          //   this.formInfo = {};
+          // }
         }
+      );
+    } else {
+      this.gloService.showMsg("未获取到标签ID！");
+      if (this.navCtrl.canGoBack()) {
+        this.navCtrl.pop();
       }
-    );
+      return;
+    }
   }
 
   ionViewDidLoad() {
@@ -103,19 +117,26 @@ export class SelectServicePage {
         {
           text: "确定",
           handler: () => {
-            // this.jumpPage("ServiceConductPage");
             const sendData = this.jsUtil.deepClone(this.paramObj);
+            const nfcId = ParamService.getParamNfc();
+            sendData.nfcNo = nfcId;
             this.httpReq.get(
               "home/a/home/homeServerWork/start",
               sendData,
               data => {
-                // if (data["data"] && data["data"]["homeUserArchives"]) {
-                //   this.formInfo = data["data"]["homeUserArchives"];
-                //   ParamService.setParamId(data["data"]["homeUserArchives"]["id"]);
-                //   this.personInfo = data["data"]["homeArchiveAddress"];
-                // } else {
-                //   this.formInfo = {};
-                // }
+                if (data["data"] && data["data"]["result"] == 0) {
+                  this.jumpPage("ServiceConductPage");
+                  // this.formInfo = data["data"]["homeUserArchives"];
+                  // ParamService.setParamId(data["data"]["homeUserArchives"]["id"]);
+                  // this.personInfo = data["data"]["homeArchiveAddress"];
+                } else {
+                  // this.formInfo = {};
+                  if (data["data"] && data["data"]["message"]) {
+                    this.gloService.showMsg(data["data"]["message"]);
+                  } else {
+                    this.gloService.showMsg("请求数据出错！");
+                  }
+                }
               }
             );
           }

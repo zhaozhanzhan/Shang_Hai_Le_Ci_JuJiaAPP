@@ -35,14 +35,24 @@
                         <div class="w100p h100p borRadius10 p10">
                             <div class="w100p h100p posRel">
                                 <div class="disFlex aligIteC">
-                                    <div class="w40 h40 borSDBDFE6">
-                                        <img class="h100p w100p" src="https://via.placeholder.com/40">
+                                    <div class="w40 h40 borSDBDFE6 bgcFFF">
+                                        <div class="h100p w100p disFlex justConC aligIteC" [hidden]="(formInfo?.sex == 1)">
+                                            <svg class="colourIcon ftz50" aria-hidden="true">
+                                                <use xlink:href="#icon-Head2"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="h100p w100p disFlex justConC aligIteC" [hidden]="!(formInfo?.sex == 1)">
+                                            <svg class="colourIcon ftz50" aria-hidden="true">
+                                                <use xlink:href="#icon-Head1"></use>
+                                            </svg>
+                                        </div>
+                                        <!-- <img class="h100p w100p" src="https://via.placeholder.com/40"> -->
                                     </div>
                                     <div class="ml10">
-                                        <span class="ftz24">张三三</span>
+                                        <span class="ftz24">{{formInfo?.userName}}</span>
                                     </div>
                                     <div class="ml20">
-                                        <span class="ftz16">00100001</span>
+                                        <span class="ftz16">{{formInfo?.userCode}}</span>
                                     </div>
                                 </div>
                                 <div class="mt5">
@@ -54,10 +64,10 @@
                                     </div>
                                     <div class="disFlex mt5">
                                         <div>
-                                            <span class="ftz14">应服务:800分钟</span>
+                                            <span class="ftz14">应服务:{{formInfo?.userWorktimeObj?.workTimeTotal}}&nbsp;分钟</span>
                                         </div>
                                         <div class="ml10">
-                                            <span class="ftz14">剩于时长:300分钟</span>
+                                            <span class="ftz14">剩于时长:{{formInfo?.userWorktimeObj?.workTimeRest}}&nbsp;分钟</span>
                                         </div>
                                     </div>
                                 </div>
@@ -67,10 +77,10 @@
                                     </div>
                                     <div class="disFlex mt5">
                                         <div>
-                                            <span class="ftz14">服务金额:300元</span>
+                                            <span class="ftz14">服务金额:{{formInfo?.userWorktimeObj?.workMoneyTotal}}&nbsp;元</span>
                                         </div>
                                         <div class="ml10">
-                                            <span class="ftz14">剩于金额:100元</span>
+                                            <span class="ftz14">剩于金额:{{formInfo?.userWorktimeObj?.workMoneyRest}}&nbsp;元</span>
                                         </div>
                                     </div>
                                 </div>
@@ -81,9 +91,9 @@
                 <div class="mt10">
                     <div>
                         <div class="borBBox">
-                            <div class="disFlex justConSB h26 aligIteC pl10 pr10">
+                            <div class="disFlex justConSB aligIteC pl10 pr10">
                                 <span class="ftz16 color999">本次服务内容：</span>
-                                <span class="ftz16">生活系统>助餐>上门做餐</span>
+                                <span class="ftz16">{{formData?.serverItemDetail}}</span>
                             </div>
                         </div>
                     </div>
@@ -91,7 +101,7 @@
                         <div class="borBBox">
                             <div class="disFlex justConSB h26 aligIteC pl10 pr10">
                                 <span class="ftz16 color999">签入时间：</span>
-                                <span class="ftz16">2018/07/31 13:16</span>
+                                <span class="ftz16">{{formData?.startTime}}</span>
                             </div>
                         </div>
                     </div>
@@ -99,7 +109,7 @@
                         <div class="borBBox">
                             <div class="disFlex justConSB h26 aligIteC pl10 pr10">
                                 <span class="ftz16 color999">签退时间：</span>
-                                <span class="ftz16">2018/07/31 13:16</span>
+                                <span class="ftz16">{{formData?.endTime}}</span>
                             </div>
                         </div>
                     </div>
@@ -110,7 +120,7 @@
                                     <span class="ftz16 color999">签退地址：</span>
                                 </div>
                                 <div class="flexShrink1">
-                                    <span class="ftz16">上海市静安区宝昌路500弄10号101室</span>
+                                    <span class="ftz16">{{formData?.address}}</span>
                                 </div>
                             </div>
                         </div>
@@ -119,7 +129,7 @@
                         <div class="borBBox">
                             <div class="disFlex justConSB h26 aligIteC pl10 pr10">
                                 <span class="ftz16 color999">本次服务属性：</span>
-                                <span class="ftz16">项目化</span>
+                                <span class="ftz16">{{formData?.billingMethod}}</span>
                             </div>
                         </div>
                     </div>
@@ -127,7 +137,7 @@
                         <div class="borBBox">
                             <div class="disFlex justConSB h26 aligIteC pl10 pr10">
                                 <span class="ftz16 color999">本次服务计时：</span>
-                                <span class="ftz16">20分钟</span>
+                                <span class="ftz16">{{formData?.serverTime}}&nbsp;分钟</span>
                             </div>
                         </div>
                     </div>
@@ -135,7 +145,7 @@
                         <div class="borBBox">
                             <div class="disFlex justConSB h26 aligIteC pl10 pr10">
                                 <span class="ftz16 color999">本次服务经费：</span>
-                                <span class="ftz16">10.00元</span>
+                                <span class="ftz16">{{formData?.serverCost}}&nbsp;元</span>
                             </div>
                         </div>
                     </div>

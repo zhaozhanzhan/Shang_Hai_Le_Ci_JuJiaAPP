@@ -1,5 +1,4 @@
-import { reqObj } from "./../../common/config/BaseConfig";
-import { Component, ViewChild, ElementRef } from "@angular/core";
+import { Component } from "@angular/core";
 import {
   AlertController,
   NavController,
@@ -11,12 +10,12 @@ import {
   ViewController
 } from "ionic-angular";
 import _ from "underscore"; // 工具类
+import { GlobalService } from "../../common/service/GlobalService";
+import { loginInfo } from "../../common/config/BaseConfig";
 // import { Storage } from "@ionic/storage";
 // import { FormBuilder } from "@angular/forms";
-import { GlobalService } from "../../common/service/GlobalService";
 // import { JsUtilsService } from "../../common/service/JsUtils.Service";
 // import { HttpReqService } from "../../common/service/HttpUtils.Service";
-import { loginInfo } from "../../common/config/BaseConfig";
 
 @IonicPage()
 @Component({
@@ -27,6 +26,7 @@ export class SelProModalPage {
   public hierarchy: any = ""; // 层级
   public serverItemCode: any = ""; // 项目ID
   public userCode: any = null; // 用户ID
+  public typeArr: any = null; // 项目类型数组
   constructor(
     // private jsUtil: JsUtilsService, // 自定义JS工具类
     // private httpReq: HttpReqService, // Http请求服务
@@ -60,6 +60,7 @@ export class SelProModalPage {
       this.serverItemCode,
       this.userCode
     );
+    this.typeArr = this.navParams.get("typeArr");
   }
 
   ionViewDidLoad() {
@@ -110,11 +111,14 @@ export class SelProModalPage {
     paramObj.userCode = this.userCode;
     paramObj.serverItemCode = this.serverItemCode;
     this.closeModal(); // 关闭弹出层
-    this.jumpPage("SelectServicePage", paramObj);
     if (type == "hour") {
       // 按小时
+      paramObj.billingMethod = 1;
     } else if (type == "number") {
       // 按次数
+      paramObj.billingMethod = 2;
     }
+    this.jumpPage("SelectServicePage", paramObj);
+    console.error(type);
   }
 }

@@ -12,7 +12,6 @@ import { Storage } from "@ionic/storage";
 import _ from "underscore"; // underscore工具类
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { GlobalService } from "../../common/service/GlobalService";
-import { FormValidService } from "../../common/service/FormValid.Service";
 import { JsUtilsService } from "../../common/service/JsUtils.Service";
 import { GlobalMethod } from "./../../common/service/GlobalMethod";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
@@ -21,6 +20,7 @@ import { ForgetPasswordPage } from "./../forget-password/forget-password"; // �
 import { FastLoginPage } from "../fast-login/fast-login"; // 快速登录
 import { PushService } from "../../common/service/Push.Service";
 import { BackButtonService } from "../../common/service/BackButton.Service";
+// import { FormValidService } from "../../common/service/FormValid.Service";
 // import { MainPage } from "../main/main";
 
 @Component({
@@ -52,9 +52,9 @@ export class LoginPage {
     });
 
     this.formData = this.fb.group({
-      username: ["duhongmei", [Validators.required]], // 账号
+      username: ["", [Validators.required]], // 账号
       password: [
-        "123456",
+        "",
         [Validators.required, Validators.minLength(5), Validators.maxLength(16)]
       ] // 密码
     });

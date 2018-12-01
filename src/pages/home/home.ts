@@ -34,6 +34,21 @@ export class HomePage {
 
   public recOrderState: boolean = false; // 定义接单状态
   public noHandleOrderNum: any = null; // 未处理订单数量
+  public isOpenSer: boolean = false; // 是否已经开启服务
+
+  // public beginTime: any = null; // 服务开始时间
+  // public endTime: any = null; // 服务终止时间
+  // public nowTime: any = null; // 服务当前时间
+  // public maxTime: any = null; // 服务最大超时时间
+  // public manyMinutes: any = 2; // 多少分钟后应该结束服务
+  // public remindMinutes: any = 1; // 每隔几分钟提醒
+  // public remindTimeArr: any = []; // 提醒时间点时间戳数组
+  // public totalRemind: any = 3; // 总提醒次数
+  // public remindNum: any = null; // 剩于提醒次数
+  public beginDura: any = "00:00:00"; // 时长
+  public hours: any = "00"; // 时
+  public minutes: any = "00"; // 分
+  public seconds: any = "00"; // 秒
 
   constructor(
     // private fb: FormBuilder, // 响应式表单
@@ -52,67 +67,90 @@ export class HomePage {
     public events: Events // 事件发布与订阅
   ) {}
 
-  ionViewDidLoad() {
-    // setInterval(() => {
-    //   this.ionicStorage.get("loginInfo").then(loginObj => {
-    //     if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
-    //       if (
-    //         !_.isNull(loginObj["UserInfo"]) &&
-    //         !_.isEmpty(loginObj["UserInfo"])
-    //       ) {
-    //         this.httpReq.post(
-    //           "workerUser/getOrderCount",
-    //           null,
-    //           { id: loginObj["UserInfo"]["id"] },
-    //           data => {
-    //             if (data["status"] == 200) {
-    //               if (data["code"] == 0) {
-    //                 if (data["data"] > 99) {
-    //                   this.noHandleOrderNum = "99+";
-    //                 } else {
-    //                   this.noHandleOrderNum = data["data"];
-    //                 }
-    //               } else {
-    //                 // this.gloService.showMsg(data["message"], null, 3000);
-    //               }
-    //             }
-    //           }
-    //         );
-    //       }
-    //     }
-    //   });
-    // }, 5000);
-  }
+  ionViewDidLoad() {}
 
   ionViewDidEnter() {
-    // this.slides.autoplayDisableOnInteraction = false; // 解决用户滑动后自动播放失效
     this.ionicStorage.get("loginInfo").then(loginObj => {
       if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
-        if (
-          !_.isNull(loginObj["UserInfo"]) &&
-          !_.isEmpty(loginObj["UserInfo"])
-        ) {
-          this.recOrderState = loginObj["UserInfo"]["isorder"]; // 是否为正在接单状态
-
-          // this.httpReq.post(
-          //   "workerUser/getOrderCount",
-          //   null,
-          //   { id: loginObj["UserInfo"]["id"] },
-          //   data => {
-          //     if (data["status"] == 200) {
-          //       if (data["code"] == 0) {
-          //         if (data["data"] > 99) {
-          //           this.noHandleOrderNum = "99+";
-          //         } else {
-          //           this.noHandleOrderNum = data["data"];
-          //         }
-          //       } else {
-          //         // this.gloService.showMsg(data["message"], null, 3000);
-          //       }
-          //     }
-          //   }
-          // );
+        // 判断是否是空对象
+        console.error("loginObj========", loginObj);
+        const loginId = loginObj.LoginId;
+        if (_.isString(loginId) && loginId.length > 0) {
+          const sendData: any = {};
+          sendData.serverPersonID = loginId;
+          this.httpReq.get(
+            "home/a/home/homeServerWork/getWorking",
+            sendData,
+            data => {
+              if (data["data"] && data["data"]["result"] == 0) {
+                this.isOpenSer = true;
+                if (
+                  data["data"]["workDetailObj"] &&
+                  data["data"]["workDetailObj"]["startTime"]
+                ) {
+                  // const beginTimeStr =
+                  //   data["data"]["workDetailObj"]["startTime"];
+                  // this.beginTime = new Date(beginTimeStr).getTime(); // 服务开始时间时间戳
+                  // this.endTime = this.beginTime + this.manyMinutes * 60 * 1000;
+                  // console.error(
+                  //   "this.beginTime,this.endTime",
+                  //   this.beginTime,
+                  //   this.endTime
+                  // );
+                  // this.maxTime =
+                  //   this.endTime +
+                  //   this.totalRemind * this.remindMinutes * 60 * 1000; // 最大超时时间戳
+                  // this.nowTime = new Date().getTime(); // 系统当前时间时间戳
+                  // this.remindNum = this.totalRemind; // 剩于提醒次数初始化为总提醒数
+                  // if (this.nowTime < this.endTime) {
+                  //   // 现在时间小于服务应该结束时间
+                  //   // 不处理
+                  // } else if (this.nowTime == this.endTime) {
+                  //   // 现在时间等于服务应该结束时间
+                  //   // 开始提醒一次
+                  // } else if (this.nowTime > this.endTime) {
+                  //   // 现在时间大于服务应该结束时间
+                  //   this.remindTimeArr.push(this.endTime);
+                  //   for (let i = 1; i <= this.totalRemind; i++) {
+                  //     const timeStamp =
+                  //       this.endTime + i * this.remindMinutes * 60 * 1000;
+                  //     this.remindTimeArr.push(timeStamp);
+                  //   }
+                  //   console.error("this.remindTimeArr", this.remindTimeArr);
+                  //   let subsection: any = null; // 当前处于第几段
+                  //   for (let i = 0; i < this.remindTimeArr.length; i++) {
+                  //     if (this.nowTime > this.remindTimeArr[i]) {
+                  //       // 当前时间大于某个点
+                  //       subsection = i;
+                  //       break;
+                  //     } else {
+                  //       // 当前时间小于等于某个点
+                  //       this.remindNum--;
+                  //     }
+                  //   }
+                  // }
+                  // const timeVal = this.calTime(this.beginTime, this.endTime);
+                  // const isStart = this.getDuration(timeVal);
+                  // if (isStart) {
+                  //   this.startWatch();
+                  // }
+                  if (true) {
+                    this.startWatch();
+                  }
+                }
+              } else {
+                this.isOpenSer = false;
+                // this.gloService.showMsg(data["data"]["message"]);
+              }
+            }
+          );
+        } else {
+          this.isOpenSer = false;
+          this.gloService.showMsg("未获取到用户ID!");
         }
+      } else {
+        this.isOpenSer = false;
+        this.gloService.showMsg("未获取到用户ID!");
       }
     });
     console.error("this.navCtrl", this.navCtrl);
@@ -163,104 +201,6 @@ export class HomePage {
       }
     }
   }
-  // /**
-  //  * 打开我的任务页面
-  //  * @memberof LoginPage
-  //  */
-  // public openMyTaskPage(): void {
-  //   this.navCtrl.push(MyTaskPage);
-  // }
-
-  /**
-   * 切换接单状态
-   */
-  public toggleRevOrderState() {
-    const titArr = [
-      {
-        title: "休息",
-        message: "休息期间不能接受待提货订单",
-        buttonTxt1: "取消",
-        buttonTxt2: "确认"
-      },
-      {
-        title: "接单",
-        message: "接单啦,系统将为您推送待提货订单",
-        buttonTxt1: "取消",
-        buttonTxt2: "确认"
-      }
-    ];
-
-    if (!this.recOrderState) {
-      // 当前为未接单状态时
-      this.openAlert(
-        titArr[1],
-        () => {
-          this.recOrderState = !this.recOrderState; // 改变接单状态
-          const sendData: any = {}; // 定义请求数据对象
-          this.ionicStorage.get("loginInfo").then(loginObj => {
-            sendData.id = loginObj["UserInfo"]["id"]; // 拉包工信息ID
-            sendData.isOrder = 1; // 0：休息，1：接单中
-            this.httpReq.post(
-              "workerUser/workerUserIsOrder",
-              null,
-              sendData,
-              data => {
-                if (data["status"] == 200) {
-                  if (data["code"] == 0) {
-                    this.gloService.showMsg(
-                      "开启持续接受订单成功！",
-                      null,
-                      3000
-                    );
-                    this.setOrderState(true);
-                  } else {
-                    this.gloService.showMsg(data["message"], null, 3000);
-                  }
-                }
-              }
-            );
-          });
-        },
-        () => {
-          console.error("cancel");
-        }
-      );
-    } else {
-      this.openAlert(
-        titArr[0],
-        () => {
-          this.recOrderState = !this.recOrderState; // 改变接单状态
-          const sendData: any = {}; // 定义请求数据对象
-          this.ionicStorage.get("loginInfo").then(loginObj => {
-            sendData.id = loginObj["UserInfo"]["id"]; // 拉包工信息ID
-            sendData.isOrder = 0; // 0：休息，1：接单中
-            this.httpReq.post(
-              "workerUser/workerUserIsOrder",
-              null,
-              sendData,
-              data => {
-                if (data["status"] == 200) {
-                  if (data["code"] == 0) {
-                    this.gloService.showMsg(
-                      "关闭持续接受订单成功！",
-                      null,
-                      3000
-                    );
-                    this.setOrderState(false);
-                  } else {
-                    this.gloService.showMsg(data["message"], null, 3000);
-                  }
-                }
-              }
-            );
-          });
-        },
-        () => {
-          console.error("cancel");
-        }
-      );
-    }
-  }
 
   /**
    * 打开确认提示对话框
@@ -289,22 +229,91 @@ export class HomePage {
   }
 
   /**
-   * 更新本地存储的接单状态，解决浏览器刷新状态错误问题
-   * @param {boolean} state
-   * @memberof HomePage
+   * 计算时间差
+   * @param {*} bTime
+   * @param {*} eTime
+   * @memberof ServiceConductPage
    */
-  public setOrderState(state: boolean) {
-    this.ionicStorage.get("loginInfo").then(loginObj => {
-      if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
-        if (
-          !_.isNull(loginObj["UserInfo"]) &&
-          !_.isEmpty(loginObj["UserInfo"])
-        ) {
-          loginObj["UserInfo"]["isorder"] = state; // 接单状态
-          this.ionicStorage.set("loginInfo", loginObj); // 更新登录信息配置对象
+  public calTime(bTime: any, eTime: any) {
+    const bTimeStr = new Date(bTime).toString();
+    const eTimeStr = new Date(eTime).toString();
+    let bTimeStamp: any = null; // 起始时间时间戳
+    let eTimeStamp: any = null; // 结束时间时间戳
+    let timeVal = 0;
+    if (bTimeStr == "Invalid Date") {
+      this.gloService.showMsg("时间格式不正确");
+      return;
+    } else {
+      bTimeStamp = new Date(bTime).getTime();
+    }
+    if (eTimeStr == "Invalid Date") {
+      this.gloService.showMsg("时间格式不正确");
+      return;
+    } else {
+      eTimeStamp = new Date(eTime).getTime();
+    }
+    console.error("bTimeStamp", bTimeStamp);
+    console.error("eTimeStamp", eTimeStamp);
+    if (bTimeStamp - eTimeStamp > 10000) {
+      this.gloService.showMsg("开始时间不能大于结束时间");
+      return;
+    }
+    timeVal = eTimeStamp - bTimeStamp;
+    if (timeVal < 0) {
+      return 0;
+    }
+    return timeVal;
+  }
+
+  /**
+   * 获取时长计算时分秒
+   * @param {*} timeVal
+   * @memberof ServiceConductPage
+   */
+  public getDuration(timeVal: any) {
+    if (_.isNumber(parseInt(timeVal)) && parseInt(timeVal) >= 0) {
+      let hours: any = Math.floor((timeVal / (1000 * 60 * 60)) % 24);
+      let minutes: any = Math.floor((timeVal / (1000 * 60)) % 60);
+      let seconds: any = Math.floor((timeVal / 1000) % 60);
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      this.hours = hours;
+      this.minutes = minutes;
+      this.seconds = seconds;
+      return true;
+    } else {
+      this.gloService.showMsg("获取时长出错！");
+      return false;
+    }
+  }
+
+  /**
+   * 开始计时
+   * @memberof ServiceConductPage
+   */
+  public startWatch() {
+    const that = this;
+    setInterval(() => {
+      let hours: any = parseInt(this.hours);
+      let minutes: any = parseInt(this.minutes);
+      let seconds: any = parseInt(this.seconds);
+      if (seconds < 59) {
+        seconds += 1;
+      } else {
+        seconds = 0;
+        if (minutes < 59) {
+          minutes += 1;
+        } else {
+          minutes = 0;
+          hours += 1;
         }
       }
-    });
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      that.hours = hours;
+      that.minutes = minutes;
+      that.seconds = seconds;
+    }, 1000);
   }
 
   /**

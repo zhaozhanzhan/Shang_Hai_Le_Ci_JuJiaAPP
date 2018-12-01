@@ -1,6 +1,5 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component } from "@angular/core";
 import {
-  Slides,
   AlertController,
   NavController,
   NavParams,
@@ -10,18 +9,18 @@ import {
   Events,
   IonicPage
 } from "ionic-angular";
-import { NativeAudio } from "@ionic-native/native-audio";
-import { Storage } from "@ionic/storage";
-import { NFC } from "@ionic-native/nfc"; // NFC
 import _ from "underscore"; // underscore工具类
+import { NativeAudio } from "@ionic-native/native-audio";
+import { NFC } from "@ionic-native/nfc"; // NFC
 import { GlobalService } from "../../common/service/GlobalService";
+import { HttpReqService } from "../../common/service/HttpUtils.Service";
+import { ParamService } from "../../common/service/Param.Service";
+// import { Storage } from "@ionic/storage";
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
 // import { JsUtilsService } from "../../common/service/JsUtils.Service";
 // import { GlobalMethod } from "../../common/service/GlobalMethod";
-import { HttpReqService } from "../../common/service/HttpUtils.Service";
-import { ParamService } from "../../common/service/Param.Service";
-import { loginInfo } from "../../common/config/BaseConfig";
+// import { loginInfo } from "../../common/config/BaseConfig";
 
 @IonicPage()
 @Component({
@@ -34,8 +33,8 @@ export class CardReadPage {
   constructor(
     // private fb: FormBuilder, // 响应式表单
     // private jsUtil: JsUtilsService, // 自定义JS工具类
+    // private ionicStorage: Storage, // IonicStorage
     private httpReq: HttpReqService, // Http请求服务
-    private ionicStorage: Storage, // IonicStorage
     public nfc: NFC, // NFC
     public navCtrl: NavController, // 导航控制器
     public navParams: NavParams, // 导航参数传递控制
@@ -50,23 +49,41 @@ export class CardReadPage {
     const nfcId = this.navParams.get("nfcId");
     ParamService.setParamNfc(nfcId);
     console.error("ParamService.getParamNfc", ParamService.getParamNfc());
-    const sendData: any = {};
-    sendData.nfcNo = nfcId;
-    this.httpReq.get(
-      "home/a/server/homeUserArchives/getByNfcNo",
-      sendData,
-      data => {
-        if (data["data"] && data["data"]["homeUserArchives"]) {
-          this.formInfo = data["data"]["homeUserArchives"];
-          ParamService.setParamId(data["data"]["homeUserArchives"]["id"]);
-          this.personInfo = data["data"]["homeArchiveAddress"];
-        } else {
-          this.formInfo = {};
-          this.gloService.showMsg("未获取到用户信息！");
-          this.navCtrl.pop();
+    if (_.isString(nfcId) && nfcId.length > 0) {
+      const sendData: any = {};
+      sendData.nfcNo = nfcId;
+      this.httpReq.get(
+        "home/a/server/homeUserArchives/getByNfcNo",
+        sendData,
+        data => {
+          if (data["data"] && data["data"]["result"] == 0) {
+            this.formInfo = data["data"]["userArchivesObj"];
+            ParamService.setParamId(data["data"]["userArchivesObj"]["userID"]);
+            console.error("ParamService.getParamId", ParamService.getParamId());
+          } else {
+            this.formInfo = {};
+            this.gloService.showMsg("获取信息失败！");
+          }
+          // if (data["data"] && data["data"]["homeUserArchives"]) {
+          //   this.formInfo = data["data"]["homeUserArchives"];
+          //   ParamService.setParamId(data["data"]["homeUserArchives"]["id"]);
+          //   this.personInfo = data["data"]["homeArchiveAddress"];
+          // } else {
+          //   this.formInfo = {};
+          //   this.gloService.showMsg("未获取到用户信息！");
+          //   if (this.navCtrl.canGoBack()) {
+          //     this.navCtrl.pop();
+          //   }
+          // }
         }
+      );
+    } else {
+      this.gloService.showMsg("未获取到用户ID！");
+      if (this.navCtrl.canGoBack()) {
+        this.navCtrl.pop();
       }
-    );
+      return;
+    }
   }
 
   ionViewDidLoad() {

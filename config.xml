@@ -3,7 +3,7 @@
     <name>居家APP</name>
     <description>镜子信息技术有限公司居家APP</description>
     <author email="799316652@qq.com" href="http://ionicframework.com/">ZZZ</author>
-    <content original-src="index.html" src="http://192.168.1.129:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -114,7 +114,7 @@
     <plugin name="cordova-plugin-qrscanner-zzz" spec="^2.7.1" />
     <plugin name="cordova-plugin-file-opener2-zzz" spec="^3.0.0" />
     <plugin name="phonegap-nfc" spec="^1.0.3" />
-    <allow-navigation href="http://192.168.1.129:8100" sessionid="8c4cea85" />
+    <allow-navigation href="http://192.168.1.129:8100" sessionid="a12454dd" />
     <engine name="browser" spec="5.0.4" />
     <engine name="android" spec="7.0.0" />
 </widget>
