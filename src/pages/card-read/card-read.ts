@@ -63,6 +63,9 @@ export class CardReadPage {
           } else {
             this.formInfo = {};
             this.gloService.showMsg("获取信息失败！");
+            if (this.navCtrl.canGoBack()) {
+              this.navCtrl.pop();
+            }
           }
           // if (data["data"] && data["data"]["homeUserArchives"]) {
           //   this.formInfo = data["data"]["homeUserArchives"];
