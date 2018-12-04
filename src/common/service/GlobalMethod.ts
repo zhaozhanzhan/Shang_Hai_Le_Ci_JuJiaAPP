@@ -294,7 +294,7 @@ export class GlobalMethod {
     if (!_.isNumber(everyItem) || everyItem <= 0) {
       return totalPage;
     }
-    totalPage = Math.ceil(totalItem / everyItem) - 1; // 因为全局页码从0开始,所以总页数减1
+    totalPage = Math.ceil(totalItem / everyItem); // 因为全局页码从0开始,所以总页数减1
     return totalPage;
   }
 }

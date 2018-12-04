@@ -23,17 +23,17 @@
     <div>
         <div>
             <div>
-                <div class="mt10 h150 w100p borBox posRel" *ngFor="let x of formInfo;let i = index;">
+                <div class="mt15 h150 w100p borBox posRel" *ngFor="let x of formInfo;let i = index;">
                     <div class="posAbs zIndex1 w100p h100p">
                         <div class="h100p disFlex">
-                            <div class="pt10 pb10 flexGrow1">
-                                <div class="h100p w100p borSD2BDB3 pl10 disFlex aligIteC" [ngClass]="{'bgcFFE1D2': i%3 == 0, 'bgcEBFFF5': i%3 == 1, 'bgcCCF5FF': i%3 == 2}">
+                            <div class=" h100p flexGrow1">
+                                <div class="h100p w100p borSD2BDB3 pl10 disFlex aligIteC" [ngClass]="{'iconBg1': i%3 == 0, 'iconBg2': i%3 == 1, 'iconBg3': i%3 == 2}">
                                     <div class="h60 disFlex flexDirC justConSB" (click)="gotoConfigList({id:x.id})">
                                         <div>
-                                            <span class="color666 ftz24">{{x.dictLabel}}</span>
+                                            <span class="colorFFF ftz24">{{x.dictLabel}}</span>
                                         </div>
                                         <div>
-                                            <span class="color999">
+                                            <span class="colorFFF">
                                                 <span *ngFor="let y of x.childList;let j = index;">{{y.dictLabel}}&nbsp;</span>
                                             </span>
                                         </div>
@@ -42,7 +42,9 @@
                             </div>
                             <div class="h100p w150 borBox">
                                 <div class="w100p h100p disFlex justConC aligIteC">
-                                    <i class="iconfont icon-WuTu ftz120 colorCCC"></i> </div>
+                                    <img class="h100p" [src]="baseImgUrl + x.extend?.extendS1">
+                                    <!-- <i class="iconfont icon-WuTu ftz120 colorCCC"></i> -->
+                                </div>
                                 <!-- <img class="h100p w100p" src="https://via.placeholder.com/160"> -->
                             </div>
                         </div>

@@ -24,6 +24,7 @@ const ip = "139.224.12.181:8980"; // 内网IP+端口
 //================= 请求地址配置对象 Begin =================//
 export const reqObj = {
   baseUrl: "http://" + ip + "/",
+  baseImgUrl: "http://" + ip + "/home/", // 基础图片URL
   andUpdAppUrl: "http://" + ipDownload + "/LaBaoGongAppDownload/update.apk", // 安卓下载更新APP包地址
   iosUpdAppUrl:
     "itms-apps://itunes.apple.com/us/app/domainsicle-domain-name-search/id511364723?ls=1&mt=8" // IOS下载更新APP包地址
@@ -51,7 +52,7 @@ export const desConfig = {
 //================= 分页参数配置对象 Begin =================//
 export const pageObj = {
   totalItem: 100, //总条数
-  currentPage: 0, //当前页码
+  currentPage: 1, //当前页码
   totalPage: 99, //总页码
   everyItem: 10 //每页条数
 };

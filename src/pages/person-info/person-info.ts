@@ -13,7 +13,7 @@ import { Storage } from "@ionic/storage";
 import { GlobalService } from "../../common/service/GlobalService";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
 import { LoginPage } from "../login/login";
-import { loginInfo } from "../../common/config/BaseConfig";
+import { loginInfo, reqObj } from "../../common/config/BaseConfig";
 // import _ from "underscore"; // underscore工具类
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
@@ -26,6 +26,7 @@ import { loginInfo } from "../../common/config/BaseConfig";
   templateUrl: "person-info.html"
 })
 export class PersonInfoPage {
+  public baseImgUrl: any = reqObj.baseImgUrl; // 基础图片URL
   public formInfo: any = {}; // 数据信息
 
   constructor(
@@ -49,7 +50,7 @@ export class PersonInfoPage {
 
     const formData: any = {};
     if (loginInfo.LoginId) {
-      formData.id = loginInfo.LoginId;
+      formData.serverPensonID = loginInfo.LoginId;
     }
     // const testObj: any = {};
     // testObj.__login = true;
@@ -61,10 +62,10 @@ export class PersonInfoPage {
     // );
 
     this.httpReq.get(
-      "home/a/person/homeServerPerson/form.json",
+      "home/a/person/homeServerPerson/getByServerPensonID",
       formData,
       data => {
-        if (data["data"]) {
+        if (data["data"] && data["data"]["result"] == 0) {
           // this.gloService.showMsg("登录成功", null, 1000);
           loading.dismiss();
           this.formInfo = data["data"]["homeServerPerson"];
@@ -88,7 +89,11 @@ export class PersonInfoPage {
           // this.navCtrl.setRoot("MainPage"); // 跳转到主页
         } else {
           loading.dismiss();
-          this.gloService.showMsg(data["message"], null, 3000);
+          this.formInfo = {};
+          this.gloService.showMsg("获取信息失败！");
+          if (this.navCtrl.canGoBack()) {
+            this.navCtrl.pop();
+          }
         }
       }
     );

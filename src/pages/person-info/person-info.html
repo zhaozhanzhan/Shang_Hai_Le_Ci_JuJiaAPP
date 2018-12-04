@@ -15,32 +15,34 @@
             </button>
         </ion-buttons>
     </ion-navbar>
-    <ion-toolbar mode="ios" no-padding>
-        <div class="h100 w100p p10">
+    <ion-toolbar mode="ios" no-padding class="borTBox">
+        <div class="h100 w100p p10 headerBg">
             <div class="h100p w100p disFlex">
                 <div class="h100p w100">
-                    <div class="w100p h100p disFlex justConC">
+                    <div class="w100p h100p disFlex justConC aligIteC">
                         <!-- <img class="h100p borRadius50p" src="assets/imgs/logoback.png"> -->
-                        <div class="h100p borRadius50p disFlex justConC aligIteC" [hidden]="(formInfo?.userSex == 1)">
-                            <svg class="colourIcon ftz50" aria-hidden="true">
-                                <use xlink:href="#icon-Head2"></use>
-                            </svg>
-                        </div>
-                        <div class="h100p borRadius50p disFlex justConC aligIteC" [hidden]="!(formInfo?.userSex == 1)">
-                            <svg class="colourIcon ftz50" aria-hidden="true">
-                                <use xlink:href="#icon-Head1"></use>
-                            </svg>
+                        <div class="w40 h40 borSDBDFE6 bgcFFF">
+                            <div class="h100p borRadius50p disFlex justConC aligIteC" [hidden]="(formInfo?.userSex == 1)">
+                                <svg class="colourIcon ftz50" aria-hidden="true">
+                                    <use xlink:href="#icon-Head2"></use>
+                                </svg>
+                            </div>
+                            <div class="h100p borRadius50p disFlex justConC aligIteC" [hidden]="!(formInfo?.userSex == 1)">
+                                <svg class="colourIcon ftz50" aria-hidden="true">
+                                    <use xlink:href="#icon-Head1"></use>
+                                </svg>
+                            </div>
                         </div>
                         <!-- <img class="h100p borRadius50p" src="https://via.placeholder.com/150"> -->
                     </div>
                 </div>
                 <div class="h100p disFlex flexDirC justConSA pt10 pb10">
                     <div>
-                        <span class="ftz20">{{formInfo?.caption}}</span>
-                        <span class="ml20">{{formInfo?.userSex | sexState}}</span>
+                        <span class="ftz20 colorFFF">{{formInfo?.caption}}</span>
+                        <span class="ml20 colorFFF">{{formInfo?.userSex | sexState}}</span>
                     </div>
                     <div>
-                        <span>工号：{{formInfo?.personCode}}</span>
+                        <span class="colorFFF">工号：{{formInfo?.personCode}}</span>
                     </div>
                 </div>
             </div>
@@ -87,6 +89,23 @@
                     <div>
                         <div class="borBBox">
                             <div class="disFlex justConSB h26 aligItec">
+                                <span class="ftz16">证件资料：</span>
+                            </div>
+                        </div>
+                        <div class="pt10" *ngIf="formInfo.fileUploads && formInfo.fileUploads.length > 0">
+                            <div class="w150 h150 mb10" *ngFor="let x of formInfo.fileUploads;let i = index;">
+                                <div class="h100p w100p disFlex justConC aligIteC borB7D8E0">
+                                    <img *ngIf="(x.fileUrl)" class="h100p w100p" [src]="baseImgUrl + x.fileUrl">
+                                    <svg *ngIf="!(x.fileUrl)" class="colourIcon ftz60" aria-hidden="true">
+                                        <use xlink:href="#icon-Cert6"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div>
+                        <div class="borBBox">
+                            <div class="disFlex justConSB h26 aligItec">
                                 <span class="ftz16">健康证明：</span>
                             </div>
                         </div>
@@ -97,11 +116,11 @@
                                         <use xlink:href="#icon-Cert6"></use>
                                     </svg>
                                 </div>
-                                <!-- <img class="h100p w100p" src="https://via.placeholder.com/150"> -->
+                                <img class="h100p w100p" src="https://via.placeholder.com/150">
                             </div>
                         </div>
-                    </div>
-                    <div class="mt20">
+                    </div> -->
+                    <!-- <div class="mt20">
                         <div class="borBBox">
                             <div class="disFlex justConSB h26 aligItec">
                                 <span class="ftz16">等级证书：</span>
@@ -114,10 +133,10 @@
                                         <use xlink:href="#icon-Cert3"></use>
                                     </svg>
                                 </div>
-                                <!-- <img class="h100p w100p" src="https://via.placeholder.com/150"> -->
+                                <img class="h100p w100p" src="https://via.placeholder.com/150">
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

@@ -1,4 +1,13 @@
 page-config-list-two {
+    .iconBg1 {
+        background: linear-gradient(120deg, #FFA366, #FFC347) !important;
+    }
+    .iconBg2 {
+        background: linear-gradient(120deg, #4897F0, #29DAE9) !important;
+    }
+    .iconBg3 {
+        background: linear-gradient(120deg, #FD5264, #FF71BF) !important;
+    }
     .parentBox {
         .childListHide {
             position: relative;
@@ -11,9 +20,9 @@ page-config-list-two {
             position: relative;
             .childListCtrl {
                 display: block;
-                overflow: hidden;
+                overflow: scroll;
                 // background: #F00;
-                animation: open 1s ease 0s 1 normal forwards;
+                // animation: open 1s ease 0s 1 normal forwards;
             }
         }
     }

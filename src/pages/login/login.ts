@@ -52,9 +52,9 @@ export class LoginPage {
     });
 
     this.formData = this.fb.group({
-      username: ["", [Validators.required]], // 账号
+      username: ["duhongmei", [Validators.required]], // 账号
       password: [
-        "",
+        "123456",
         [Validators.required, Validators.minLength(5), Validators.maxLength(16)]
       ] // 密码
     });

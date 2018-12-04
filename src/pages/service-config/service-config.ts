@@ -13,6 +13,7 @@ import { NativeAudio } from "@ionic-native/native-audio";
 import _ from "underscore"; // underscore工具类
 import { GlobalService } from "../../common/service/GlobalService";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
+import { reqObj } from "../../common/config/BaseConfig";
 // import { Storage } from "@ionic/storage";
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
@@ -25,6 +26,7 @@ import { HttpReqService } from "../../common/service/HttpUtils.Service";
   templateUrl: "service-config.html"
 })
 export class ServiceConfigPage {
+  public baseImgUrl: any = reqObj.baseImgUrl; // 基础图片URL
   public infoWay: string = ""; // 定义表单对象
   public formInfo: Array<any> = []; // 定义表单对象
   constructor(

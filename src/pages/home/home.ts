@@ -13,7 +13,7 @@ import {
 import { NativeAudio } from "@ionic-native/native-audio";
 import { Storage } from "@ionic/storage";
 import { NFC } from "@ionic-native/nfc"; // NFC
-// import _ from "underscore"; // underscore工具类
+import _ from "underscore"; // 工具类
 import { GlobalService } from "../../common/service/GlobalService";
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
@@ -21,7 +21,7 @@ import { GlobalService } from "../../common/service/GlobalService";
 // import { GlobalMethod } from "../../common/service/GlobalMethod";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
 import { ParamService } from "../../common/service/Param.Service";
-import _ from "underscore";
+import { ServiceNotification } from "../../common/service/ServiceNotification";
 import { loginInfo } from "../../common/config/BaseConfig";
 
 @Component({
@@ -64,7 +64,8 @@ export class HomePage {
     public platform: Platform, // 获取平台信息
     public alertCtrl: AlertController, // Alert消息弹出框
     public nativeAudio: NativeAudio, // 音频播放
-    public events: Events // 事件发布与订阅
+    public events: Events, // 事件发布与订阅
+    public serNotifi: ServiceNotification // 服务开启定时通知关闭
   ) {}
 
   ionViewDidLoad() {}
@@ -88,6 +89,18 @@ export class HomePage {
                   data["data"]["workDetailObj"] &&
                   data["data"]["workDetailObj"]["startTime"]
                 ) {
+                  // const bTime = data["data"]["workDetailObj"]["startTime"];
+                  // this.serNotifi.bTimeStamp(bTime); // 计算时间
+                  // this.serNotifi.openServer(); // 开启定时服务
+                  // this.serNotifi.getHms(data => {
+                  //   console.error("data", data);
+                  //   this.serNotifi.startWatch(data => {
+                  //     this.hours = data.hours;
+                  //     this.minutes = data.minutes;
+                  //     this.seconds = data.seconds;
+                  //   }); // 开启时长计时
+                  // }); // 获取服务时长服务
+                  // this.serNotifi.openServer();
                   // const beginTimeStr =
                   //   data["data"]["workDetailObj"]["startTime"];
                   // this.beginTime = new Date(beginTimeStr).getTime(); // 服务开始时间时间戳
@@ -134,9 +147,9 @@ export class HomePage {
                   // if (isStart) {
                   //   this.startWatch();
                   // }
-                  if (true) {
-                    this.startWatch();
-                  }
+                  // if (true) {
+                  //   this.startWatch();
+                  // }
                 }
               } else {
                 this.isOpenSer = false;
@@ -291,30 +304,30 @@ export class HomePage {
    * 开始计时
    * @memberof ServiceConductPage
    */
-  public startWatch() {
-    const that = this;
-    setInterval(() => {
-      let hours: any = parseInt(this.hours);
-      let minutes: any = parseInt(this.minutes);
-      let seconds: any = parseInt(this.seconds);
-      if (seconds < 59) {
-        seconds += 1;
-      } else {
-        seconds = 0;
-        if (minutes < 59) {
-          minutes += 1;
-        } else {
-          minutes = 0;
-          hours += 1;
-        }
-      }
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-      that.hours = hours;
-      that.minutes = minutes;
-      that.seconds = seconds;
-    }, 1000);
-  }
+  // public startWatch() {
+  //   const that = this;
+  //   setInterval(() => {
+  //     let hours: any = parseInt(this.hours);
+  //     let minutes: any = parseInt(this.minutes);
+  //     let seconds: any = parseInt(this.seconds);
+  //     if (seconds < 59) {
+  //       seconds += 1;
+  //     } else {
+  //       seconds = 0;
+  //       if (minutes < 59) {
+  //         minutes += 1;
+  //       } else {
+  //         minutes = 0;
+  //         hours += 1;
+  //       }
+  //     }
+  //     minutes = minutes < 10 ? "0" + minutes : minutes;
+  //     seconds = seconds < 10 ? "0" + seconds : seconds;
+  //     that.hours = hours;
+  //     that.minutes = minutes;
+  //     that.seconds = seconds;
+  //   }, 1000);
+  // }
 
   /**
    * 未开发提示

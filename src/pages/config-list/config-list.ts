@@ -12,6 +12,7 @@ import { NativeAudio } from "@ionic-native/native-audio";
 import _ from "underscore"; // underscore工具类
 import { GlobalService } from "../../common/service/GlobalService";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
+import { reqObj } from "../../common/config/BaseConfig";
 // import { Storage } from "@ionic/storage";
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
@@ -24,6 +25,7 @@ import { HttpReqService } from "../../common/service/HttpUtils.Service";
   templateUrl: "config-list.html"
 })
 export class ConfigListPage {
+  public baseImgUrl: any = reqObj.baseImgUrl; // 基础图片URL
   public paramId: any = null; // 传过来的ID
   public dataList: any = []; // 数据列表
   // public isActive: boolean = false;

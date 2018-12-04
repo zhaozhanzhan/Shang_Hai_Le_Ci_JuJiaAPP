@@ -1,0 +1,50 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="orange" hideBackButton="true">
+        <ion-title>公告详情</ion-title>
+        <ion-buttons start>
+            <button ion-button class="pl10" (click)="backHome()">
+                <!-- <span color="primary" showWhen="ios">返回</span> -->
+                <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button class="pr10" (click)="navCtrl.pop()">
+                <span showWhen="android,windows,ios">返回</span>
+                <!-- <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon> -->
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 页面内容区域 Begin -->
+<ion-content>
+    <div>
+        <div>
+            <div>
+                <div class="disFlex justConC">
+                    <h5>{{formInfo?.noticeTitle}}</h5>
+                </div>
+                <div class="disFlex justConC">
+                    <span class="color999">{{formInfo?.createDate}}</span>
+                </div>
+                <div class="mt10">
+                    <div class="p10">
+                        <p class="ftz16" style="text-indent:2em;">{{formInfo?.noticeContent}}</p>
+                    </div>
+                </div>
+                <div class="p10">
+                    <div class="pt10" *ngIf="formInfo.fileUploads && formInfo.fileUploads.length > 0">
+                        <div class="w150 h150 mb10" *ngFor="let x of formInfo.fileUploads;let i = index;">
+                            <div class="h100p w100p disFlex justConC aligIteC borB7D8E0">
+                                <img class="h100p w100p" [src]="baseImgUrl + x.fileUrl">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<!-- 页面内容区域 End -->

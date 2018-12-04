@@ -26,6 +26,7 @@ import { HttpReqService } from "../common/service/HttpUtils.Service"; // HTTP数
 import { AppUpdateService } from "../common/service/AppUpdate.Service";
 import { SelectCityService } from "../common/service/SelectCity.Service";
 import { LocalNotifications } from "@ionic-native/local-notifications";
+import { ServiceNotification } from "../common/service/ServiceNotification";
 import { loginInfo } from "../common/config/BaseConfig";
 
 declare var cordova: any; //导入第三方的库定义到 TS 项目中
@@ -63,6 +64,7 @@ export class MyApp implements AfterViewInit {
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController,
     public appUpdate: AppUpdateService, // app升级更新
+    public serNotifi: ServiceNotification, // 服务开启定时通知关闭
     public selCity: SelectCityService, // 省市区三级联动
     public nativeAudio: NativeAudio, // 音频播放
     public events: Events // 事件发布与订阅
@@ -71,6 +73,7 @@ export class MyApp implements AfterViewInit {
     console.error("this", this);
     console.error("this.nav：", this.nav);
     console.error("this.appUpdate：", this.appUpdate);
+    console.error("this.serNotifi", this.serNotifi);
     this.initializeApp(); // 初始化APP
     this.pages = [{ title: "Login", component: LoginPage }]; // 页面组件数组
   }

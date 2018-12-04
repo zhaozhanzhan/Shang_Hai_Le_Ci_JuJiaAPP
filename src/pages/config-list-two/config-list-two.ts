@@ -14,6 +14,7 @@ import _ from "underscore"; // underscore工具类
 import { GlobalService } from "../../common/service/GlobalService";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
 import { ParamService } from "../../common/service/Param.Service";
+import { reqObj } from "../../common/config/BaseConfig";
 // import { Storage } from "@ionic/storage";
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
@@ -26,6 +27,7 @@ import { ParamService } from "../../common/service/Param.Service";
   templateUrl: "config-list-two.html"
 })
 export class ConfigListTwoPage {
+  public baseImgUrl: any = reqObj.baseImgUrl; // 基础图片URL
   public paramId: any = null; // 传过来的ID
   public dataList: any = []; // 数据列表
   public userCode: any = null; // 用户ID
