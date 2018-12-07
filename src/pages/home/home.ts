@@ -8,7 +8,8 @@ import {
   ActionSheetController,
   Platform,
   MenuController,
-  Events
+  Events,
+  App
 } from "ionic-angular";
 import { NativeAudio } from "@ionic-native/native-audio";
 import { Storage } from "@ionic/storage";
@@ -35,6 +36,8 @@ export class HomePage {
   public recOrderState: boolean = false; // 定义接单状态
   public noHandleOrderNum: any = null; // 未处理订单数量
   public isOpenSer: boolean = false; // 是否已经开启服务
+  public nfcId: any = null; // 是否已经开启服务
+  public timerInter: any = null; // 定时器
 
   // public beginTime: any = null; // 服务开始时间
   // public endTime: any = null; // 服务终止时间
@@ -53,6 +56,7 @@ export class HomePage {
   constructor(
     // private fb: FormBuilder, // 响应式表单
     // private jsUtil: JsUtilsService, // 自定义JS工具类
+    public app: App,
     private httpReq: HttpReqService, // Http请求服务
     private ionicStorage: Storage, // IonicStorage
     public nfc: NFC, // NFC
@@ -89,17 +93,24 @@ export class HomePage {
                   data["data"]["workDetailObj"] &&
                   data["data"]["workDetailObj"]["startTime"]
                 ) {
-                  // const bTime = data["data"]["workDetailObj"]["startTime"];
-                  // this.serNotifi.bTimeStamp(bTime); // 计算时间
-                  // this.serNotifi.openServer(); // 开启定时服务
-                  // this.serNotifi.getHms(data => {
-                  //   console.error("data", data);
-                  //   this.serNotifi.startWatch(data => {
-                  //     this.hours = data.hours;
-                  //     this.minutes = data.minutes;
-                  //     this.seconds = data.seconds;
-                  //   }); // 开启时长计时
-                  // }); // 获取服务时长服务
+                  this.nfcId = data["data"]["workDetailObj"]["nfcNo"];
+                  const bTime = data["data"]["workDetailObj"]["startTime"];
+
+                  this.serNotifi.bTimeStamp(bTime); // 将开始时间转换为时间戳
+                  this.serNotifi.calTimeStamp(); // 计算各种所需要的时间戳
+                  this.serNotifi.getRemindArr(); // 获取提醒对象数组
+
+                  this.serNotifi.getHms(data => {
+                    // 获取时分秒并回调
+                    console.error("data", data);
+                    this.hours = data.hours;
+                    this.minutes = data.minutes;
+                    this.seconds = data.seconds;
+                    this.startWatch();
+                    this.serNotifi.openServer(); // 开启定时服务
+                    // this.serNotifi.startWatch(data => {}); // 开启时长计时
+                  }); // 获取服务时长服务
+
                   // this.serNotifi.openServer();
                   // const beginTimeStr =
                   //   data["data"]["workDetailObj"]["startTime"];
@@ -171,8 +182,27 @@ export class HomePage {
 
     //=================订阅NFC扫描成功事件 Begin=================//
     this.events.subscribe("nfcScanSuc", nfcId => {
-      this.jumpPage("CardReadPage", { nfcId: nfcId });
-      this.events.unsubscribe("nfcScanSuc");
+      if (this.isOpenSer) {
+        // 已经开启
+        if (nfcId == this.nfcId) {
+          // 已经服务标签与扫描标签相同
+          this.events.unsubscribe("nfcScanSuc");
+          this.jumpPage("ServiceConductPage");
+        } else {
+          setTimeout(() => {
+            let rootNav = this.app.getRootNavs()[0]; // 获取根导航
+            let ionicApp = rootNav._app._appRoot;
+            let activePortal = ionicApp._toastPortal.getActive();
+            if (activePortal) {
+            } else {
+              this.gloService.showMsg("扫描标签与已开服务标签不一致！");
+            }
+          }, 300);
+        }
+      } else {
+        this.events.unsubscribe("nfcScanSuc");
+        this.jumpPage("CardReadPage", { nfcId: nfcId });
+      }
     });
     //=================订阅NFC扫描成功事件 End=================//
 
@@ -304,30 +334,38 @@ export class HomePage {
    * 开始计时
    * @memberof ServiceConductPage
    */
-  // public startWatch() {
-  //   const that = this;
-  //   setInterval(() => {
-  //     let hours: any = parseInt(this.hours);
-  //     let minutes: any = parseInt(this.minutes);
-  //     let seconds: any = parseInt(this.seconds);
-  //     if (seconds < 59) {
-  //       seconds += 1;
-  //     } else {
-  //       seconds = 0;
-  //       if (minutes < 59) {
-  //         minutes += 1;
-  //       } else {
-  //         minutes = 0;
-  //         hours += 1;
-  //       }
-  //     }
-  //     minutes = minutes < 10 ? "0" + minutes : minutes;
-  //     seconds = seconds < 10 ? "0" + seconds : seconds;
-  //     that.hours = hours;
-  //     that.minutes = minutes;
-  //     that.seconds = seconds;
-  //   }, 1000);
-  // }
+  public startWatch() {
+    const that = this;
+    this.timerInter = setInterval(() => {
+      let hours: any = parseInt(this.hours);
+      let minutes: any = parseInt(this.minutes);
+      let seconds: any = parseInt(this.seconds);
+      if (seconds < 59) {
+        seconds += 1;
+      } else {
+        seconds = 0;
+        if (minutes < 59) {
+          minutes += 1;
+        } else {
+          minutes = 0;
+          hours += 1;
+        }
+      }
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      that.hours = hours;
+      that.minutes = minutes;
+      that.seconds = seconds;
+    }, 1000);
+  }
+
+  /**
+   * 关闭计时
+   * @memberof HomePage
+   */
+  public closeWatch() {
+    window.clearInterval(this.timerInter); // 清除定时器
+  }
 
   /**
    * 未开发提示

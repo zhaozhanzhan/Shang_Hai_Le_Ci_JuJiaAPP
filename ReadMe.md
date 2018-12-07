@@ -157,11 +157,11 @@ configurations.all {
     <native-interface version="1" />
 </chcp>
 <chcp>
-    <config-file url="http://180.103.210.106:8888/LaBaoGongUpdate/chcp.json" />
+    <config-file url="http://139.224.12.181:9527/JuJiaUpdate/chcp.json" />
     <auto-download enabled="true" />
     <auto-install enabled="true" />
     <local-development enabled="true" />
-    <native-interface version="6" />
+    <native-interface version="1" />
 </chcp>
     ionic build --prod
 

@@ -15,6 +15,7 @@ import { NFC } from "@ionic-native/nfc"; // NFC
 import { GlobalService } from "../../common/service/GlobalService";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
 import { ParamService } from "../../common/service/Param.Service";
+import { loginInfo } from "../../common/config/BaseConfig";
 // import { Storage } from "@ionic/storage";
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
@@ -52,6 +53,14 @@ export class CardReadPage {
     if (_.isString(nfcId) && nfcId.length > 0) {
       const sendData: any = {};
       sendData.nfcNo = nfcId;
+      if (_.isString(loginInfo.LoginId) && loginInfo.LoginId.length > 0) {
+        sendData.personID = loginInfo.LoginId;
+      } else {
+        if (this.navCtrl.canGoBack()) {
+          this.navCtrl.pop();
+        }
+        return;
+      }
       this.httpReq.get(
         "home/a/server/homeUserArchives/getByNfcNo",
         sendData,
@@ -62,7 +71,7 @@ export class CardReadPage {
             console.error("ParamService.getParamId", ParamService.getParamId());
           } else {
             this.formInfo = {};
-            this.gloService.showMsg("获取信息失败！");
+            this.gloService.showMsg(data["data"]["message"]);
             if (this.navCtrl.canGoBack()) {
               this.navCtrl.pop();
             }

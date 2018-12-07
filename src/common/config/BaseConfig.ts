@@ -11,13 +11,13 @@
 // const ip = "180.103.210.106:8081";// 公网IP+端口
 // const ip = "139.196.204.226:8980"; // 公网IP+端口 测试服
 // const ip = "180.103.210.106:8088"; // 公网IP+端口 测试服
-const ipDownload = "180.103.210.106:8888"; // 下载文件 测试服
+const ipDownload = "139.224.12.181:9527"; // 下载文件 测试服
 // const ip = "192.168.1.129:9999"; // 内网IP+端口
 // const ip = "192.168.1.118:8081"; // 内网IP+端口
 // const ip = "192.168.1.118:8088"; // 内网IP+端口
 // const ip = "192.168.1.222:8088"; // 内网IP+端口
-// const ip = "192.168.1.128:8980"; // 内网IP+端口
-const ip = "139.224.12.181:8980"; // 内网IP+端口
+const ip = "192.168.1.128:8980"; // 内网IP+端口
+// const ip = "139.224.12.181:8980"; // 公网IP+端口
 
 //================= 服务器IP + 端口配置 End =================//
 
@@ -25,7 +25,7 @@ const ip = "139.224.12.181:8980"; // 内网IP+端口
 export const reqObj = {
   baseUrl: "http://" + ip + "/",
   baseImgUrl: "http://" + ip + "/home/", // 基础图片URL
-  andUpdAppUrl: "http://" + ipDownload + "/LaBaoGongAppDownload/update.apk", // 安卓下载更新APP包地址
+  andUpdAppUrl: "http://" + ipDownload + "/JuJiaAppDownload/update.apk", // 安卓下载更新APP包地址
   iosUpdAppUrl:
     "itms-apps://itunes.apple.com/us/app/domainsicle-domain-name-search/id511364723?ls=1&mt=8" // IOS下载更新APP包地址
 };

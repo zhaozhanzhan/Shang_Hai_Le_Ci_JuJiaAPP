@@ -118,7 +118,11 @@ export class PersonInfoPage {
    */
   public clearLogin() {
     for (const key in loginInfo) {
-      if (loginInfo.hasOwnProperty(key) && key !== "UserName") {
+      if (
+        loginInfo.hasOwnProperty(key) &&
+        key !== "UserName" &&
+        key !== "Password"
+      ) {
         loginInfo[key] = null;
       }
     }

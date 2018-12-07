@@ -114,7 +114,7 @@
     <plugin name="cordova-plugin-qrscanner-zzz" spec="^2.7.1" />
     <plugin name="cordova-plugin-file-opener2-zzz" spec="^3.0.0" />
     <plugin name="phonegap-nfc" spec="^1.0.3" />
-    <allow-navigation href="http://192.168.1.129:8100" sessionid="a12454dd" />
+    <allow-navigation href="http://192.168.1.129:8100" sessionid="c7556aad" />
     <engine name="browser" spec="5.0.4" />
     <engine name="android" spec="7.0.0" />
 </widget>

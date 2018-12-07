@@ -14,6 +14,7 @@ import { GlobalService } from "../../common/service/GlobalService";
 import { JsUtilsService } from "../../common/service/JsUtils.Service";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
 import { ParamService } from "../../common/service/Param.Service";
+import { loginInfo } from "../../common/config/BaseConfig";
 // import { Storage } from "@ionic/storage";
 // import { FormBuilder } from "@angular/forms";
 
@@ -48,6 +49,15 @@ export class SelectServicePage {
     if (_.isString(nfcId) && nfcId.length > 0) {
       const sendData: any = {};
       sendData.nfcNo = nfcId;
+      if (_.isString(loginInfo.LoginId) && loginInfo.LoginId.length > 0) {
+        sendData.personID = loginInfo.LoginId;
+      } else {
+        if (this.navCtrl.canGoBack()) {
+          this.navCtrl.pop();
+        }
+        return;
+      }
+
       this.httpReq.get(
         "home/a/server/homeUserArchives/getByNfcNo",
         sendData,
@@ -58,7 +68,10 @@ export class SelectServicePage {
             console.error("ParamService.getParamId", ParamService.getParamId());
           } else {
             this.formInfo = {};
-            this.gloService.showMsg("获取信息失败！");
+            this.gloService.showMsg(data["data"]["message"]);
+            if (this.navCtrl.canGoBack()) {
+              this.navCtrl.pop();
+            }
           }
           // if (data["data"] && data["data"]["homeUserArchives"]) {
           //   this.formInfo = data["data"]["homeUserArchives"];

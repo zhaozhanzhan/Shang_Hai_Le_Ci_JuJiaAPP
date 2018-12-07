@@ -19,7 +19,7 @@ export class ServiceNotification {
   public eTime: any = null; // 服务应结束时间
   public maxTime: any = null; // 服务最大提醒时间，未结束则服务异常
   public nowTime: any = null; // 服务开启后当前时间
-  public manyMin: any = 5; // 服务开启多少分钟后可以结束服务
+  public manyMin: any = 1; // 服务开启多少分钟后可以结束服务
   public xMin: any = 1; // 服务超出应结束时间时每隔多少分钟提醒一次
   public yRemind: any = 3; // 总共提醒y次
   public remindArr: any = []; // 提醒对象数组
@@ -27,7 +27,7 @@ export class ServiceNotification {
   public hours: any = "00"; // 时
   public minutes: any = "00"; // 分
   public seconds: any = "00"; // 秒
-  // public timerInter: any = null; // 定时器
+  public timerInter: any = null; // 定时器
 
   constructor(
     public nativeAudio: NativeAudio, // 音频播放
@@ -69,8 +69,6 @@ export class ServiceNotification {
       return false;
     } else {
       this.bTime = new Date(bTime).getTime();
-      this.calTimeStamp(); // 计算各种所需要的时间戳
-      this.getRemindArr(); // 获取提醒对象数组
       return true;
     }
   }
@@ -186,60 +184,184 @@ export class ServiceNotification {
     if (this.isTimingOpen) {
       console.error("定时服务已经开启！");
       return;
-    } else {
-      let timerInter = setInterval(() => {
-        // console.error("定时服务正在运行中。。。");
-        if (this.nowTime < this.eTime) {
-          // 现在时间小于服务应该结束时间
-          this.isTimingOpen = false; // 服务未开启
-          // window.clearInterval(timerInter); // 清除定时器
-        } else {
-          // 现在时间大于等于服务应该结束时间
-          this.isTimingOpen = true; // 服务已开启
-          if (
-            this.nowTime >
-            this.remindArr[this.remindArr.length - 1]["timeStamp"]
-          ) {
-            // 当前时间大于最大超出时间，直接结束服务
-            // TODO: 发送结束服务事件
-            console.error("当前时间大于最大超出时间，直接结束服务");
-            this.isTimingOpen = false; // 服务已关闭
-            console.error(timerInter);
-            // window.clearInterval(timerInter); // 清除定时器
-            return;
-          }
-          // let timePoint = null; // 当前时间处于哪一段
-          for (let i = 0; i < this.remindArr.length; i++) {
-            // if (
-            //   this.nowTime > this.remindArr[i]["timeStamp"] &&
-            //   i + 1 != this.remindArr.length &&
-            //   this.nowTime < this.remindArr[i + 1]["timeStamp"]
-            // ) {
-            //   timePoint = i;
-            //   console.error("timePoint", timePoint);
-            //   break;
-            // } else {
-            //   console.error("不在时间段范围内！");
+    }
+    let timePoint: any = null; // 当前时间处于哪一段
+    for (let i = 0; i < this.remindArr.length; i++) {
+      if (this.nowTime > this.remindArr[i]["timeStamp"]) {
+        timePoint = i;
+        // console.error("在范围内！" + " " + i);
+      } else {
+        // console.error("不在时间段范围内！" + " " + i);
+      }
+    }
+    // console.error("timePoint", timePoint);
+
+    if (timePoint == this.remindArr.length - 1) {
+      // 已经超出最大超时时间，直接结束服务
+      // console.error("当前时间大于最大超出时间，直接结束服务");
+      console.error("结束服务。。。");
+      this.isTimingOpen = false; // 服务已关闭
+      return;
+    }
+
+    window.clearInterval(this.timerInter); // 清除定时器
+    console.error("页面已经重载。。。");
+    this.timerInter = setInterval(() => {
+      // console.error("定时服务正在运行中。。。");
+      console.error("正在统计服务时间");
+      this.nowTime = new Date().getTime(); // 系统当前时间时间戳
+      if (this.nowTime < this.eTime) {
+        // 现在时间小于服务应该结束时间
+        this.isTimingOpen = false; // 服务未开启
+        // window.clearInterval(this.timerInter); // 清除定时器
+      } else {
+        // 现在时间大于等于服务应该结束时间
+        this.isTimingOpen = true; // 服务已开启
+        if (
+          this.nowTime > this.remindArr[this.remindArr.length - 1]["timeStamp"]
+        ) {
+          // 当前时间大于最大超出时间，直接结束服务
+          // TODO: 发送结束服务事件
+          // console.error("当前时间大于最大超出时间，直接结束服务");
+          console.error("结束服务。。。");
+          this.isTimingOpen = false; // 服务已关闭
+          console.error(this.timerInter);
+          window.clearInterval(this.timerInter); // 清除定时器
+          return;
+        }
+
+        for (let i = 0; i < this.remindArr.length; i++) {
+          if (this.nowTime > this.remindArr[i]["timeStamp"]) {
+            timePoint = i;
+            // console.error("在范围内！" + " " + i);
+            // break;
+          } else {
+            // if (timePoint == this.remindArr.length - 1) {
+            //   // 已经超出最大超时时间，直接结束服务
+            //   console.error("当前时间大于最大超出时间，直接结束服务");
             //   this.isTimingOpen = false; // 服务已关闭
-            //   clearInterval(this.timerInter); // 清除定时器
             //   return;
             // }
           }
-          for (let i = 0; i < this.remindArr.length; i++) {
-            if (
-              this.nowTime > this.remindArr[i]["timeStamp"] &&
-              this.remindArr[i]["state"] == false
-            ) {
-              this.remindArr[i]["state"] = true; // 改变当前时间状态为已提醒
-              console.error("this.remindArr", this.remindArr);
+        }
+
+        for (let i = 0; i < this.remindArr.length; i++) {
+          if (
+            this.nowTime > this.remindArr[i]["timeStamp"] &&
+            this.remindArr[i]["state"] == false
+          ) {
+            this.remindArr[i]["state"] = true; // 改变当前时间状态为已提醒
+            if (timePoint == i && i == this.remindArr.length - 1) {
+              // 是最后一次
+              // console.error("this.remindArr", this.remindArr);
+              // console.error("发送通知第" + (i + 1) + "次！");
               console.error("发送通知第" + (i + 1) + "次！");
+              console.error("结束服务。。。");
+              this.isTimingOpen = false; // 服务已关闭
+              console.error(this.timerInter);
+              window.clearInterval(this.timerInter); // 清除定时器
+              return;
+            } else {
+              // 不是最后一次通知
+              console.error("发送通知次！");
               break;
+              // console.error("当前时间大于最大超出时间，直接结束服务");
+              // console.error("结束服务。。。");
             }
           }
-          // console.error("this.remindArr", this.remindArr);
         }
-      }, 500);
-    }
+      }
+    }, 1000);
+
+    // if (this.isTimingOpen) {
+    //   // console.error("定时服务已经开启！");
+    //   return;
+    // } else {
+    // let timePoint: any = null; // 当前时间处于哪一段
+    // for (let i = 0; i < this.remindArr.length; i++) {
+    //   if (this.nowTime > this.remindArr[i]["timeStamp"]) {
+    //     timePoint = i;
+    //     // console.error("在范围内！" + " " + i);
+    //   } else {
+    //     // console.error("不在时间段范围内！" + " " + i);
+    //   }
+    // }
+    // // console.error("timePoint", timePoint);
+
+    // if (timePoint == this.remindArr.length - 1) {
+    //   // 已经超出最大超时时间，直接结束服务
+    //   // console.error("当前时间大于最大超出时间，直接结束服务");
+    //   console.error("结束服务。。。");
+    //   this.isTimingOpen = false; // 服务已关闭
+    //   return;
+    // }
+
+    // this.timerInter = setInterval(() => {
+    //   // console.error("定时服务正在运行中。。。");
+    //   if (this.nowTime < this.eTime) {
+    //     // 现在时间小于服务应该结束时间
+    //     this.isTimingOpen = false; // 服务未开启
+    //     // window.clearInterval(this.timerInter); // 清除定时器
+    //   } else {
+    //     // 现在时间大于等于服务应该结束时间
+    //     this.isTimingOpen = true; // 服务已开启
+    //     if (
+    //       this.nowTime >
+    //       this.remindArr[this.remindArr.length - 1]["timeStamp"]
+    //     ) {
+    //       // 当前时间大于最大超出时间，直接结束服务
+    //       // TODO: 发送结束服务事件
+    //       // console.error("当前时间大于最大超出时间，直接结束服务");
+    //       console.error("结束服务。。。");
+    //       this.isTimingOpen = false; // 服务已关闭
+    //       console.error(this.timerInter);
+    //       window.clearInterval(this.timerInter); // 清除定时器
+    //       return;
+    //     }
+
+    //     for (let i = 0; i < this.remindArr.length; i++) {
+    //       if (this.nowTime > this.remindArr[i]["timeStamp"]) {
+    //         timePoint = i;
+    //         // console.error("在范围内！" + " " + i);
+    //         // break;
+    //       } else {
+    //         // if (timePoint == this.remindArr.length - 1) {
+    //         //   // 已经超出最大超时时间，直接结束服务
+    //         //   console.error("当前时间大于最大超出时间，直接结束服务");
+    //         //   this.isTimingOpen = false; // 服务已关闭
+    //         //   return;
+    //         // }
+    //       }
+    //     }
+    //     console.error("正在统计服务时间");
+    //     for (let i = 0; i < this.remindArr.length; i++) {
+    //       if (
+    //         this.nowTime > this.remindArr[i]["timeStamp"] &&
+    //         this.remindArr[i]["state"] == false
+    //       ) {
+    //         this.remindArr[i]["state"] = true; // 改变当前时间状态为已提醒
+    //         if (timePoint == i && i == this.remindArr.length - 1) {
+    //           // 是最后一次
+    //           // console.error("this.remindArr", this.remindArr);
+    //           // console.error("发送通知第" + (i + 1) + "次！");
+    //           console.error("发送通知第" + (i + 1) + "次！");
+    //           console.error("结束服务。。。");
+    //           this.isTimingOpen = false; // 服务已关闭
+    //           console.error(this.timerInter);
+    //           window.clearInterval(this.timerInter); // 清除定时器
+    //           return;
+    //         } else {
+    //           // 不是最后一次通知
+    //           console.error("发送通知次！");
+    //           break;
+    //           // console.error("当前时间大于最大超出时间，直接结束服务");
+    //           // console.error("结束服务。。。");
+    //         }
+    //       }
+    //     }
+    //   }
+    // }, 1000);
+    // }
   }
 
   /**

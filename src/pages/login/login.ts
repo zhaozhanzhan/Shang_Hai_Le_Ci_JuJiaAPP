@@ -20,8 +20,8 @@ import { ForgetPasswordPage } from "./../forget-password/forget-password"; // �
 import { FastLoginPage } from "../fast-login/fast-login"; // 快速登录
 import { PushService } from "../../common/service/Push.Service";
 import { BackButtonService } from "../../common/service/BackButton.Service";
-// import { FormValidService } from "../../common/service/FormValid.Service";
 // import { MainPage } from "../main/main";
+// import { FormValidService } from "../../common/service/FormValid.Service";
 
 @Component({
   selector: "page-login",
@@ -31,6 +31,7 @@ export class LoginPage {
   @ViewChild(Content)
   content: Content;
 
+  public isRemPwd: boolean = true; // 定义是否记住密码
   public formData: FormGroup; // 定义表单对象
   constructor(
     public app: App, // 应用控制器
@@ -52,9 +53,9 @@ export class LoginPage {
     });
 
     this.formData = this.fb.group({
-      username: ["duhongmei", [Validators.required]], // 账号
+      username: ["", [Validators.required]], // 账号
       password: [
-        "123456",
+        "",
         [Validators.required, Validators.minLength(5), Validators.maxLength(16)]
       ] // 密码
     });
@@ -62,6 +63,7 @@ export class LoginPage {
 
   ionViewDidLoad() {
     //获取上一次登录的信息
+
     this.ionicStorage.get("loginInfo").then(loginObj => {
       console.error("loginInfo", loginInfo);
       if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
@@ -71,11 +73,16 @@ export class LoginPage {
           loginObj.LoginState == "success"
         ) {
           // 判断以前是否登录成功过
+          console.error(
+            "=================loginInfo=================",
+            loginInfo
+          );
+
           let loginHour = loginObj.LoginTime; // 登录成功小时数
           let curTime = new Date().getTime(); // 当前时间
           let interHour = Math.floor((curTime - loginHour) / 1000 / 3600); // 登录间隔小时数
           if (interHour < 24) {
-            // 间隔时间小于24小时,可自动登录,不需要得新登录
+            // 间隔时间小于24小时,可自动登录,不需要重新登录
             loginObj.LoginTime = new Date().getTime(); // 重置登录时间
             for (const key in loginObj) {
               // 更新全局信息对象
@@ -85,10 +92,18 @@ export class LoginPage {
             }
             this.ionicStorage.set("loginInfo", loginInfo); // 登录信息配置对象
             this.ionicStorage.set("userInfo", loginInfo["UserInfo"]); // 后台返回用户信息对象
+            this.navCtrl.setRoot("MainPage"); // 跳转到主页
             // this.jGPush.setTags(); // 极光推送设置标签 IOS或Android
             // this.jGPush.setAlias(loginInfo["UserInfo"]["id"]); // 极光推送设置别名用户唯一
             // this.jGPush.getRegistrationId(); // 获取设备唯一标识RegistrationId
-
+            // loginInfo.LoginState = "success"; // 登录状态
+            // loginInfo.LoginTime = new Date().getTime(); // 登录时间
+            // this.ionicStorage.get("loginInfo").then(loginObj => {
+            //   loginInfo.UserName = loginObj.UserName; // 用户名
+            //   loginInfo.Password = loginObj.Password; // 用户密码
+            // });
+            // this.ionicStorage.set("userInfo", loginInfo["UserInfo"]); // 后台返回用户信息对象
+            // this.ionicStorage.set("loginInfo", loginInfo); // 登录信息配置对象
             // this.updateUserInfo(
             //   loginInfo["UserInfo"]["id"],
             //   () => {
@@ -115,10 +130,12 @@ export class LoginPage {
           } else {
             // 需要重新登录
             this.clearLogin(); // 清除登录信息
+            // this.navCtrl.setRoot(LoginPage); // 跳转到主页
           }
         } else {
           // 以前未登录过
           this.clearLogin(); // 清除登录信息
+          // this.navCtrl.setRoot(LoginPage); // 跳转到主页
         }
       }
     });
@@ -132,6 +149,11 @@ export class LoginPage {
         if (!_.isNull(loginObj.UserName)) {
           GlobalMethod.setForm(this.formData, {
             username: loginInfo["UserName"]
+          }); // 重新设置表单
+        }
+        if (!_.isNull(loginObj.Password)) {
+          GlobalMethod.setForm(this.formData, {
+            password: loginInfo["Password"]
           }); // 重新设置表单
         }
       }
@@ -164,6 +186,14 @@ export class LoginPage {
   }
 
   /**
+   * 切换记住密码状态
+   * @memberof LoginPage
+   */
+  public toggleRemPwd() {
+    this.isRemPwd = !this.isRemPwd;
+  }
+
+  /**
    * 打开新页面
    * @param {*} pageName 页面组件类名称
    * @memberof LoginPage
@@ -178,7 +208,11 @@ export class LoginPage {
    */
   public clearLogin() {
     for (const key in loginInfo) {
-      if (loginInfo.hasOwnProperty(key) && key !== "UserName") {
+      if (
+        loginInfo.hasOwnProperty(key) &&
+        key !== "UserName" &&
+        key !== "Password"
+      ) {
         loginInfo[key] = null;
       }
     }
@@ -211,6 +245,7 @@ export class LoginPage {
     const newFormData: any = {};
     newFormData.__login = true;
     newFormData.__ajax = "json";
+    newFormData.param_deviceType = "mobileApp"; // APP标识符
     newFormData.username = window["DesUtils"].encode(
       formData.username,
       desConfig.key
@@ -235,7 +270,12 @@ export class LoginPage {
         loginInfo.LoginState = "success"; // 登录状态
         loginInfo.LoginTime = new Date().getTime(); // 登录时间
         loginInfo.UserName = formData.username; // 用户名
-        loginInfo.Password = formData.password; // 用户密码
+        if (this.isRemPwd) {
+          // 是否记住密码
+          loginInfo.Password = formData.password; // 用户密码
+        } else {
+          loginInfo.Password = null; // 清除密码
+        }
         loginInfo.UserInfo = data["data"]; // 后台返回用户信息对象
         if (
           data["data"] &&

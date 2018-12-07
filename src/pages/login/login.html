@@ -53,6 +53,21 @@
                             </ion-col>
                         </ion-row>
                     </div>
+                    <div class="mt15 pl15">
+                        <div class="checkbox-wrap disFlex" (click)="toggleRemPwd()">
+                            <div class="flexBasis20 pt1">
+                                <div class="checkbox-box" [ngClass]="{'active': isRemPwd}">
+                                    <div class="checkbox-box-inner" [ngClass]="{' checkbox-box-check': isRemPwd}"></div>
+                                </div>
+                                <input type="checkbox" class="checkbox-base" />
+                            </div>
+                            <label class="checkbox-label flexGrow1 pl5">
+                                <div class="disFlex">
+                                    <span>记住密码</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
                     <!-- <ion-row>
                         <ion-col>
                             <p text-left>
