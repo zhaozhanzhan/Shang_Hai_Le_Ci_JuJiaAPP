@@ -16,14 +16,14 @@ import { Storage } from "@ionic/storage";
 import { NFC } from "@ionic-native/nfc"; // NFC
 import _ from "underscore"; // 工具类
 import { GlobalService } from "../../common/service/GlobalService";
-// import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-// import { FormValidService } from "../../common/service/FormValid.Service";
-// import { JsUtilsService } from "../../common/service/JsUtils.Service";
-// import { GlobalMethod } from "../../common/service/GlobalMethod";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
 import { ParamService } from "../../common/service/Param.Service";
 import { ServiceNotification } from "../../common/service/ServiceNotification";
 import { loginInfo } from "../../common/config/BaseConfig";
+// import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+// import { FormValidService } from "../../common/service/FormValid.Service";
+// import { JsUtilsService } from "../../common/service/JsUtils.Service";
+// import { GlobalMethod } from "../../common/service/GlobalMethod";
 
 @Component({
   selector: "page-home",
@@ -37,6 +37,7 @@ export class HomePage {
   public noHandleOrderNum: any = null; // 未处理订单数量
   public isOpenSer: boolean = false; // 是否已经开启服务
   public nfcId: any = null; // 是否已经开启服务
+  public workID: any = null; // 服务ID
   public timerInter: any = null; // 定时器
 
   // public beginTime: any = null; // 服务开始时间
@@ -94,8 +95,17 @@ export class HomePage {
                   data["data"]["workDetailObj"]["startTime"]
                 ) {
                   this.nfcId = data["data"]["workDetailObj"]["nfcNo"];
+                  this.workID = data["data"]["workDetailObj"]["workID"];
                   const bTime = data["data"]["workDetailObj"]["startTime"];
+                  this.serNotifi.setManyMin(
+                    data["data"]["workDetailObj"]["maxWorktime"]
+                  );
+                  this.serNotifi.setXMin(
+                    data["data"]["workDetailObj"]["warnFrequency"]
+                  );
 
+                  this.serNotifi.setNfcNo(this.nfcId);
+                  this.serNotifi.setWorkId(this.workID);
                   this.serNotifi.bTimeStamp(bTime); // 将开始时间转换为时间戳
                   this.serNotifi.calTimeStamp(); // 计算各种所需要的时间戳
                   this.serNotifi.getRemindArr(); // 获取提醒对象数组
@@ -110,57 +120,6 @@ export class HomePage {
                     this.serNotifi.openServer(); // 开启定时服务
                     // this.serNotifi.startWatch(data => {}); // 开启时长计时
                   }); // 获取服务时长服务
-
-                  // this.serNotifi.openServer();
-                  // const beginTimeStr =
-                  //   data["data"]["workDetailObj"]["startTime"];
-                  // this.beginTime = new Date(beginTimeStr).getTime(); // 服务开始时间时间戳
-                  // this.endTime = this.beginTime + this.manyMinutes * 60 * 1000;
-                  // console.error(
-                  //   "this.beginTime,this.endTime",
-                  //   this.beginTime,
-                  //   this.endTime
-                  // );
-                  // this.maxTime =
-                  //   this.endTime +
-                  //   this.totalRemind * this.remindMinutes * 60 * 1000; // 最大超时时间戳
-                  // this.nowTime = new Date().getTime(); // 系统当前时间时间戳
-                  // this.remindNum = this.totalRemind; // 剩于提醒次数初始化为总提醒数
-                  // if (this.nowTime < this.endTime) {
-                  //   // 现在时间小于服务应该结束时间
-                  //   // 不处理
-                  // } else if (this.nowTime == this.endTime) {
-                  //   // 现在时间等于服务应该结束时间
-                  //   // 开始提醒一次
-                  // } else if (this.nowTime > this.endTime) {
-                  //   // 现在时间大于服务应该结束时间
-                  //   this.remindTimeArr.push(this.endTime);
-                  //   for (let i = 1; i <= this.totalRemind; i++) {
-                  //     const timeStamp =
-                  //       this.endTime + i * this.remindMinutes * 60 * 1000;
-                  //     this.remindTimeArr.push(timeStamp);
-                  //   }
-                  //   console.error("this.remindTimeArr", this.remindTimeArr);
-                  //   let subsection: any = null; // 当前处于第几段
-                  //   for (let i = 0; i < this.remindTimeArr.length; i++) {
-                  //     if (this.nowTime > this.remindTimeArr[i]) {
-                  //       // 当前时间大于某个点
-                  //       subsection = i;
-                  //       break;
-                  //     } else {
-                  //       // 当前时间小于等于某个点
-                  //       this.remindNum--;
-                  //     }
-                  //   }
-                  // }
-                  // const timeVal = this.calTime(this.beginTime, this.endTime);
-                  // const isStart = this.getDuration(timeVal);
-                  // if (isStart) {
-                  //   this.startWatch();
-                  // }
-                  // if (true) {
-                  //   this.startWatch();
-                  // }
                 }
               } else {
                 this.isOpenSer = false;
@@ -336,6 +295,7 @@ export class HomePage {
    */
   public startWatch() {
     const that = this;
+    window.clearInterval(this.timerInter);
     this.timerInter = setInterval(() => {
       let hours: any = parseInt(this.hours);
       let minutes: any = parseInt(this.minutes);

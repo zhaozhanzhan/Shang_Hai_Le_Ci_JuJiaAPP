@@ -18,6 +18,7 @@ import { NFC } from "@ionic-native/nfc"; // NFC
 import { GlobalService } from "../../common/service/GlobalService";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
 import { loginInfo } from "../../common/config/BaseConfig";
+import { ServiceNotification } from "../../common/service/ServiceNotification";
 // import moment from "moment"; // 时间格式化插件
 // import { FormBuilder } from "@angular/forms";
 // import { JsUtilsService } from "../../common/service/JsUtils.Service";
@@ -29,6 +30,8 @@ import { loginInfo } from "../../common/config/BaseConfig";
   templateUrl: "service-conduct.html"
 })
 export class ServiceConductPage {
+  public nfcId: any = null; // 是否已经开启服务
+  public workID: any = null; // 服务ID
   public formData: any = {}; // 数据信息
   public formInfo: any = {}; // 数据信息
   public beginDura: any = "00:00:00"; // 开始时长
@@ -49,7 +52,8 @@ export class ServiceConductPage {
     public platform: Platform, // 获取平台信息
     public alertCtrl: AlertController, // Alert消息弹出框
     public events: Events, // 事件发布与订阅
-    public nfc: NFC // NFC
+    public nfc: NFC, // NFC
+    public serNotifi: ServiceNotification // 服务开启定时通知关闭
   ) {
     this.ionicStorage.get("loginInfo").then(loginObj => {
       if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
@@ -64,6 +68,8 @@ export class ServiceConductPage {
             sendData,
             data => {
               if (data["data"] && data["data"]["result"] == 0) {
+                this.nfcId = data["data"]["workDetailObj"]["nfcNo"];
+                this.workID = data["data"]["workDetailObj"]["workID"];
                 this.formData = data["data"]["workDetailObj"];
                 this.formData.serverItemDetail = this.formData.serverItemDetail
                   .split("/")
@@ -73,8 +79,23 @@ export class ServiceConductPage {
                 const eTime = new Date();
                 const timeVal = this.calTime(bTime, eTime);
                 const isStart = this.getDuration(timeVal);
+
+                this.serNotifi.setManyMin(
+                  data["data"]["workDetailObj"]["maxWorktime"]
+                );
+                this.serNotifi.setXMin(
+                  data["data"]["workDetailObj"]["warnFrequency"]
+                );
+
+                this.serNotifi.setNfcNo(this.nfcId);
+                this.serNotifi.setWorkId(this.workID);
+                this.serNotifi.bTimeStamp(bTime); // 将开始时间转换为时间戳
+                this.serNotifi.calTimeStamp(); // 计算各种所需要的时间戳
+                this.serNotifi.getRemindArr(); // 获取提醒对象数组
+
                 if (isStart) {
                   this.startWatch();
+                  this.serNotifi.openServer(); // 开启定时服务
                   this.initNfcListener(); // 初始化NFC监听
 
                   //=================订阅NFC扫描成功事件 Begin=================//

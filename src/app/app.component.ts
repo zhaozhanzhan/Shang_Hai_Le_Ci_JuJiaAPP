@@ -1,3 +1,4 @@
+import { loginInfo } from "./../common/config/BaseConfig";
 import { Component, ViewChild, AfterViewInit } from "@angular/core";
 import {
   Nav,
@@ -27,7 +28,6 @@ import { AppUpdateService } from "../common/service/AppUpdate.Service";
 import { SelectCityService } from "../common/service/SelectCity.Service";
 import { LocalNotifications } from "@ionic-native/local-notifications";
 import { ServiceNotification } from "../common/service/ServiceNotification";
-import { loginInfo } from "../common/config/BaseConfig";
 
 declare var cordova: any; //导入第三方的库定义到 TS 项目中
 
@@ -91,6 +91,7 @@ export class MyApp implements AfterViewInit {
       this.splashScreen.hide();
       // }, 1000);
       this.jGPush.initJpush(); // 初始化极光推送
+      this.serNotifi.initSerNotif(); // 初始化护工服务时长通知
 
       //=================是否第一次开启应用 Begin=================//
       this.ionicStorage.get("isOpen").then(result => {
@@ -280,6 +281,40 @@ export class MyApp implements AfterViewInit {
         this.exitLogin(); // 退出登录
       });
       //=================订阅全局退出通知事件 End=================//
+
+      //=================订阅全局服务结束事件 Begin=================//
+      this.events.subscribe("serviceEndEvent", data => {
+        console.error("nfcNo", data.nfcNo);
+        console.error("workId", data.workId);
+        // console.error("loginId", loginInfo.LoginId);
+        // const loginId = loginInfo.LoginId;
+        // const workId = loginInfo.LoginId;
+        const sendData: any = {};
+        if (_.isString(data.workId) && data.workId.length > 0) {
+          sendData.id = data.workId;
+        } else {
+          this.gloService.showMsg("未获取到用户ID");
+          return;
+        }
+        if (_.isString(data.nfcNo) && data.nfcNo.length > 0) {
+          sendData.nfcNo = data.nfcNo;
+        } else {
+          this.gloService.showMsg("未获取到NFC标签");
+          return;
+        }
+        this.httpReq.get(
+          "home/a/home/homeServerWork/abnormalEnd",
+          sendData,
+          data => {
+            if (data["data"] && data["data"]["result"] == 0) {
+              this.serNotifi.closeServer(); // 关闭定时服务
+              this.app.getActiveNavs()[0].setRoot("MainPage");
+            }
+          }
+        );
+        // this.app.getActiveNavs()[0].setRoot("MainPage");
+      });
+      //=================订阅全局服务结束事件 End=================//
     });
   }
 
