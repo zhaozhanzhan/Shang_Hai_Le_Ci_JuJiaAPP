@@ -161,7 +161,7 @@ configurations.all {
     <auto-download enabled="true" />
     <auto-install enabled="true" />
     <local-development enabled="true" />
-    <native-interface version="1" />
+    <native-interface version="2" />
 </chcp>
     ionic build --prod
 

@@ -118,6 +118,7 @@ export class HomePage {
                     this.seconds = data.seconds;
                     this.startWatch();
                     this.serNotifi.openServer(); // 开启定时服务
+                    this.serNotifi.clickNotifi(); // 单击通知
                     // this.serNotifi.startWatch(data => {}); // 开启时长计时
                   }); // 获取服务时长服务
                 }

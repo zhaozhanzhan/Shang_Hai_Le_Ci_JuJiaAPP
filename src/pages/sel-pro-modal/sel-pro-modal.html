@@ -1,20 +1,20 @@
 <ion-content class="h100p contentBg" (click)="closeModal()">
     <div class="h100p w100p">
-        <div class="w100p h100p posRel">
-            <div class="posAbs w60p h30p bgcFFF l0 r0 t0 b0 ma overflowH">
-                <div class="posRel h100p w100p">
-                    <div class="posAbs h100p w100p disFlex justConC aligIteC">
+        <div class="w100p h100p disFlex justConC aligIteC">
+            <div class="w60p bgcFFF borRadius10 overflowH">
+                <div class="w100p">
+                    <div class="w100p disFlex justConC aligIteC">
                         <div class="w100p h100p disFlex flexDirC justConSB">
-                            <div class="h80 bgcFFE1D2 w100p disFlex flexDirC justConSA">
+                            <div class="h80 modalBg2 w100p disFlex flexDirC justConSA colorFFF">
                                 <div class="pl5">
-                                    <span class="ftz18">您当前选择的是：</span>
+                                    <span class="ftz16">您当前选择的是：</span>
                                 </div>
                                 <div class="pl10">
-                                    <span class="ftz18">{{hierarchy}}</span>
-                                </div>          
+                                    <span class="ftz16">{{hierarchy}}</span>
+                                </div>
                             </div>
-                            <div class="h50 bgc0FF w100p disFlex justConC aligIteC" [ngClass]="{'bgc0FF':x.billingMethodValue == 1,'bgcEBFFF5':x.billingMethodValue == 2}"  *ngFor="let x of typeArr;let i = index;" (click)="selType($event,x.billingMethodValue==1?'hour':'number')">
-                              <span class="ftz22 ftwB">{{x.billingMethodLabel}}</span>
+                            <div class="h50 w100p disFlex justConC aligIteC" [ngClass]="{'modalBg1':x.billingMethodValue == 1,'modalBg4':x.billingMethodValue == 2}" *ngFor="let x of typeArr;let i = index;" (click)="selType($event,x.billingMethodValue==1?'hour':'number')">
+                                <span class="ftz22 ftwB colorFFF">{{x.billingMethodLabel}}</span>
                             </div>
                             <!-- <div class="h50 bgc0FF w100p disFlex justConC aligIteC" (click)="selType($event,'hour')">
                                 <span class="ftz22 ftwB">计时</span>

@@ -96,6 +96,7 @@ export class ServiceConductPage {
                 if (isStart) {
                   this.startWatch();
                   this.serNotifi.openServer(); // 开启定时服务
+                  this.serNotifi.clickNotifi(); // 单击通知
                   this.initNfcListener(); // 初始化NFC监听
 
                   //=================订阅NFC扫描成功事件 Begin=================//

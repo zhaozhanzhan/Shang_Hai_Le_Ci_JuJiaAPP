@@ -307,12 +307,28 @@ export class MyApp implements AfterViewInit {
           sendData,
           data => {
             if (data["data"] && data["data"]["result"] == 0) {
-              this.serNotifi.closeServer(); // 关闭定时服务
               this.app.getActiveNavs()[0].setRoot("MainPage");
+              this.serNotifi.closeServer(); // 关闭定时服务
             }
           }
         );
         // this.app.getActiveNavs()[0].setRoot("MainPage");
+      });
+
+      this.events.subscribe("notifiClickEvent", data => {
+        this.ionicStorage.get("loginInfo").then(loginObj => {
+          console.error("loginInfo", loginInfo);
+          if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
+            // 判断是否是空对象
+            if (
+              !_.isNull(loginObj.LoginState) &&
+              loginObj.LoginState == "success"
+            ) {
+              this.app.getActiveNavs()[0].setRoot("MainPage");
+              this.app.getActiveNavs()[0].push("ServiceConductPage"); // 跳转到登录页面
+            }
+          }
+        });
       });
       //=================订阅全局服务结束事件 End=================//
     });

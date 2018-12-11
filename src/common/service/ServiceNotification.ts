@@ -142,7 +142,7 @@ export class ServiceNotification {
     if (!(this.plt.is("ios") || this.plt.is("android"))) {
       return;
     }
-    this.nativeAudio.preloadSimple("overtime", "assets/wav/overtime.wav").then(
+    this.nativeAudio.preloadSimple("overtime", "assets/wav/overtime4.mp3").then(
       suc => {
         console.error("overtime音频文件预加载成功！", suc);
       },
@@ -294,7 +294,7 @@ export class ServiceNotification {
       id: 1,
       title: "居家APP",
       text: "服务时间已到达，可关闭服务！",
-      sound: "file://assets/wav/overtime.wav"
+      sound: "file://assets/wav/overtime4.mp3"
     });
     this.vibration.vibrate([2000, 1000, 2000]); // 震动手机
     // this.events.publish("jpush.receiveNotification");
@@ -395,8 +395,12 @@ export class ServiceNotification {
               return;
             } else {
               // 不是最后一次通知
-              this.voiceVibrate(); // 声音与震动
-              console.error("发送通知次！");
+              if (timePoint == i) {
+                this.voiceVibrate(); // 声音与震动
+                console.error("发送未过时通知！");
+              } else {
+                console.error("发送已过时通知！");
+              }
               break;
               // console.error("当前时间大于最大超出时间，直接结束服务");
               // console.error("结束服务。。。");
@@ -424,9 +428,20 @@ export class ServiceNotification {
    * @memberof ServiceNotification
    */
   public publishExcEvent() {
+    this.localNotif.clearAll();
     this.events.publish("serviceEndEvent", {
       nfcNo: this.nfcNo,
       workId: this.workId
+    });
+  }
+
+  /**
+   * 单击通知
+   * @memberof ServiceNotification
+   */
+  public clickNotifi() {
+    this.localNotif.on("click").subscribe(result => {
+      this.events.publish("notifiClickEvent");
     });
   }
 }
