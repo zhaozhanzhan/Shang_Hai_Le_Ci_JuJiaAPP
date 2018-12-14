@@ -10,6 +10,7 @@ import { AppUpdateService } from "./service/AppUpdate.Service";
 import { SelectCityService } from "./service/SelectCity.Service";
 import { PipesModule } from "./pipe/pipes.module";
 import { ComponentsModule } from "./component/components.module";
+import { FilePreviewService } from "./service/FilePreview.Service";
 import { ServiceNotification } from "./service/ServiceNotification";
 @NgModule({
   imports: [PipesModule, ComponentsModule],
@@ -26,6 +27,7 @@ import { ServiceNotification } from "./service/ServiceNotification";
     BackButtonService,
     AppUpdateService,
     SelectCityService,
+    FilePreviewService,
     ServiceNotification
   ]
 })

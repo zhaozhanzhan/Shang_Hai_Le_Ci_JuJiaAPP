@@ -2,7 +2,7 @@
 <ion-header>
     <ion-navbar color="main">
         <ion-title>注册</ion-title>
-        <ion-buttons start (click)="navCtrl.pop()">
+        <ion-buttons start (click)="navCtrl.canGoBack()?navCtrl.pop():''">
             <button ion-button>
                 <span color="primary" showWhen="ios,android,windows">返回</span>
                 <!-- <ion-icon name="arrow-back" showWhen="ios,android,windows"></ion-icon> -->

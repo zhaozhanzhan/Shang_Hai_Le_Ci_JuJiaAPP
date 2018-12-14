@@ -40,7 +40,7 @@ export class GlobalService {
       time = 3000;
     }
     if (!pos) {
-      pos = "top";
+      pos = "middle";
     }
 
     let toast = this.toastCtrl.create({

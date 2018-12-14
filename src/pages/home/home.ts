@@ -48,7 +48,7 @@ export class HomePage {
   // public remindMinutes: any = 1; // 每隔几分钟提醒
   // public remindTimeArr: any = []; // 提醒时间点时间戳数组
   // public totalRemind: any = 3; // 总提醒次数
-  // public remindNum: any = null; // 剩于提醒次数
+  // public remindNum: any = null; // 剩余提醒次数
   public beginDura: any = "00:00:00"; // 时长
   public hours: any = "00"; // 时
   public minutes: any = "00"; // 分

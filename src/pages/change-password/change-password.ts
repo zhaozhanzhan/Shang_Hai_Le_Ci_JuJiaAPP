@@ -116,7 +116,7 @@ export class ChangePasswordPage {
       return;
     }
 
-    this.remnantTime = this.smsTime; // 初始化剩于时间
+    this.remnantTime = this.smsTime; // 初始化剩余时间
     const phoneObj = {
       phone: this.formData.get("phoneNum").value
     };

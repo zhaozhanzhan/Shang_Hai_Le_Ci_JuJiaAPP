@@ -75,7 +75,7 @@ export class ForgetPasswordPage {
       return;
     }
 
-    this.remnantTime = this.smsTime; // 初始化剩于时间
+    this.remnantTime = this.smsTime; // 初始化剩余时间
     const phoneObj: any = {
       phone: this.formData.get("phoneNum").value
     };

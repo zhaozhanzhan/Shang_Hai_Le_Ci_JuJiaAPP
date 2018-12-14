@@ -23,10 +23,10 @@ export class AppUpdateService {
     public app: App,
     public platform: Platform, // 判断平台
     public gloService: GlobalService, // 全局自定义服务
-    private file: File, // 文件
-    private transfer: FileTransfer, // 文件上传
+    public file: File, // 文件
+    public transfer: FileTransfer, // 文件上传下载
     // private fileOpener: FileOpener, // 打开文件
-    private alertCtrl: AlertController // private filePath: FilePath, // 文件路径
+    public alertCtrl: AlertController // private filePath: FilePath, // 文件路径
   ) {
     console.error("===============AppUpdateService=====================");
     console.error("this=======", this);
@@ -252,7 +252,7 @@ export class AppUpdateService {
                 "application/vnd.android.package-archive",
                 {
                   //以APK文件方式打开
-                  error: err => {
+                  error: (err: any) => {
                     this.gloService.showMsg("打开更新包失败", null, 2000);
                     console.error("打开失败err", err);
                   },
@@ -274,17 +274,25 @@ export class AppUpdateService {
       });
 
     // 文件下载进度,注册每当传输新数据块时调用的侦听器
+    let downNum: any = 0;
     fileTransfer.onProgress(progressEvent => {
       let downloadProgress = (
         (progressEvent.loaded / progressEvent.total) *
         100
       ).toFixed(2);
       // console.error("已下载:" + downloadProgress);
-      loading.setContent("已下载:" + downloadProgress + "%");
+      downNum = parseFloat(downloadProgress);
+      // loading.setContent("已下载:" + downloadProgress + "%");
       if (parseFloat(downloadProgress) > 99) {
         loading.dismiss();
       }
     });
+    let timer: any = setInterval(() => {
+      loading.setContent("已下载:" + downNum + "%");
+      if (parseFloat(downNum) > 99) {
+        window.clearInterval(timer);
+      }
+    }, 1000);
   }
 
   /**

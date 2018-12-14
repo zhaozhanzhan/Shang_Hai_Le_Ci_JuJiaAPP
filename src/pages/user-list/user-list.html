@@ -9,7 +9,7 @@
             </button>
         </ion-buttons>
         <ion-buttons end>
-            <button ion-button class="pr10" (click)="navCtrl.pop()">
+            <button ion-button class="pr10" (click)="navCtrl.canGoBack()?navCtrl.pop():''">
                 <span showWhen="android,windows,ios">返回</span>
                 <!-- <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon> -->
             </button>
@@ -60,7 +60,7 @@
                                 <span class="ftz14 colorFFF">应服务：{{x?.userWorktimeObj?.workTimeTotal | number:'1.0-0'}}&nbsp;分钟</span>
                             </div>
                             <div class="ml20">
-                                <span class="ftz14 colorFFF">剩于时长：{{x?.userWorktimeObj?.workTimeRest | number:'1.0-0'}}&nbsp;分钟</span>
+                                <span class="ftz14 colorFFF">剩余时长：{{x?.userWorktimeObj?.workTimeRest | number:'1.0-0'}}&nbsp;分钟</span>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                                 <span class="ftz14 colorFFF">服务金额：{{x?.userWorktimeObj?.workMoneyTotal}}&nbsp;元</span>
                             </div>
                             <div class="ml20">
-                                <span class="ftz14 colorFFF">剩于金额：{{x?.userWorktimeObj?.workMoneyRest}}&nbsp;元</span>
+                                <span class="ftz14 colorFFF">剩余金额：{{x?.userWorktimeObj?.workMoneyRest}}&nbsp;元</span>
                             </div>
                         </div>
                     </div>

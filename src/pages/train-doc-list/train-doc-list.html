@@ -1,0 +1,109 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="orange" hideBackButton="true">
+        <ion-title>培训资料</ion-title>
+        <ion-buttons start>
+            <button ion-button class="pl10" (click)="backHome()">
+                <!-- <span color="primary" showWhen="ios">返回</span> -->
+                <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button class="pr10" (click)="navCtrl.canGoBack()?navCtrl.pop():''">
+                <span showWhen="android,windows,ios">返回</span>
+                <!-- <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon> -->
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar no-padding class="h50">
+        <div class="h50">
+            <div class="h100p borBS39B5EC">
+                <div class="disFlex justConSA aligIteC h100p">
+                    <div class="">
+                        <span class="color39B5EC ftz16 ftwB">文件名</span>
+                    </div>
+                    <div class="">
+                        <span class="color39B5EC ftz16 ftwB">发布时间</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-toolbar>
+</ion-header>
+<!-- 导航条区域 End -->
+
+
+<!-- 页面内容区域 Begin -->
+<ion-content no-padding>
+    <!-- 下拉刷新控制元素Begin -->
+    <ion-refresher (ionRefresh)="downRefresh($event,reqUrl,sendData)">
+        <ion-refresher-content pullingIcon="arrow-down" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="正在加载">
+        </ion-refresher-content>
+    </ion-refresher>
+    <!-- 下拉刷新控制元素End -->
+
+    <div class="">
+        <!-- *ngFor="let x of dataList;let i = index;" (click)="jumpPage('UserDetailPage',{id:x.userID})" -->
+        <div class="">
+            <div class="w100p cardBg4 h40" (click)="openBrowser()">
+                <div class="h100p">
+                    <div class="disFlex justConSB aligIteC h100p">
+                        <div class="flexShrink1 txtEll pl10">
+                            <span class="colorFFF ftz14 ftwB">1、资料培训培训资料培训资料培训资料培训资料培训资料资料培训资料培训资料.pdf</span>
+                        </div>
+                        <div class="flexShrink0 pr10 ml10">
+                            <span class="colorFFF ftz14 ftwB">2018/07/30 09:29</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w100p cardBg2 h40">
+                <div class="h100p">
+                    <div class="disFlex justConSB aligIteC h100p">
+                        <div class="flexShrink1 txtEll pl10">
+                            <span class="colorFFF ftz14 ftwB">1、培训资料培训资料培训资培训资资料培训资料培训资料.pdf</span>
+                        </div>
+                        <div class="flexShrink0 pr10 ml10">
+                            <span class="colorFFF ftz14 ftwB">2018/07/30 09:29</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w100p cardBg4 h40">
+                <div class="h100p">
+                    <div class="disFlex justConSB aligIteC h100p">
+                        <div class="flexShrink1 txtEll pl10">
+                            <span class="colorFFF ftz14 ftwB">1、培训资料培训资料培训资料培训资料.pdf</span>
+                        </div>
+                        <div class="flexShrink0 pr10 ml10">
+                            <span class="colorFFF ftz14 ftwB">2018/07/30 09:29</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w100p cardBg2 h40">
+                <div class="h100p">
+                    <div class="disFlex justConSB aligIteC h100p">
+                        <div class="flexShrink1 txtEll pl10">
+                            <span class="colorFFF ftz14 ftwB">1、培训资料料料培训资料.pdf</span>
+                        </div>
+                        <div class="flexShrink0 pr10 ml10">
+                            <span class="colorFFF ftz14 ftwB">2018/07/30 09:29</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 上拉加载控制元素Begin -->
+    <ion-infinite-scroll (ionInfinite)="upLoad($event,reqUrl,sendData)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载更多数据..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <ion-row [hidden]="!isShowNoData" padding-bottom>
+        <ion-col col-12 text-center>
+            <span class="ftz16">没有更多数据</span>
+        </ion-col>
+    </ion-row>
+    <!-- 上拉加载控制元素End -->
+</ion-content>
+<!-- 页面内容区域 End -->

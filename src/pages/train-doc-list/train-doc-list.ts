@@ -17,16 +17,18 @@ import { GlobalMethod } from "../../common/service/GlobalMethod";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
 import { pageObj } from "../../common/config/BaseConfig";
 import { ParamService } from "../../common/service/Param.Service";
+import { InAppBrowser } from "@ionic-native/in-app-browser";
+import { FilePreviewService } from "../../common/service/FilePreview.Service";
 // import { JsUtilsService } from "../../common/service/JsUtils.Service";
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
 
 @IonicPage()
 @Component({
-  selector: "page-train-meeting-list",
-  templateUrl: "train-meeting-list.html"
+  selector: "page-train-doc-list",
+  templateUrl: "train-doc-list.html"
 })
-export class TrainMeetingListPage {
+export class TrainDocListPage {
   @ViewChild(Content)
   content: Content;
   public reqUrl: string = "consignee/listForWorker"; // 请求数据URL
@@ -40,13 +42,14 @@ export class TrainMeetingListPage {
     // private jsUtil: JsUtilsService, // 自定义JS工具类
     public navCtrl: NavController, // 导航控制器
     public navParams: NavParams, // 导航参数传递控制
-    private httpReq: HttpReqService, // Http请求服务
-    private ionicStorage: Storage, // IonicStorage
+    public httpReq: HttpReqService, // Http请求服务
+    public ionicStorage: Storage, // IonicStorage
     public gloService: GlobalService, // 全局自定义服务
+    public filePrevService: FilePreviewService, // PDF文件查看服务
     public actionSheetCtrl: ActionSheetController, // 操作表控制器
     public platform: Platform, // 获取平台信息
     public alertCtrl: AlertController, // Alert消息弹出框
-    private globalService: GlobalService
+    public iab: InAppBrowser // 打开内置浏览器
   ) {}
 
   ionViewDidLoad() {
@@ -265,7 +268,7 @@ export class TrainMeetingListPage {
    * @memberof ConsignorListPage
    */
   public clickDelBtn(id: any, arr: any, index: number): void {
-    this.globalService.delAlert(
+    this.gloService.delAlert(
       () => {
         console.error(id, arr, index);
         this.delFun(id, arr, index);
@@ -311,5 +314,46 @@ export class TrainMeetingListPage {
         console.error("下拉刷新请求数据失败");
       }
     );
+  }
+
+  /**
+   * 打开浏览器
+   * @memberof TrainDocListPage
+   */
+  public openBrowser() {
+    const fileUrl: string =
+      "http://139.224.12.181:9527/JuJiaAppDownload/11.pdf";
+    this.filePrevService.previewFile(fileUrl);
+    // this.filePrevService.checkIsHasFile("update1.5.0.apk").then(
+    //   suc => {
+    //     console.error("找到update1.5.0.apk文件");
+    //   },
+    //   err => {
+    //     console.error("未找到update1.5.0.apk文件");
+    //   }
+    // );
+    // filesystem: {
+    //   name: "sdcard"
+    //   root: DirectoryEntry
+    // }
+    // fullPath: "/updatePackage/update1.5.0.apk"
+    // isDirectory: false
+    // isFile: true
+    // name: "update1.5.0.apk"
+    // nativeURL: "file:///storage/emulated/0/updatePackage/update1.5.0.apk"
+
+    // const browser = this.iab.create(
+    //   "http://139.224.12.181:9527/JuJiaAppDownload/11.pdf",
+    //   "_system"
+    // );
+    // browser.on("loadstop").subscribe(event => {
+    //   // browser.insertCSS({ code: "body{color: red;" });
+    // });
+    // browser.on("loadstop").subscribe(event => {
+    //   // setTimeout(() => {
+    //   //   browser.close();
+    //   // }, 3000);
+    //   // browser.insertCSS({ code: "body{color: red;" });
+    // });
   }
 }

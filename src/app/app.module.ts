@@ -18,8 +18,10 @@ import { LocalNotifications } from "@ionic-native/local-notifications"; // 本�
 import { NativeAudio } from "@ionic-native/native-audio"; // 音频播放
 import { Vibration } from "@ionic-native/vibration"; // 震动插件
 import { QRScanner } from "@ionic-native/qr-scanner"; // 条码、二维码扫描
+import { AppAvailability } from "@ionic-native/app-availability"; // 检查用户设备安装了某应用程序
 import { AndroidPermissions } from "@ionic-native/android-permissions"; // Android权限控制
 import { OpenNativeSettings } from "@ionic-native/open-native-settings"; // 系统设置
+import { InAppBrowser } from "@ionic-native/in-app-browser"; // 打开浏览器
 import { CommonServiceModule } from "../common/common.module"; // 全局自定义公共服务模块
 import { MultiPickerModule } from "ion-multi-picker"; // 多级选择器
 import { MainPageModule } from "../pages/main/main.module";
@@ -72,6 +74,8 @@ import { FastLoginPage } from "../pages/fast-login/fast-login"; // 快速登录
     Vibration, // 震动插件
     QRScanner, // 条码、二维码扫描
     NFC, // NFC
+    InAppBrowser, // 打开浏览器
+    AppAvailability, // 检查用户设备安装了某应用程序
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
