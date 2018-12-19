@@ -1,0 +1,108 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="orange" hideBackButton="true">
+        <ion-title>服务结算</ion-title>
+        <ion-buttons start>
+            <button ion-button class="pl10" (click)="backHome()">
+                <!-- <span color="primary" showWhen="ios">返回</span> -->
+                <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button class="pr10" (click)="navCtrl.canGoBack()?navCtrl.pop():''">
+                <span showWhen="android,windows,ios">返回</span>
+                <!-- <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon> -->
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar no-padding>
+        <div class="bgcFFF">
+            <ion-row no-padding align-items-center>
+                <ion-col col-5 no-padding>
+                    <ion-item no-padding>
+                        <!-- <ion-label>Date</ion-label> -->
+                        <ion-datetime [(ngModel)]="sendData.startDate" displayFormat="YYYY/MM/DD" cancelText="取消" doneText="确认" placeholder="开始日期"></ion-datetime>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-5 no-padding>
+                    <ion-item no-padding>
+                        <ion-datetime no-padding [(ngModel)]='sendData.endDate' displayFormat="YYYY/MM/DD" cancelText="取消" doneText="确认" placeholder="结束日期"></ion-datetime>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-2 no-padding text-center>
+                    <button ion-button small class="w80p" color="orange">查询</button>
+                </ion-col>
+            </ion-row>
+        </div>
+        <div class="pt5 pb5 pl10 pr10">
+            <div class="disFlex flexWrapW justConSB">
+                <div class="pr5">
+                    <span>截止本月</span>
+                </div>
+            </div>
+        </div>
+    </ion-toolbar>
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 页面内容区域 Begin -->
+<ion-content>
+    <div>
+        <div>
+            <div>
+                <div class="p10">
+                    <div class="disFlex flexDirC p3">
+                        <div class="h80 disFlex justConSB">
+                            <div class="h100p w33p cardBg4 disFlex aligIteC justConC">
+                                <span class="colorFFF ftz16">回访形式</span>
+                            </div>
+                            <div class="h100p w32p cardBg5 disFlex aligIteC justConC">
+                                <span class="colorFFF ftz14">上门</span>
+                            </div>
+                            <div class="h100p w33p cardBg6 disFlex aligIteC justConC">
+                                <span class="colorFFF ftz14">电话</span>
+                            </div>
+                        </div>
+                        <div class="h80 disFlex justConSB mt2">
+                            <div class="h100p w33p cardBg4 disFlex aligIteC justConC">
+                                <span class="colorFFF ftz16">回访数</span>
+                            </div>
+                            <div class="h100p w32p cardBg5 disFlex aligIteC justConC">
+                                <span class="colorFFF ftz14">5</span>
+                            </div>
+                            <div class="h100p w33p cardBg6 disFlex aligIteC justConC">
+                                <span class="colorFFF ftz14">1</span>
+                            </div>
+                        </div>
+                        <div class="h80 disFlex justConSB mt2">
+                            <div class="h100p w33p cardBg4 disFlex aligIteC justConC">
+                                <span class="colorFFF ftz16">满意率</span>
+                            </div>
+                            <div class="h100p w32p cardBg5 disFlex aligIteC justConC">
+                                <span class="colorFFF ftz14">100%</span>
+                            </div>
+                            <div class="h100p w33p cardBg6 disFlex aligIteC justConC">
+                                <span class="colorFFF ftz14">100%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt10">
+                    <div class="borBBox">
+                        <div class="disFlex justConSB h26 aligIteC pl10 pr10">
+                            <span class="ftz16">综合满意率:</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt30">
+                    <div class="">
+                        <div class="disFlex justConC h26 aligIteC pl10 pr10">
+                            <span class="ftz40 color093">100%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<!-- 页面内容区域 End -->

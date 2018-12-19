@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-startapp-zzz" version="1.0.1">
+
+    <name>startApp</name>
+    <description>Cordova plugin for check or launch other application in android device.</description>
+    <license>MIT</license>
+    <keywords>cordova,startapp,zzz</keywords>
+
+    <js-module src="www/startApp.js" name="startapp">
+        <merges target="cordova.plugins.startApp" />
+    </js-module>
+
+    <!-- Android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="startApp">
+                <param name="android-package" value="com.lampa.startapp.startApp"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/startApp.java" target-dir="src/com/lampa/startapp" />
+        <source-file src="src/android/Assets.java" target-dir="src/com/lampa/startapp" />
+        <source-file src="src/android/res/xml/file_paths.xml" target-dir="res/xml" />
+    </platform>
+
+    <!-- IOS -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="startApp">
+                <param name="ios-package" value="startApp"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/startApp.h"/>
+        <source-file src="src/ios/startApp.m"/>
+    </platform>
+</plugin>

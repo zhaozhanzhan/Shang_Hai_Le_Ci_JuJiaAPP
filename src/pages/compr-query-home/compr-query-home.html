@@ -1,0 +1,86 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="orange" hideBackButton="true">
+        <ion-title>综合查询</ion-title>
+        <ion-buttons start>
+            <button ion-button class="pl10" (click)="backHome()">
+                <!-- <span color="primary" showWhen="ios">返回</span> -->
+                <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button class="pr10" (click)="navCtrl.canGoBack()?navCtrl.pop():''">
+                <span showWhen="android,windows,ios">返回</span>
+                <!-- <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon> -->
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 页面内容区域 Begin -->
+<ion-content>
+    <div>
+        <div>
+            <div>
+                <div class="mt20" (click)="jumpPage('SatiQueryPage')">
+                    <div class="borTBox">
+                        <div class="h100 w100p borBBox">
+                            <div class="disFlex aligIteS h100p pl10 pr10 cardBg1">
+                                <div class="w60 disFlex aligIteC justConC p5">
+                                    <div class="w100p bgcFFF borRadius5">
+                                        <svg class="colourIcon ftz50" aria-hidden="true">
+                                            <use xlink:href="#icon-Service3"></use>
+                                        </svg>
+                                        <!-- <img src="assets/imgs/logo1.png"> -->
+                                        <!-- <img *ngIf="(x.fileUrl)" class="h100p w100p" [src]="baseImgUrl + x.fileUrl"> -->
+                                    </div>
+                                </div>
+                                <div class="flexGrow1 disFlex aligIteC pl30">
+                                    <div>
+                                        <span class="ftz20 ftwB colorFFF">满意度查询</span>
+                                    </div>
+                                </div>
+                                <div class="w30 disFlex aligIteC justConC">
+                                    <div>
+                                        <ion-icon class="ftz30 colorFFF" name="ios-arrow-forward"></ion-icon>
+                                        <!-- <ion-icon class="ftz30 color999" [hidden]="!x.isActive" name="ios-arrow-down"></ion-icon> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt20" (click)="jumpPage('ServQueryPage')">
+                    <div class="borTBox">
+                        <div class="h100 w100p borBBox">
+                            <div class="disFlex aligIteS h100p pl10 pr10 cardBg2">
+                                <div class="w60 disFlex aligIteC justConC p5">
+                                    <div class="w100p bgcFFF borRadius5">
+                                        <svg class="colourIcon ftz50" aria-hidden="true">
+                                            <use xlink:href="#icon-Service5"></use>
+                                        </svg>
+                                        <!-- <img src="assets/imgs/logo1.png"> -->
+                                        <!-- <img *ngIf="(x.fileUrl)" class="h100p w100p" [src]="baseImgUrl + x.fileUrl"> -->
+                                    </div>
+                                </div>
+                                <div class="flexGrow1 disFlex aligIteC pl30">
+                                    <div>
+                                        <span class="ftz20 ftwB colorFFF">服务查询</span>
+                                    </div>
+                                </div>
+                                <div class="w30 disFlex aligIteC justConC">
+                                    <div>
+                                        <ion-icon class="ftz30 colorFFF" name="ios-arrow-forward"></ion-icon>
+                                        <!-- <ion-icon class="ftz30 color999" [hidden]="!x.isActive" name="ios-arrow-down"></ion-icon> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<!-- 页面内容区域 End -->

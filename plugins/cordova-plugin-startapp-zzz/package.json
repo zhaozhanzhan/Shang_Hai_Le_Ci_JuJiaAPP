@@ -1,0 +1,64 @@
+{
+  "_from": "cordova-plugin-startapp-zzz",
+  "_id": "cordova-plugin-startapp-zzz@1.0.1",
+  "_inBundle": false,
+  "_integrity": "sha512-4k8RsEaG5vOlfJaZbcOvuen1d5a8MHAmGadDYz8Igo7dmc29GCqe7hnGGLOSSFrY2Tx3J54anyKo0rEpOTnLew==",
+  "_location": "/cordova-plugin-startapp-zzz",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-startapp-zzz",
+    "name": "cordova-plugin-startapp-zzz",
+    "escapedName": "cordova-plugin-startapp-zzz",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-startapp-zzz/-/cordova-plugin-startapp-zzz-1.0.1.tgz",
+  "_shasum": "49482dbc6f076ff01694adc5f6505cdd92b05127",
+  "_spec": "cordova-plugin-startapp-zzz",
+  "_where": "F:\\AppWorkspace\\JuJiaAPP",
+  "author": {
+    "name": "zhaozhanzhan"
+  },
+  "bugs": {
+    "url": "https://github.com/zhaozhanzhan/cordova-plugin-startapp-zzz/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-startapp-zzz",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "deprecated": false,
+  "description": "Cordova plugin for check or launch other application in android device.",
+  "homepage": "https://github.com/zhaozhanzhan/cordova-plugin-startapp-zzz",
+  "keywords": [
+    "cordova",
+    "startapp",
+    "zzz",
+    "extra",
+    "extrafields",
+    "hasextra",
+    "cordova",
+    "cordova-ios",
+    "cordova",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-startapp-zzz",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhaozhanzhan/cordova-plugin-startapp-zzz.git"
+  },
+  "version": "1.0.1"
+}

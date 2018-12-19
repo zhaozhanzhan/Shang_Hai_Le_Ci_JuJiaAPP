@@ -15,7 +15,7 @@ import _ from "underscore"; // 工具类
 import { GlobalService } from "../../common/service/GlobalService";
 import { GlobalMethod } from "../../common/service/GlobalMethod";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
-import { pageObj } from "../../common/config/BaseConfig";
+import { pageObj, reqObj } from "../../common/config/BaseConfig";
 import { ParamService } from "../../common/service/Param.Service";
 import { InAppBrowser } from "@ionic-native/in-app-browser";
 import { FilePreviewService } from "../../common/service/FilePreview.Service";
@@ -31,7 +31,9 @@ import { FilePreviewService } from "../../common/service/FilePreview.Service";
 export class TrainDocListPage {
   @ViewChild(Content)
   content: Content;
-  public reqUrl: string = "consignee/listForWorker"; // 请求数据URL
+  public paramType: any = null; // 传递过来的参数类型
+  public baseImgUrl: any = reqObj.baseImgUrl; // 基础图片URL
+  public reqUrl: string = "home/a/internal/homeTrain/listTrains"; // 请求数据URL
   public sendData: any = {}; // 定义请求数据时的对象
   public dataList: Array<any> = []; // 数据列表
   public isShowNoData: boolean = false; // 给客户提示没有更多数据
@@ -50,56 +52,40 @@ export class TrainDocListPage {
     public platform: Platform, // 获取平台信息
     public alertCtrl: AlertController, // Alert消息弹出框
     public iab: InAppBrowser // 打开内置浏览器
-  ) {}
+  ) {
+    this.paramType = this.navParams.get("datumType");
+    console.error("this.paramType", this.paramType);
+    if (_.isNull(this.paramType) || _.isUndefined(this.paramType)) {
+      this.gloService.showMsg("获取列表类型失败！");
+      if (this.navCtrl.canGoBack()) {
+        this.navCtrl.pop();
+      }
+    }
+  }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad TrainMeetingListPage");
-    this.sendData.page = pageObj.currentPage; // 定义当前页码
-    this.sendData.size = pageObj.everyItem; // 定义当前页面请求条数
+    this.sendData.datumType = this.paramType; // 列表类型
+    this.sendData.pageNo = pageObj.currentPage; // 定义当前页码
+    this.sendData.pageSize = pageObj.everyItem; // 定义当前页面请求条数
     this.sendData.totalPage = pageObj.totalPage; // 定义当前页面请求条数
-    this.ionicStorage.get("loginInfo").then(loginObj => {
-      console.error("loginInfo", loginObj);
-      if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
-        // 判断是否是空对象
-        if (
-          !_.isNull(loginObj["UserInfo"]) &&
-          !_.isEmpty(loginObj["UserInfo"])
-        ) {
-          const userId = loginObj["UserInfo"]["id"]; // 拉包工信息ID
-          if (
-            !_.isUndefined(userId) &&
-            !_.isNull(userId) &&
-            userId.length > 0
-          ) {
-            this.sendData.id = userId; // 拉包工信息ID
-            this.sendData.status = 2; // 人员属于（1：发货人，2：收货人）
-            // 请求列表数据
-            this.reqData(
-              this.reqUrl,
-              this.sendData,
-              res => {
-                // 请求数据成功
-                this.dataList = this.dataList.concat(res);
-                console.error("this.sendData", this.sendData);
-              },
-              err => {
-                // 请求数据失败
-                this.dataList = this.dataList.concat(err);
-              }
-            );
-          } else {
-            this.gloService.showMsg("未获取到用户ID", null, 3000);
-            return;
-          }
-        } else {
-          this.gloService.showMsg("未获取到用户ID", null, 3000);
-          return;
+    // 请求列表数据
+    this.reqData(
+      this.reqUrl,
+      this.sendData,
+      (res: any) => {
+        // 请求数据成功
+        this.dataList = this.dataList.concat(res);
+        if (this.dataList.length == 0) {
+          this.gloService.showMsg("该列表暂无数据！");
         }
-      } else {
-        this.gloService.showMsg("未获取到用户ID", null, 3000);
-        return;
+        console.error("this.sendData", this.sendData);
+      },
+      (err: any) => {
+        // 请求数据失败
+        this.dataList = this.dataList.concat(err);
       }
-    });
+    );
   }
 
   /**
@@ -133,21 +119,16 @@ export class TrainDocListPage {
    * @memberof ConsignorListPage
    */
   public reqData(url: string, reqObj: any, suc: Function, err: Function) {
-    this.httpReq.post(url, null, reqObj, data => {
-      if (data["status"] == 200) {
-        if (data["code"] == 0) {
-          this.sendData.totalPage = GlobalMethod.calTotalPage(
-            data["data"]["objectMap"]["count"],
-            this.sendData.size
-          ); //定义当前总页数
-          suc(data["data"]["list"]);
-          // this.dataList = this.dataList.concat(data["data"]);
-        } else {
-          this.gloService.showMsg(data["message"], null, 3000);
-          err([]);
-        }
+    this.httpReq.get(url, reqObj, (data: any) => {
+      if (data["data"] && _.isArray(data["data"]["list"])) {
+        this.sendData.totalPage = GlobalMethod.calTotalPage(
+          data["data"]["list"],
+          data["data"]["count"]
+        ); //定义当前总页数
+        suc(data["data"]["list"]);
+        // this.dataList = this.dataList.concat(data["data"]);
       } else {
-        // this.gloService.showMsg("请求服务器出错", null, 3000);
+        this.gloService.showMsg(data["message"], null, 3000);
         err([]);
       }
     });
@@ -161,13 +142,13 @@ export class TrainDocListPage {
    * @memberof ConsignorListPage
    */
   public downRefresh(ev: Refresher, url: string, reqObj: any) {
-    reqObj.page = pageObj.currentPage; //重置当前页码
-    reqObj.size = pageObj.everyItem; //重置当前页面请求条数
+    reqObj.pageNo = pageObj.currentPage; //重置当前页码
+    reqObj.pageSize = pageObj.everyItem; //重置当前页面请求条数
     console.error("下拉刷新执行");
     this.reqData(
       url,
       reqObj,
-      res => {
+      (res: any) => {
         this.dataList = [];
         this.dataList = this.dataList.concat(res); // 添加新增数据
         setTimeout(() => {
@@ -180,7 +161,7 @@ export class TrainDocListPage {
         }, 1000);
         console.error("下拉刷新请求数据成功");
       },
-      err => {
+      (err: any) => {
         this.dataList = this.dataList.concat(err); // 添加新增数据
         setTimeout(() => {
           ev.complete(); // 关闭下拉刷新动画
@@ -200,10 +181,10 @@ export class TrainDocListPage {
    */
   public upLoad(ev: InfiniteScroll, url: string, reqObj: any) {
     this.infiniteScroll = ev; // 保留上拉加载事件对象
-    reqObj.page++; // 当前页码加1
-    if (reqObj.page > reqObj.totalPage) {
+    reqObj.pageNo++; // 当前页码加1
+    if (reqObj.pageNo > reqObj.totalPage) {
       //判断当前页面页码是否大于总页数
-      reqObj.page--;
+      reqObj.pageNo--;
       setTimeout(() => {
         ev.complete();
         this.isShowNoData = true; // 提示没有更多数据
@@ -214,14 +195,14 @@ export class TrainDocListPage {
       this.reqData(
         url,
         reqObj,
-        res => {
+        (res: any) => {
           this.dataList = this.dataList.concat(res); // 添加新增数据
           setTimeout(() => {
             ev.complete(); // 关闭上拉加载动画
           }, 1000);
         },
-        err => {
-          reqObj.page--; // 失败页码减1
+        (err: any) => {
+          reqObj.pageNo--; // 失败页码减1
           this.dataList = this.dataList.concat(err); // 添加新增数据
           setTimeout(() => {
             ev.complete(); // 关闭上拉加载动画
@@ -298,7 +279,7 @@ export class TrainDocListPage {
     that.reqData(
       url,
       reqObj,
-      res => {
+      (res: any) => {
         that.content.scrollToTop();
         that.dataList = [];
         that.dataList = that.dataList.concat(res); // 添加新增数据
@@ -309,11 +290,24 @@ export class TrainDocListPage {
         }
         console.error("下拉刷新请求数据成功");
       },
-      err => {
+      (err: any) => {
         that.dataList = that.dataList.concat(err); // 添加新增数据
         console.error("下拉刷新请求数据失败");
       }
     );
+  }
+
+  /**
+   * 打开文档
+   * @memberof TrainDocListPage
+   */
+  public openDoc(url: string) {
+    if (_.isString(url) && url.length > 0) {
+      const fileUrl: string = this.baseImgUrl + url; // 文件在服务器上的地址
+      this.filePrevService.previewFile(fileUrl);
+    } else {
+      this.gloService.showMsg("文件地址错误！");
+    }
   }
 
   /**
@@ -324,6 +318,9 @@ export class TrainDocListPage {
     const fileUrl: string =
       "http://139.224.12.181:9527/JuJiaAppDownload/11.pdf";
     this.filePrevService.previewFile(fileUrl);
+    // this.filePrevService.setFileUrl(fileUrl);
+    // this.filePrevService.openApp();
+
     // this.filePrevService.checkIsHasFile("update1.5.0.apk").then(
     //   suc => {
     //     console.error("找到update1.5.0.apk文件");

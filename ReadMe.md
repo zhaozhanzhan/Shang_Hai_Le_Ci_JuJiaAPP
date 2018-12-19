@@ -175,6 +175,8 @@ configurations.all {
     ionic cordova platform add android
     ionic cordova run android --prod --release
     ionic cordova build android --prod --release
+    ionic serve --prod --port 5555
+    ionic cordova run android --prod -l
     修改版本号 version="1.5.0" native-interface version="5" "min_native_interface": 5
 
 解决 `AndroidManifest.xml file is not found` 修改platforms\android\cordova\Api.js

@@ -33,6 +33,7 @@ export class FilePreviewService {
   public localDirName: string = "pdfDir"; // pdf文件存储目录
   public pdfReadApp: string =
     "http://139.224.12.181:9527/JuJiaAppDownload/AdobeReader.apk";
+  public appPkgName: string = "com.adobe.reader"; // PDF阅读器包名
 
   constructor(
     // private http: Http,
@@ -481,7 +482,7 @@ export class FilePreviewService {
       if (this.platform.is("ios")) {
         app = "twitter://";
       } else if (this.platform.is("android")) {
-        app = "com.adobe.reader";
+        app = this.appPkgName;
       }
       this.appAva.check(app).then(
         checkAppSuc => {
@@ -555,264 +556,46 @@ export class FilePreviewService {
               }, 1000);
             }
           );
-          // this.file.listDir(fs, this.localDirName).then(listDirSuc=>{
-          //   console.error("已经找到下载文件所在目录");
-          //   console.error("下载目录所有文件",listDirSuc);
-          // },listDirErr=>{
-          //   console.error("未找到下载文件目录",listDirErr);
-          // });
+        }
+      );
+    });
+  }
 
-          // this.file.listDir(fs, this.localDirName).then(
-          //   listDirSuc => {
-          //     console.error("查看文件夹下有没有PDF安装包成功", listDirSuc);
-          //     let count = 0;
-          //     const pdfAppName = GlobalMethod.getFileNameAndType(
-          //       this.pdfReadApp
-          //     );
-          //     if (_.isArray(listDirSuc) && listDirSuc.length > 0) {
-          //       for (let i = 0; i < listDirSuc.length; i++) {
-          //         if (
-          //           listDirSuc[i].hasOwnProperty("name") &&
-          //           listDirSuc[i]["name"] == pdfAppName
-          //         ) {
-          //           count++;
-          //         }
-          //       }
-          //       if (count > 0) {
-          //         // resolve(); // 已有文件并已经下载在本地
-          //         cordova["plugins"].fileOpener2.open(
-          //           fs + this.localDirName + "/" + pdfAppName, //下载文件保存地址
-          //           "application/vnd.android.package-archive",
-          //           {
-          //             //以APK文件方式打开
-          //             error: (err: any) => {
-          //               this.gloService.showMsg(
-          //                 "打开PDF阅读器失败",
-          //                 null,
-          //                 2000
-          //               );
-          //               reject(err);
-          //               console.error("打开失败err", err);
-          //             },
-          //             success: () => {
-          //               console.error("打开成功data");
-          //               // resolve();
-          //             }
-          //           }
-          //         );
-          //       } else {
-          //         // reject(); // 文件未下载在本地
-          //         const loading = this.gloService.showLoading(
-          //           "下载PDF查看器：0%"
-          //         );
-          //         fileTransfer
-          //           .download(
-          //             this.pdfReadApp,
-          //             fs + this.localDirName + "/" + fileNameAndType
-          //           )
-          //           .then(
-          //             downloadSuc => {
-          //               console.error("下载文件成功", downloadSuc);
-          //               if (loading) {
-          //                 loading.dismiss();
-          //               }
-          //               try {
-          //                 console.error("cordova=======", cordova);
-          //               } catch (error) {
-          //                 console.error("=======cordova未找到=======");
-          //                 return;
-          //               }
-          //               cordova["plugins"].fileOpener2.open(
-          //                 fs + this.localDirName + "/" + fileNameAndType, //下载文件保存地址
-          //                 "application/vnd.android.package-archive",
-          //                 {
-          //                   //以APK文件方式打开
-          //                   error: (err: any) => {
-          //                     this.gloService.showMsg(
-          //                       "打开PDF阅读器失败",
-          //                       null,
-          //                       2000
-          //                     );
-          //                     reject(err);
-          //                     console.error("打开失败err", err);
-          //                   },
-          //                   success: () => {
-          //                     console.error("打开成功data");
-          //                     // resolve();
-          //                   }
-          //                 }
-          //               );
-          //             },
-          //             downloadErr => {
-          //               console.error("下载文件失败", downloadErr);
-          //               this.gloService.showMsg("下载PDF阅读器失败");
-          //               if (loading) {
-          //                 loading.dismiss();
-          //               }
-          //               reject(downloadErr);
-          //             }
-          //           );
-          //         // 文件下载进度,注册每当传输新数据块时调用的侦听器
-          //         let downNum: any = 0;
-          //         fileTransfer.onProgress(progressEvent => {
-          //           let downloadProgress = (
-          //             (progressEvent.loaded / progressEvent.total) *
-          //             100
-          //           ).toFixed(2);
-          //           downNum = parseFloat(downloadProgress);
-          //           if (parseFloat(downloadProgress) > 99) {
-          //             loading.dismiss();
-          //           }
-          //         });
-          //         let timer: any = setInterval(() => {
-          //           loading.setContent("PDF查看器已下载:" + downNum + "%");
-          //           if (parseFloat(downNum) > 99) {
-          //             window.clearInterval(timer);
-          //           }
-          //         }, 1000);
-          //       }
-          //     } else {
-          //       // reject(); // 文件未下载在本地
-          //       const loading = this.gloService.showLoading(
-          //         "下载PDF查看器：0%"
-          //       );
-          //       fileTransfer
-          //         .download(
-          //           this.pdfReadApp,
-          //           fs + this.localDirName + "/" + fileNameAndType
-          //         )
-          //         .then(
-          //           downloadSuc => {
-          //             console.error("下载文件成功", downloadSuc);
-          //             if (loading) {
-          //               loading.dismiss();
-          //             }
-          //             try {
-          //               console.error("cordova=======", cordova);
-          //             } catch (error) {
-          //               console.error("=======cordova未找到=======");
-          //               return;
-          //             }
-          //             cordova["plugins"].fileOpener2.open(
-          //               fs + this.localDirName + "/" + fileNameAndType, //下载文件保存地址
-          //               "application/vnd.android.package-archive",
-          //               {
-          //                 //以APK文件方式打开
-          //                 error: (err: any) => {
-          //                   this.gloService.showMsg(
-          //                     "打开PDF阅读器失败",
-          //                     null,
-          //                     2000
-          //                   );
-          //                   reject(err);
-          //                   console.error("打开失败err", err);
-          //                 },
-          //                 success: () => {
-          //                   console.error("打开成功data");
-          //                   // resolve();
-          //                 }
-          //               }
-          //             );
-          //           },
-          //           downloadErr => {
-          //             console.error("下载文件失败", downloadErr);
-          //             this.gloService.showMsg("下载PDF阅读器失败");
-          //             if (loading) {
-          //               loading.dismiss();
-          //             }
-          //             reject(downloadErr);
-          //           }
-          //         );
-          //       // 文件下载进度,注册每当传输新数据块时调用的侦听器
-          //       let downNum: any = 0;
-          //       fileTransfer.onProgress(progressEvent => {
-          //         let downloadProgress = (
-          //           (progressEvent.loaded / progressEvent.total) *
-          //           100
-          //         ).toFixed(2);
-          //         downNum = parseFloat(downloadProgress);
-          //         if (parseFloat(downloadProgress) > 99) {
-          //           loading.dismiss();
-          //         }
-          //       });
-          //       let timer: any = setInterval(() => {
-          //         loading.setContent("PDF查看器已下载:" + downNum + "%");
-          //         if (parseFloat(downNum) > 99) {
-          //           window.clearInterval(timer);
-          //         }
-          //       }, 1000);
-          //     }
-          //   },
-          //   listDirErr => {
-          //     // reject(); // 文件未下载在本地
-          //     const loading = this.gloService.showLoading("下载PDF查看器：0%");
-          //     console.error("查看文件夹下文件失败", listDirErr);
-          //     fileTransfer
-          //       .download(
-          //         this.pdfReadApp,
-          //         fs + this.localDirName + "/" + fileNameAndType
-          //       )
-          //       .then(
-          //         downloadSuc => {
-          //           console.error("下载文件成功", downloadSuc);
-          //           if (loading) {
-          //             loading.dismiss();
-          //           }
-          //           try {
-          //             console.error("cordova=======", cordova);
-          //           } catch (error) {
-          //             console.error("=======cordova未找到=======");
-          //             return;
-          //           }
-          //           cordova["plugins"].fileOpener2.open(
-          //             fs + this.localDirName + "/" + fileNameAndType, //下载文件保存地址
-          //             "application/vnd.android.package-archive",
-          //             {
-          //               //以APK文件方式打开
-          //               error: (err: any) => {
-          //                 this.gloService.showMsg(
-          //                   "打开PDF阅读器失败",
-          //                   null,
-          //                   2000
-          //                 );
-          //                 reject(err);
-          //                 console.error("打开失败err", err);
-          //               },
-          //               success: () => {
-          //                 console.error("打开成功data");
-          //               }
-          //             }
-          //           );
-          //         },
-          //         downloadErr => {
-          //           console.error("下载文件失败", downloadErr);
-          //           this.gloService.showMsg("下载PDF阅读器失败");
-          //           if (loading) {
-          //             loading.dismiss();
-          //           }
-          //           reject(downloadErr);
-          //         }
-          //       );
-          //     // 文件下载进度,注册每当传输新数据块时调用的侦听器
-          //     let downNum: any = 0;
-          //     fileTransfer.onProgress(progressEvent => {
-          //       let downloadProgress = (
-          //         (progressEvent.loaded / progressEvent.total) *
-          //         100
-          //       ).toFixed(2);
-          //       downNum = parseFloat(downloadProgress);
-          //       if (parseFloat(downloadProgress) > 99) {
-          //         loading.dismiss();
-          //       }
-          //     });
-          //     let timer: any = setInterval(() => {
-          //       loading.setContent("PDF查看器已下载:" + downNum + "%");
-          //       if (parseFloat(downNum) > 99) {
-          //         window.clearInterval(timer);
-          //       }
-          //     }, 1000);
-          //   }
-          // );
+  /**
+   * 打开本地APP并打开文件
+   * @memberof FilePreviewService
+   */
+  public openAppAndFile() {
+    const fs: string = cordova.file.externalRootDirectory; // 外部存储（SD卡）根目录
+    const fileNameAndType = GlobalMethod.getFileNameAndType(this.fileUrl); // 截取文件名和文件类型
+    const fileMimeType = GlobalMethod.getFileMimeType(this.fileUrl);
+    const fileLocalUrl: string = fs + this.localDirName + "/" + fileNameAndType; // 下载文件保存地址
+    return new Promise((resolve, reject) => {
+      const startApp = cordova["plugins"]["startApp"].set(
+        {
+          // 启动APP并打开文件
+          // action: "ACTION_VIEW", // 添加上会打不开应用
+          category: "CATEGORY_DEFAULT",
+          type: fileMimeType,
+          package: this.appPkgName,
+          uri: fileLocalUrl,
+          flags: ["FLAG_ACTIVITY_CLEAR_TOP", "FLAG_ACTIVITY_CLEAR_TASK"],
+          intentstart: "startActivity"
+          // "component": ["com.android.GoBallistic","com.android.GoBallistic.Activity"],
+        },
+        {
+          EXTRA_STREAM: "extraValue1",
+          extraKey2: "extraValue2"
+        }
+      );
+      startApp.start(
+        (suc: any) => {
+          console.error("启动PDF阅读器并打开文件成功！", suc);
+          resolve(suc);
+        },
+        (err: any) => {
+          console.error("启动PDF阅读器并打开文件失败！", err);
+          reject(err);
         }
       );
     });
@@ -832,6 +615,14 @@ export class FilePreviewService {
     }
 
     this.setFileUrl(fileUrl);
+
+    const fileType = GlobalMethod.getFileType(this.fileUrl); // 获取文件扩展名
+    console.error("fileType", fileType);
+    if (fileType != "pdf") {
+      this.gloService.showMsg("远程服务器文件非PDF文档，暂无法打开");
+      return;
+    }
+
     this.checkPermission().then(
       checkPermSuc => {
         console.error("获取权限成功AAAAA", checkPermSuc);
@@ -848,13 +639,13 @@ export class FilePreviewService {
                 this.checkIsHasFile(fileNameAndType).then(
                   getPdfSuc => {
                     console.error("检测本地已有PDF文件", getPdfSuc);
-                    this.openFile().then(
-                      openSuc => {
-                        console.error("打开本地已有文件成功CCCCC", openSuc);
+                    this.openAppAndFile().then(
+                      openAppSuc => {
+                        console.error("打开本地已有文件成功CCCCC", openAppSuc);
                       },
-                      openErr => {
-                        console.error("打开本地已有文件失败CCCCC", openErr);
-                        this.gloService.showMsg("打开文件失败，请选择阅读器！");
+                      openAppErr => {
+                        console.error("打开本地已有文件失败CCCCC", openAppErr);
+                        // this.gloService.showMsg("打开文件失败，请选择阅读器！");
                       }
                     );
                   },
@@ -866,15 +657,21 @@ export class FilePreviewService {
                           "下载服务器文件成功EEEEE",
                           downloadFileSuc
                         );
-                        this.openFile().then(
-                          openSuc => {
-                            console.error("打开本地已有文件成功CCCCC", openSuc);
-                          },
-                          openErr => {
-                            console.error("打开本地已有文件失败CCCCC", openErr);
-                            this.gloService.showMsg(
-                              "打开文件失败，请选择阅读器！"
+                        this.openAppAndFile().then(
+                          openAppSuc => {
+                            console.error(
+                              "打开本地已有文件成功CCCCC",
+                              openAppSuc
                             );
+                          },
+                          openAppErr => {
+                            console.error(
+                              "打开本地已有文件失败CCCCC",
+                              openAppErr
+                            );
+                            // this.gloService.showMsg(
+                            //   "打开文件失败，请选择阅读器！"
+                            // );
                           }
                         );
                       },
@@ -893,62 +690,6 @@ export class FilePreviewService {
                 console.error("PDF阅读器没有安装", appInsErr);
               }
             );
-            // this.checkIsHasFile(fileNameAndType).then(
-            //   checkSuc => {
-            //     console.error("检测本地已有文件BBBBB", checkSuc);
-
-            //     this.checkAppInstall().then(
-            //       checkAppSuc => {
-            //         console.error("阅读器已安装HHHHHHHH", checkAppSuc);
-            //         this.openFile().then(
-            //           openSuc => {
-            //             console.error("打开本地已有文件成功CCCCC", openSuc);
-            //           },
-            //           openErr => {
-            //             console.error("打开本地已有文件失败CCCCC", openErr);
-            //             this.gloService.showMsg("打开文件失败，请选择阅读器！");
-            //           }
-            //         );
-            //       },
-            //       checkAppErr => {
-            //         console.error("阅读器未安装HHHHHHHH", checkAppErr);
-            //         this.gloService.showMsg("阅读器未安装！");
-            //       }
-            //     );
-            //   },
-            //   checkErr => {
-            //     this.downloadFile().then(
-            //       downloadFileSuc => {
-            //         console.error("下载服务器文件成功EEEEE", downloadFileSuc);
-
-            //         this.checkAppInstall().then(
-            //           checkAppSuc => {
-            //             console.error("阅读器已安装HHHHHHHH", checkAppSuc);
-            //             this.openFile().then(
-            //               openSuc => {
-            //                 console.error("打开远程文件成功FFFFF", openSuc);
-            //               },
-            //               openErr => {
-            //                 console.error("打开远程文件失败FFFFF", openErr);
-            //                 this.gloService.showMsg(
-            //                   "打开文件失败，请选择阅读器！"
-            //                 );
-            //               }
-            //             );
-            //           },
-            //           checkAppErr => {
-            //             console.error("阅读器未安装HHHHHHHH", checkAppErr);
-            //             this.gloService.showMsg("阅读器未安装！");
-            //           }
-            //         );
-            //       },
-            //       downloadFileErr => {
-            //         console.error("下载服务器文件失败EEEEE", downloadFileErr);
-            //         this.gloService.showMsg("下载远程服务器文件失败！");
-            //       }
-            //     );
-            //   }
-            // );
           },
           creatDirErr => {
             console.error("目录获取失败GGGGG", creatDirErr);

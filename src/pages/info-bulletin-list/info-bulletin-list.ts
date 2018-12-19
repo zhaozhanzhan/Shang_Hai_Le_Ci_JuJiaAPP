@@ -58,12 +58,12 @@ export class InfoBulletinListPage {
     this.reqData(
       this.reqUrl,
       this.sendData,
-      res => {
+      (res: any) => {
         // 请求数据成功
         this.dataList = this.dataList.concat(res);
         console.error("this.sendData", this.sendData);
       },
-      err => {
+      (err: any) => {
         // 请求数据失败
         this.dataList = this.dataList.concat(err);
       }
@@ -173,7 +173,7 @@ export class InfoBulletinListPage {
     this.reqData(
       url,
       reqObj,
-      res => {
+      (res: any) => {
         this.dataList = [];
         this.dataList = this.dataList.concat(res); // 添加新增数据
         setTimeout(() => {
@@ -186,7 +186,7 @@ export class InfoBulletinListPage {
         }, 1000);
         console.error("下拉刷新请求数据成功");
       },
-      err => {
+      (err: any) => {
         this.dataList = this.dataList.concat(err); // 添加新增数据
         setTimeout(() => {
           ev.complete(); // 关闭下拉刷新动画
@@ -206,10 +206,10 @@ export class InfoBulletinListPage {
    */
   public upLoad(ev: InfiniteScroll, url: string, reqObj: any) {
     this.infiniteScroll = ev; // 保留上拉加载事件对象
-    reqObj.page++; // 当前页码加1
-    if (reqObj.page > reqObj.totalPage) {
+    reqObj.pageNo++; // 当前页码加1
+    if (reqObj.pageNo > reqObj.totalPage) {
       //判断当前页面页码是否大于总页数
-      reqObj.page--;
+      reqObj.pageNo--;
       setTimeout(() => {
         ev.complete();
         this.isShowNoData = true; // 提示没有更多数据
@@ -220,14 +220,14 @@ export class InfoBulletinListPage {
       this.reqData(
         url,
         reqObj,
-        res => {
+        (res: any) => {
           this.dataList = this.dataList.concat(res); // 添加新增数据
           setTimeout(() => {
             ev.complete(); // 关闭上拉加载动画
           }, 1000);
         },
-        err => {
-          reqObj.page--; // 失败页码减1
+        (err: any) => {
+          reqObj.pageNo--; // 失败页码减1
           this.dataList = this.dataList.concat(err); // 添加新增数据
           setTimeout(() => {
             ev.complete(); // 关闭上拉加载动画

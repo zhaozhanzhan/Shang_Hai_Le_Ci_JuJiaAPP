@@ -1,7 +1,10 @@
 <!-- 导航条区域 Begin -->
 <ion-header>
     <ion-navbar color="orange" hideBackButton="true">
-        <ion-title>培训资料</ion-title>
+        <ion-title>
+            <span *ngIf="paramType == 1">培训资料</span>
+            <span *ngIf="paramType == 2">会议资料</span>
+        </ion-title>
         <ion-buttons start>
             <button ion-button class="pl10" (click)="backHome()">
                 <!-- <span color="primary" showWhen="ios">返回</span> -->
@@ -43,21 +46,20 @@
     <!-- 下拉刷新控制元素End -->
 
     <div class="">
-        <!-- *ngFor="let x of dataList;let i = index;" (click)="jumpPage('UserDetailPage',{id:x.userID})" -->
         <div class="">
-            <div class="w100p cardBg4 h40" (click)="openBrowser()">
+            <div class="w100p h40" [ngClass]="{'cardBg4':i%2 == 0,'cardBg2':i%2 == 1}" *ngFor="let x of dataList;let i = index;" (click)="openDoc(x?.fileUploads[0]?.fileUrl)">
                 <div class="h100p">
                     <div class="disFlex justConSB aligIteC h100p">
                         <div class="flexShrink1 txtEll pl10">
-                            <span class="colorFFF ftz14 ftwB">1、资料培训培训资料培训资料培训资料培训资料培训资料资料培训资料培训资料.pdf</span>
+                            <span class="colorFFF ftz14 ftwB">{{i + 1}}、{{x?.fileUploads[0]?.fileName}}</span>
                         </div>
                         <div class="flexShrink0 pr10 ml10">
-                            <span class="colorFFF ftz14 ftwB">2018/07/30 09:29</span>
+                            <span class="colorFFF ftz14 ftwB">{{x?.fileUploads[0]?.updateDate}}</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="w100p cardBg2 h40">
+            <!-- <div class="w100p h40">
                 <div class="h100p">
                     <div class="disFlex justConSB aligIteC h100p">
                         <div class="flexShrink1 txtEll pl10">
@@ -92,7 +94,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <!-- 上拉加载控制元素Begin -->

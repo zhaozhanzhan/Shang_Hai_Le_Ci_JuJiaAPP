@@ -211,5 +211,13 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "cordova-plugin-startapp-zzz": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-startapp-zzz"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }
