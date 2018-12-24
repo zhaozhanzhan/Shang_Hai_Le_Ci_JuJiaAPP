@@ -383,8 +383,6 @@ export class ServiceInfoListPage {
    */
   public openDoc(url: string) {
     if (_.isString(url) && url.length > 0) {
-      const fileUrl: string = this.baseImgUrl + url; // 文件在服务器上的地址
-      this.filePrevService.previewFile(fileUrl);
     } else {
       this.gloService.showMsg("文件地址错误！");
     }
