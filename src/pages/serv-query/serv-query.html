@@ -1,7 +1,7 @@
 <!-- 导航条区域 Begin -->
 <ion-header>
     <ion-navbar color="orange" hideBackButton="true">
-        <ion-title>满意度</ion-title>
+        <ion-title>服务结算</ion-title>
         <ion-buttons start>
             <button ion-button class="pl10" (click)="backHome()">
                 <!-- <span color="primary" showWhen="ios">返回</span> -->
@@ -16,11 +16,10 @@
         </ion-buttons>
     </ion-navbar>
     <ion-toolbar no-padding>
-        <div class="bgcFFF">
+        <!-- <div class="bgcFFF">
             <ion-row no-padding align-items-center>
                 <ion-col col-5 no-padding>
                     <ion-item no-padding>
-                        <!-- <ion-label>Date</ion-label> -->
                         <ion-datetime [(ngModel)]="sendData.startDate" displayFormat="YYYY/MM/DD" cancelText="取消" doneText="确认" placeholder="开始日期"></ion-datetime>
                     </ion-item>
                 </ion-col>
@@ -33,14 +32,19 @@
                     <button ion-button small class="w80p" color="orange">查询</button>
                 </ion-col>
             </ion-row>
-        </div>
-        <!-- <div class="pt5 pb5 pl10 pr10">
-            <div class="disFlex flexWrapW justConSB">
-                <div class="pr5">
+        </div> -->
+        <div class="pt5 pb5 pl10 pr10 bgcEEE">
+            <div class="disFlex flexWrapW justConSB h30 aligIteC">
+                <div class="ftz16">
                     <span>截止本月</span>
                 </div>
+                <div class="pr10">
+                    <span>
+                        <ion-icon class="ftz30" name="ios-search"></ion-icon>
+                    </span>
+                </div>
             </div>
-        </div> -->
+        </div>
         <div class="h50">
             <div class="h100p borBS39B5EC">
                 <div class="disFlex justConSA aligIteC h100p">
@@ -66,64 +70,28 @@
 <!-- 页面内容区域 Begin -->
 <ion-content>
     <!-- 下拉刷新控制元素Begin -->
-    <ion-refresher (ionRefresh)="downRefresh($event,reqUrl,sendData)">
+    <!-- <ion-refresher (ionRefresh)="downRefresh($event,reqUrl,sendData)">
         <ion-refresher-content pullingIcon="arrow-down" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="正在加载">
         </ion-refresher-content>
-    </ion-refresher>
+    </ion-refresher> -->
     <!-- 下拉刷新控制元素End -->
     <div>
         <div>
             <div>
-                <div class="w100p cardBg1 h40">
+                <div class="w100p h40" [ngClass]="{'bgcFFF': i%2 == 1,'bgcCCF5FF': i%2 == 0}" *ngFor="let x of dataList;let i = index;" (click)="jumpPage('ServiceInfoListPage',{'personCode':x.personcode,userCode:x.usercode})">
                     <div class="h100p">
-                        <div class="disFlex justConSB aligIteC h100p">
+                        <div class="disFlex justConSB aligIteC h100p color999">
                             <div class="w25p txtEll flexShrink0 tac">
-                                <span class="colorFFF ftz14 ftwB">老人1</span>
+                                <span class="ftz14">{{x.username}}</span>
                             </div>
                             <div class="w25p txtEll flexShrink0 tac">
-                                <span class="colorFFF ftz14 ftwB">120</span>
+                                <span class="ftz14">{{x.timing}}</span>
                             </div>
                             <div class="w25p txtEll flexShrink0 tac">
-                                <span class="colorFFF ftz14 ftwB">10</span>
+                                <span class="ftz14">{{x.project}}</span>
                             </div>
                             <div class="w25p txtEll flexShrink0 tac">
-                                <span class="colorFFF ftz14 ftwB">250</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="w100p cardBg4 h40">
-                    <div class="h100p">
-                        <div class="disFlex justConSB aligIteC h100p">
-                            <div class="w25p txtEll flexShrink0 tac">
-                                <span class="colorFFF ftz14 ftwB">老人1</span>
-                            </div>
-                            <div class="w25p txtEll flexShrink0 tac">
-                                <span class="colorFFF ftz14 ftwB">120</span>
-                            </div>
-                            <div class="w25p txtEll flexShrink0 tac">
-                                <span class="colorFFF ftz14 ftwB">10</span>
-                            </div>
-                            <div class="w25p txtEll flexShrink0 tac">
-                                <span class="colorFFF ftz14 ftwB">250</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="w100p cardBg2 h40">
-                    <div class="h100p">
-                        <div class="disFlex justConSB aligIteC h100p">
-                            <div class="w25p txtEll flexShrink0 tac">
-                                <span class="colorFFF ftz14 ftwB">老人1</span>
-                            </div>
-                            <div class="w25p txtEll flexShrink0 tac">
-                                <span class="colorFFF ftz14 ftwB">120</span>
-                            </div>
-                            <div class="w25p txtEll flexShrink0 tac">
-                                <span class="colorFFF ftz14 ftwB">10</span>
-                            </div>
-                            <div class="w25p txtEll flexShrink0 tac">
-                                <span class="colorFFF ftz14 ftwB">250</span>
+                                <span class="ftz14">{{x.money}}</span>
                             </div>
                         </div>
                     </div>
@@ -132,30 +100,30 @@
         </div>
     </div>
     <!-- 上拉加载控制元素Begin -->
-    <ion-infinite-scroll (ionInfinite)="upLoad($event,reqUrl,sendData)">
+    <!-- <ion-infinite-scroll (ionInfinite)="upLoad($event,reqUrl,sendData)">
         <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载更多数据..."></ion-infinite-scroll-content>
     </ion-infinite-scroll>
     <ion-row [hidden]="!isShowNoData" padding-bottom>
         <ion-col col-12 text-center>
             <span class="ftz16">没有更多数据</span>
         </ion-col>
-    </ion-row>
+    </ion-row> -->
     <!-- 上拉加载控制元素End -->
 </ion-content>
 <ion-footer>
     <ion-toolbar color="dark">
         <div class="disFlex justConSB aligIteC h100p">
             <div class="w25p txtEll flexShrink0 tac">
-                <span class="colorFFF ftz14 ftwB">合计</span>
+                <span class="colorFFF ftz14">合计</span>
             </div>
             <div class="w25p txtEll flexShrink0 tac">
-                <span class="colorFFF ftz14 ftwB">120</span>
+                <span class="colorFFF ftz14">{{formInfo?.timing}}</span>
             </div>
             <div class="w25p txtEll flexShrink0 tac">
-                <span class="colorFFF ftz14 ftwB">10</span>
+                <span class="colorFFF ftz14">{{formInfo?.project}}</span>
             </div>
             <div class="w25p txtEll flexShrink0 tac">
-                <span class="colorFFF ftz14 ftwB">250</span>
+                <span class="colorFFF ftz14">{{formInfo?.money}}</span>
             </div>
         </div>
     </ion-toolbar>

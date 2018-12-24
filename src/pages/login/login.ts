@@ -20,6 +20,7 @@ import { ForgetPasswordPage } from "./../forget-password/forget-password"; // �
 import { FastLoginPage } from "../fast-login/fast-login"; // 快速登录
 import { PushService } from "../../common/service/Push.Service";
 import { BackButtonService } from "../../common/service/BackButton.Service";
+import { Local } from "../../common/service/Storage";
 // import { MainPage } from "../main/main";
 // import { FormValidService } from "../../common/service/FormValid.Service";
 
@@ -90,6 +91,7 @@ export class LoginPage {
                 loginInfo[key] = loginObj[key];
               }
             }
+            Local.set("sessionId", loginInfo.SessionId);
             this.ionicStorage.set("loginInfo", loginInfo); // 登录信息配置对象
             this.ionicStorage.set("userInfo", loginInfo["UserInfo"]); // 后台返回用户信息对象
             this.navCtrl.setRoot("MainPage"); // 跳转到主页
@@ -216,6 +218,7 @@ export class LoginPage {
         loginInfo[key] = null;
       }
     }
+    Local.set("sessionId", "");
     this.ionicStorage.set("loginInfo", loginInfo); // 登录信息配置对象
     this.ionicStorage.set("userInfo", loginInfo["UserInfo"]); // 后台返回用户信息对象
   }
@@ -286,6 +289,7 @@ export class LoginPage {
         }
         if (data["data"] && data["data"]["sessionid"]) {
           loginInfo.SessionId = data["data"]["sessionid"]; // 登录者Token
+          Local.set("sessionId", loginInfo.SessionId);
         }
         this.ionicStorage.set("userInfo", data["data"]); // 后台返回用户信息对象
         this.ionicStorage.set("loginInfo", loginInfo); // 登录信息配置对象

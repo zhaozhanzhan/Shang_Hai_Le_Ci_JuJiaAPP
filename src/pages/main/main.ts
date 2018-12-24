@@ -13,6 +13,7 @@ import { GlobalService } from "../../common/service/GlobalService";
 import { loginInfo } from "../../common/config/BaseConfig";
 import { LoginPage } from "../login/login";
 import { HomePage } from "../home/home";
+import { Local } from "../../common/service/Storage";
 
 @IonicPage()
 @Component({
@@ -102,6 +103,7 @@ export class MainPage {
         loginInfo[key] = null;
       }
     }
+    Local.set("sessionId", "");
     this.ionicStorage.set("loginInfo", loginInfo); // 登录信息配置对象
     this.ionicStorage.set("userInfo", loginInfo["UserInfo"]); // 后台返回用户信息对象
   }

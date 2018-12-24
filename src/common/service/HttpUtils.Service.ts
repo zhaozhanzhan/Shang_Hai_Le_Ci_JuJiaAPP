@@ -18,11 +18,13 @@ import {
 import "rxjs/add/operator/toPromise";
 import "rxjs/add/operator/timeout";
 import { JsUtilsService } from "./JsUtils.Service";
-import { reqObj, loginInfo } from "../config/BaseConfig";
+import { reqObj } from "../config/BaseConfig";
 import { GlobalService } from "./GlobalService";
 import moment from "moment"; // 时间格式化插件
 import { Events } from "ionic-angular";
 import { Storage } from "@ionic/storage";
+import _ from "underscore";
+import { Local } from "./Storage";
 // import _ from "underscore";
 
 const baseUrl: String = reqObj.baseUrl;
@@ -70,6 +72,17 @@ export class HttpReqService {
     public events: Events, // 事件发布与订阅
     public ionicStorage: Storage // IonicStorage
   ) {
+    // this.setSessionId().then(
+    //   sessionId => {
+    //     const sessId: any = sessionId;
+    //     Local.set("sessionId", sessId);
+    //     console.error("获取SessionId成功", sessId);
+    //   },
+    //   err => {
+    //     console.error("获取SessionId失败", err);
+    //     Local.set("sessionId", "");
+    //   }
+    // );
     // setTimeout(() => {
     // console.error("=====================", this.app);
     // this.defOptions.headers.set("token", "");
@@ -90,38 +103,59 @@ export class HttpReqService {
   }
 
   /**
+   * 设置SessionId
+   * @memberof HttpReqService
+   */
+  public setSessionId() {
+    return new Promise((reslove, reject) => {
+      this.ionicStorage.get("loginInfo").then(loginObj => {
+        if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
+          if (_.isString(loginObj.SessionId) && loginObj.SessionId.length > 0) {
+            console.error("loginObj.SessionId==========", loginObj.SessionId);
+            reslove(loginObj.SessionId);
+          } else {
+            reject("");
+          }
+        } else {
+          reject("");
+        }
+      });
+    });
+  }
+
+  /**
    * 设置更新Token
    * @private
    * @memberof HttpReqService
    */
   // private setToken() {
-    // if (
-    //   !_.isNull(loginInfo.Token) &&
-    //   !_.isUndefined(loginInfo.Token) &&
-    //   loginInfo.Token.length > 0
-    // ) {
-    //   // console.error("loginObj.Token==========", loginInfo.Token);
-    //   this.defOptions.headers.set("token", loginInfo.Token);
-    // } else {
-    //   this.defOptions.headers.set("token", "");
-    // }
-    // this.defOptions.headers.set("token", loginInfo.Token);
-    // this.ionicStorage.get("loginInfo").then(loginObj => {
-    //   if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
-    //     if (
-    //       !_.isNull(loginObj.Token) &&
-    //       !_.isUndefined(loginObj.Token) &&
-    //       loginObj.Token.length > 0
-    //     ) {
-    //       console.error("loginObj.Token==========", loginObj.Token);
-    //       this.defOptions.headers.set("token", loginObj.Token);
-    //     } else {
-    //       this.defOptions.headers.set("token", "");
-    //     }
-    //   } else {
-    //     this.defOptions.headers.set("token", "");
-    //   }
-    // });
+  // if (
+  //   !_.isNull(loginInfo.Token) &&
+  //   !_.isUndefined(loginInfo.Token) &&
+  //   loginInfo.Token.length > 0
+  // ) {
+  //   // console.error("loginObj.Token==========", loginInfo.Token);
+  //   this.defOptions.headers.set("token", loginInfo.Token);
+  // } else {
+  //   this.defOptions.headers.set("token", "");
+  // }
+  // this.defOptions.headers.set("token", loginInfo.Token);
+  // this.ionicStorage.get("loginInfo").then(loginObj => {
+  //   if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
+  //     if (
+  //       !_.isNull(loginObj.Token) &&
+  //       !_.isUndefined(loginObj.Token) &&
+  //       loginObj.Token.length > 0
+  //     ) {
+  //       console.error("loginObj.Token==========", loginObj.Token);
+  //       this.defOptions.headers.set("token", loginObj.Token);
+  //     } else {
+  //       this.defOptions.headers.set("token", "");
+  //     }
+  //   } else {
+  //     this.defOptions.headers.set("token", "");
+  //   }
+  // });
   // }
 
   /**
@@ -137,14 +171,16 @@ export class HttpReqService {
     let reqUrl: string = "";
     if (queParam) {
       const queryObj = this.jsUtil.deepClone(queryParams);
-      if (loginInfo.SessionId) {
-        queryObj.__sid = loginInfo.SessionId;
+      const sid: any = Local.get("sessionId");
+      if (_.isString(sid) && sid.length > 0) {
+        queryObj.__sid = sid;
       }
       reqUrl = ipUrl + "?" + this.jsUtil.queryStr(queryObj); // URL后拼接查询参数
     } else {
       const queryObj: any = {};
-      if (loginInfo.SessionId) {
-        queryObj.__sid = loginInfo.SessionId;
+      const sid: any = Local.get("sessionId");
+      if (_.isString(sid) && sid.length > 0) {
+        queryObj.__sid = sid;
       }
       reqUrl = ipUrl + "?" + this.jsUtil.queryStr(queryObj);
     }
@@ -276,14 +312,16 @@ export class HttpReqService {
     let reqUrl: string = "";
     if (queParam) {
       const queryObj = this.jsUtil.deepClone(queryParams);
-      if (loginInfo.SessionId) {
-        queryObj.__sid = loginInfo.SessionId;
+      const sid: any = Local.get("sessionId");
+      if (_.isString(sid) && sid.length > 0) {
+        queryObj.__sid = sid;
       }
       reqUrl = ipUrl + "?" + this.jsUtil.queryStr(queryObj); // URL后拼接查询参数
     } else {
       const queryObj: any = {};
-      if (loginInfo.SessionId) {
-        queryObj.__sid = loginInfo.SessionId;
+      const sid: any = Local.get("sessionId");
+      if (_.isString(sid) && sid.length > 0) {
+        queryObj.__sid = sid;
       }
       reqUrl = ipUrl + "?" + this.jsUtil.queryStr(queryObj);
     }

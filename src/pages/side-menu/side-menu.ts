@@ -15,6 +15,7 @@ import { GlobalService } from "../../common/service/GlobalService";
 import { loginInfo } from "../../common/config/BaseConfig";
 import { LoginPage } from "../login/login";
 import { BackButtonService } from "../../common/service/BackButton.Service";
+import { Local } from "../../common/service/Storage";
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
 // import { JsUtilsService } from "../../common/service/JsUtils.Service";
@@ -85,6 +86,7 @@ export class SideMenuPage implements OnInit {
         loginInfo[key] = null;
       }
     }
+    Local.set("sessionId", "");
     this.ionicStorage.set("loginInfo", loginInfo); // 登录信息配置对象
     this.ionicStorage.set("userInfo", loginInfo["UserInfo"]); // 后台返回用户信息对象
   }

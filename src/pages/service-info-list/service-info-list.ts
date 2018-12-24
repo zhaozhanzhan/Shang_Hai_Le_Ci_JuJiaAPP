@@ -1,119 +1,132 @@
 import { Component, ViewChild } from "@angular/core";
 import {
-  IonicPage,
+  AlertController,
   NavController,
   NavParams,
   ActionSheetController,
   Platform,
-  AlertController,
-  Refresher,
+  MenuController,
+  IonicPage,
+  ModalController,
+  Content,
   InfiniteScroll,
-  Content
+  Refresher
 } from "ionic-angular";
-import { Storage } from "@ionic/storage";
-import _ from "underscore"; // 工具类
+import { NativeAudio } from "@ionic-native/native-audio";
+import _ from "underscore"; // underscore工具类
 import { GlobalService } from "../../common/service/GlobalService";
-import { GlobalMethod } from "../../common/service/GlobalMethod";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
-import { pageObj, reqObj, loginInfo } from "../../common/config/BaseConfig";
-import { InAppBrowser } from "@ionic-native/in-app-browser";
+import { ParamService } from "../../common/service/Param.Service";
+import { reqObj, pageObj } from "../../common/config/BaseConfig";
+import { GlobalMethod } from "../../common/service/GlobalMethod";
 import { FilePreviewService } from "../../common/service/FilePreview.Service";
-// import { ParamService } from "../../common/service/Param.Service";
-// import { JsUtilsService } from "../../common/service/JsUtils.Service";
+import { JsUtilsService } from "../../common/service/JsUtils.Service";
+// import { Storage } from "@ionic/storage";
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
+// import { JsUtilsService } from "../../common/service/JsUtils.Service";
+// import { GlobalMethod } from "../../common/service/GlobalMethod";
+
 @IonicPage()
 @Component({
-  selector: "page-serv-query",
-  templateUrl: "serv-query.html"
+  selector: "page-service-info-list",
+  templateUrl: "service-info-list.html"
 })
-export class ServQueryPage {
+export class ServiceInfoListPage {
   @ViewChild(Content)
   content: Content;
-  public paramType: any = null; // 传递过来的参数类型
-  public baseImgUrl: any = reqObj.baseImgUrl; // 基础图片URL
-  public reqUrl: string = "home/a/home/homeServerWork/ServiceSettlement"; // 请求数据URL
+  public paramObj: any = {}; // 传过来的参数对象
+  public reqUrl: string = "home/a/home/homeServerWork/ServiceInfo"; // 请求数据URL
   public sendData: any = {}; // 定义请求数据时的对象
   public dataList: Array<any> = []; // 数据列表
   public formInfo: any = {}; // 数据信息
   public isShowNoData: boolean = false; // 给客户提示没有更多数据
   public infiniteScroll: InfiniteScroll = null; // 上拉加载事件对象
+  // public isActive: boolean = false;
   constructor(
-    // private jsUtil: JsUtilsService, // 自定义JS工具类
     // private fb: FormBuilder, // 响应式表单
     // private jsUtil: JsUtilsService, // 自定义JS工具类
+    // private ionicStorage: Storage, // IonicStorage
+    private httpReq: HttpReqService, // Http请求服务
     public navCtrl: NavController, // 导航控制器
     public navParams: NavParams, // 导航参数传递控制
-    public httpReq: HttpReqService, // Http请求服务
-    public ionicStorage: Storage, // IonicStorage
+    public menuCtrl: MenuController, // 侧滑菜单控制器
     public gloService: GlobalService, // 全局自定义服务
+    private jsUtil: JsUtilsService, // 全局自定义工具类
     public filePrevService: FilePreviewService, // PDF文件查看服务
     public actionSheetCtrl: ActionSheetController, // 操作表控制器
     public platform: Platform, // 获取平台信息
     public alertCtrl: AlertController, // Alert消息弹出框
-    public iab: InAppBrowser // 打开内置浏览器
-  ) {}
+    public nativeAudio: NativeAudio, // 音频播放
+    public modalCtrl: ModalController // Modal弹出页控制器
+  ) {
+    this.paramObj.personCode = this.navParams.get("personCode");
+    this.paramObj.userCode = this.navParams.get("userCode");
+    if (
+      !(
+        _.isString(this.paramObj.personCode) &&
+        this.paramObj.personCode.length > 0
+      )
+    ) {
+      this.gloService.showMsg("未获取到护工ID", null, 3000);
+      if (this.navCtrl.canGoBack()) {
+        this.navCtrl.pop();
+      }
+    }
+
+    if (
+      !(_.isString(this.paramObj.userCode) && this.paramObj.userCode.length > 0)
+    ) {
+      this.gloService.showMsg("未获取到老人ID", null, 3000);
+      if (this.navCtrl.canGoBack()) {
+        this.navCtrl.pop();
+      }
+    }
+
+    this.sendData = this.jsUtil.deepClone(this.paramObj);
+    this.sendData.pageNo = pageObj.currentPage; // 定义当前页码
+    this.sendData.pageSize = pageObj.everyItem; // 定义当前页面请求条数
+    this.sendData.totalPage = pageObj.totalPage; // 定义总页数
+
+    // 请求列表数据
+    this.reqData(
+      this.reqUrl,
+      this.sendData,
+      (res: any) => {
+        // 请求数据成功
+        this.dataList = this.dataList.concat(res);
+        if (this.dataList.length == 0) {
+          this.gloService.showMsg("该列表暂无数据！");
+        }
+        console.error("this.sendData", this.sendData);
+      },
+      (err: any) => {
+        // 请求数据失败
+        this.dataList = this.dataList.concat(err);
+      }
+    );
+
+    // this.httpReq.get(this.reqUrl, this.sendData, data => {
+    //   console.error("服务配置二级列表", data);
+    //   if (
+    //     data["data"] &&
+    //     _.isArray(data["data"]["serverItemsSecondTreeObjList"])
+    //   ) {
+    //     this.dataList = data["data"]["serverItemsSecondTreeObjList"];
+    //   } else {
+    //     this.dataList = [];
+    //   }
+    // });
+
+    console.error("ParamService.getParamNfc", ParamService.getParamNfc());
+    console.error("ParamService.getParamId", ParamService.getParamId());
+    console.error("this.dataList=====", this.dataList);
+  }
 
   ionViewDidLoad() {
-    console.log("ionViewDidLoad ServQueryPage");
-    this.ionicStorage.get("loginInfo").then(loginObj => {
-      console.error("loginInfo", loginObj);
-      if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
-        // 判断是否是空对象
-        if (
-          !_.isNull(loginObj["UserInfo"]) &&
-          !_.isEmpty(loginObj["UserInfo"])
-        ) {
-          const loginId = loginObj["LoginId"]; // 用户ID
-          if (_.isString(loginId) && loginId.length > 0) {
-            // this.sendData.pageNo = pageObj.currentPage; // 定义当前页码
-            // this.sendData.pageSize = pageObj.everyItem; // 定义当前页面请求条数
-            // this.sendData.totalPage = pageObj.totalPage; // 定义总页数
-            const curMonthArr = GlobalMethod.getCurrMonthDays(true); // 获取本月开始时间结束时间数组
-            this.sendData.starttime = curMonthArr[0]; // 开始时间
-            this.sendData.endtime = curMonthArr[1]; // 结束时间
-            this.sendData.personid = loginId; // 用户ID
-            console.error(GlobalMethod.getCurrMonthDays(true));
-            console.error(this.sendData);
-            // 请求列表数据
-            this.reqData(
-              this.reqUrl,
-              this.sendData,
-              (res: any) => {
-                // 请求数据成功
-                this.dataList = this.dataList.concat(res);
-                if (this.dataList.length == 0) {
-                  this.gloService.showMsg("该列表暂无数据！");
-                }
-                console.error("this.sendData", this.sendData);
-              },
-              (err: any) => {
-                // 请求数据失败
-                this.dataList = this.dataList.concat(err);
-              }
-            );
-          } else {
-            this.gloService.showMsg("未获取到用户ID", null, 3000);
-            if (this.navCtrl.canGoBack()) {
-              this.navCtrl.pop();
-            }
-          }
-        } else {
-          this.gloService.showMsg("未获取到用户ID", null, 3000);
-          if (this.navCtrl.canGoBack()) {
-            this.navCtrl.pop();
-          }
-        }
-      } else {
-        this.gloService.showMsg("未获取到用户ID", null, 3000);
-        if (this.navCtrl.canGoBack()) {
-          this.navCtrl.pop();
-        }
-      }
-    });
-    //127.0.0.1:8980/personid=1062522704693075968&starttime=&endtime=
-    // const loginId = loginInfo.LoginId;
+    console.log("ionViewDidLoad ServiceInfoListPage");
   }
+
   /**
    * 返回到主页
    * @memberof PersonInfoPage
@@ -127,7 +140,7 @@ export class ServQueryPage {
    * @param {*} pageName 页面组件类名称
    * @param {*} obj 页面组件类名称
    * @param {*} opts 转场动画
-   * @memberof ServiceConfigPage
+   * @memberof UserListPage
    */
   public jumpPage(pageName: any, obj?: any, opts?: any): void {
     if (_.isObject(obj) && !_.isEmpty(obj)) {
@@ -142,6 +155,41 @@ export class ServQueryPage {
   }
 
   /**
+   * 切换菜单展开状态
+   * @param {boolean} isActive
+   * @param {*} obj
+   * @param {number} i
+   * @memberof ConfigListPage
+   */
+  public menuOpenToggle(isActive: boolean, obj: any, i: number) {
+    if (isActive) {
+      // 展开
+      obj["isActive"] = !isActive;
+    } else {
+      // 关闭
+      for (let i = 0; i < this.dataList.length; i++) {
+        this.dataList[i]["isActive"] = false;
+      }
+      obj["isActive"] = !isActive;
+    }
+  }
+
+  /**
+   * 打开Modal框
+   * @param {string} pageName 页面
+   * @param {any} obj 传递对象
+   * @memberof ServiceConfigPage
+   */
+  public openModal(pageName: string, obj?: any) {
+    console.error("打开弹出层");
+    if (obj) {
+      this.modalCtrl.create(pageName, obj).present();
+    } else {
+      this.modalCtrl.create(pageName).present();
+    }
+  }
+
+  /**
    * 请求列表数据
    * @param {string} url 接口URL地址
    * @param {*} reqObj 请接参数对象
@@ -151,14 +199,14 @@ export class ServQueryPage {
    */
   public reqData(url: string, reqObj: any, suc: Function, err: Function) {
     this.httpReq.get(url, reqObj, (data: any) => {
-      if (data["data"] && _.isArray(data["data"]["ServiceSettlement"])) {
-        // this.sendData.totalPage = GlobalMethod.calTotalPage(
-        //   data["data"]["list"],
-        //   this.sendData.pageSize
-        // ); //定义当前总页数
-        this.formInfo = data["data"]["tol"];
-        suc(data["data"]["ServiceSettlement"]);
-        // this.dataList = this.dataList.concat(data["data"]);
+      if (data["data"] && _.isArray(data["data"]["list"])) {
+        this.sendData.totalPage = GlobalMethod.calTotalPage(
+          data["data"]["list"],
+          data["data"]["count"]
+        ); //定义当前总页数
+        suc(data["data"]["list"]);
+        this.dataList = this.dataList.concat(data["data"]);
+        this.formInfo = data["data"]["otherData"];
       } else {
         this.gloService.showMsg(data["message"], null, 3000);
         err([]);

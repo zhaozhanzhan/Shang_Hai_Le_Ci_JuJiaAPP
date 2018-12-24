@@ -10,5 +10,6 @@ page-train-doc-list {
     }
     .cardBg4 {
         background: linear-gradient(270deg, #AF00FF, #FF64FF) !important;
+        // @include bounceIn();
     }
 }

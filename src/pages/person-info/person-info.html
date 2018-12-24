@@ -93,7 +93,7 @@
                             </div>
                         </div>
                         <div class="pt10" *ngIf="formInfo.fileUploads && formInfo.fileUploads.length > 0">
-                            <div class="w150 h150 mb10" *ngFor="let x of formInfo.fileUploads;let i = index;">
+                            <div class="w240 h160 mb10" *ngFor="let x of formInfo.fileUploads;let i = index;" (click)="prevImg(formInfo.fileUploads,i)">
                                 <div class="h100p w100p disFlex justConC aligIteC borB7D8E0">
                                     <img *ngIf="(x.fileUrl)" class="h100p w100p" [src]="baseImgUrl + x.fileUrl">
                                     <svg *ngIf="!(x.fileUrl)" class="colourIcon ftz60" aria-hidden="true">
@@ -141,6 +141,9 @@
             </div>
         </div>
     </div>
+    <!-- 图片预览组件 Begin -->
+    <photo-prev #photoPrev></photo-prev>
+    <!-- 图片预览组件 End -->
 </ion-content>
 <ion-footer>
     <ion-toolbar>

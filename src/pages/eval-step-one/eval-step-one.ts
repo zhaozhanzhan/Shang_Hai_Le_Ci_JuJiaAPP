@@ -15,27 +15,27 @@ import _ from "underscore"; // 工具类
 import { GlobalService } from "../../common/service/GlobalService";
 import { GlobalMethod } from "../../common/service/GlobalMethod";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
-import { pageObj, reqObj, loginInfo } from "../../common/config/BaseConfig";
+import { pageObj, reqObj } from "../../common/config/BaseConfig";
 import { InAppBrowser } from "@ionic-native/in-app-browser";
 import { FilePreviewService } from "../../common/service/FilePreview.Service";
 // import { ParamService } from "../../common/service/Param.Service";
 // import { JsUtilsService } from "../../common/service/JsUtils.Service";
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
+
 @IonicPage()
 @Component({
-  selector: "page-serv-query",
-  templateUrl: "serv-query.html"
+  selector: "page-eval-step-one",
+  templateUrl: "eval-step-one.html"
 })
-export class ServQueryPage {
+export class EvalStepOnePage {
   @ViewChild(Content)
   content: Content;
   public paramType: any = null; // 传递过来的参数类型
   public baseImgUrl: any = reqObj.baseImgUrl; // 基础图片URL
-  public reqUrl: string = "home/a/home/homeServerWork/ServiceSettlement"; // 请求数据URL
+  public reqUrl: string = "home/a/internal/homeTrain/listTrains"; // 请求数据URL
   public sendData: any = {}; // 定义请求数据时的对象
   public dataList: Array<any> = []; // 数据列表
-  public formInfo: any = {}; // 数据信息
   public isShowNoData: boolean = false; // 给客户提示没有更多数据
   public infiniteScroll: InfiniteScroll = null; // 上拉加载事件对象
   constructor(
@@ -55,65 +55,31 @@ export class ServQueryPage {
   ) {}
 
   ionViewDidLoad() {
+    console.log("ionViewDidLoad EvalStepOnePage");
     console.log("ionViewDidLoad ServQueryPage");
-    this.ionicStorage.get("loginInfo").then(loginObj => {
-      console.error("loginInfo", loginObj);
-      if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
-        // 判断是否是空对象
-        if (
-          !_.isNull(loginObj["UserInfo"]) &&
-          !_.isEmpty(loginObj["UserInfo"])
-        ) {
-          const loginId = loginObj["LoginId"]; // 用户ID
-          if (_.isString(loginId) && loginId.length > 0) {
-            // this.sendData.pageNo = pageObj.currentPage; // 定义当前页码
-            // this.sendData.pageSize = pageObj.everyItem; // 定义当前页面请求条数
-            // this.sendData.totalPage = pageObj.totalPage; // 定义总页数
-            const curMonthArr = GlobalMethod.getCurrMonthDays(true); // 获取本月开始时间结束时间数组
-            this.sendData.starttime = curMonthArr[0]; // 开始时间
-            this.sendData.endtime = curMonthArr[1]; // 结束时间
-            this.sendData.personid = loginId; // 用户ID
-            console.error(GlobalMethod.getCurrMonthDays(true));
-            console.error(this.sendData);
-            // 请求列表数据
-            this.reqData(
-              this.reqUrl,
-              this.sendData,
-              (res: any) => {
-                // 请求数据成功
-                this.dataList = this.dataList.concat(res);
-                if (this.dataList.length == 0) {
-                  this.gloService.showMsg("该列表暂无数据！");
-                }
-                console.error("this.sendData", this.sendData);
-              },
-              (err: any) => {
-                // 请求数据失败
-                this.dataList = this.dataList.concat(err);
-              }
-            );
-          } else {
-            this.gloService.showMsg("未获取到用户ID", null, 3000);
-            if (this.navCtrl.canGoBack()) {
-              this.navCtrl.pop();
-            }
-          }
-        } else {
-          this.gloService.showMsg("未获取到用户ID", null, 3000);
-          if (this.navCtrl.canGoBack()) {
-            this.navCtrl.pop();
-          }
+    this.sendData.datumType = this.paramType; // 列表类型
+    this.sendData.pageNo = pageObj.currentPage; // 定义当前页码
+    this.sendData.pageSize = pageObj.everyItem; // 定义当前页面请求条数
+    this.sendData.totalPage = pageObj.totalPage; // 定义当前页面请求条数
+    // 请求列表数据
+    this.reqData(
+      this.reqUrl,
+      this.sendData,
+      (res: any) => {
+        // 请求数据成功
+        this.dataList = this.dataList.concat(res);
+        if (this.dataList.length == 0) {
+          this.gloService.showMsg("该列表暂无数据！");
         }
-      } else {
-        this.gloService.showMsg("未获取到用户ID", null, 3000);
-        if (this.navCtrl.canGoBack()) {
-          this.navCtrl.pop();
-        }
+        console.error("this.sendData", this.sendData);
+      },
+      (err: any) => {
+        // 请求数据失败
+        this.dataList = this.dataList.concat(err);
       }
-    });
-    //127.0.0.1:8980/personid=1062522704693075968&starttime=&endtime=
-    // const loginId = loginInfo.LoginId;
+    );
   }
+
   /**
    * 返回到主页
    * @memberof PersonInfoPage
@@ -151,13 +117,12 @@ export class ServQueryPage {
    */
   public reqData(url: string, reqObj: any, suc: Function, err: Function) {
     this.httpReq.get(url, reqObj, (data: any) => {
-      if (data["data"] && _.isArray(data["data"]["ServiceSettlement"])) {
-        // this.sendData.totalPage = GlobalMethod.calTotalPage(
-        //   data["data"]["list"],
-        //   this.sendData.pageSize
-        // ); //定义当前总页数
-        this.formInfo = data["data"]["tol"];
-        suc(data["data"]["ServiceSettlement"]);
+      if (data["data"] && _.isArray(data["data"]["list"])) {
+        this.sendData.totalPage = GlobalMethod.calTotalPage(
+          data["data"]["list"],
+          data["data"]["count"]
+        ); //定义当前总页数
+        suc(data["data"]["list"]);
         // this.dataList = this.dataList.concat(data["data"]);
       } else {
         this.gloService.showMsg(data["message"], null, 3000);

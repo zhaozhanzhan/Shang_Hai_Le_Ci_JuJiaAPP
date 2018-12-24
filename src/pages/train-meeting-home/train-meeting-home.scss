@@ -4,6 +4,7 @@ page-train-meeting-home {
     }
     .cardBg2 {
         background: linear-gradient(180deg, #4897F0, #29DAE9) !important;
+        // @include bounceIn();
     }
     .cardBg3 {
         background: linear-gradient(180deg, #FC16A0, #F8420B) !important;

@@ -28,6 +28,7 @@ import { AppUpdateService } from "../common/service/AppUpdate.Service";
 import { SelectCityService } from "../common/service/SelectCity.Service";
 import { LocalNotifications } from "@ionic-native/local-notifications";
 import { ServiceNotification } from "../common/service/ServiceNotification";
+import { Local } from "../common/service/Storage";
 
 declare var cordova: any; //导入第三方的库定义到 TS 项目中
 
@@ -580,6 +581,7 @@ export class MyApp implements AfterViewInit {
         loginInfo[key] = null;
       }
     }
+    Local.set("sessionId", "");
     this.ionicStorage.set("loginInfo", loginInfo); // 登录信息配置对象
     this.ionicStorage.set("userInfo", loginInfo["UserInfo"]); // 后台返回用户信息对象
   }

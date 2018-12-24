@@ -1,0 +1,51 @@
+page-service-info-list {
+    .iconBg1 {
+        background: linear-gradient(120deg, #FFA366, #FFC347) !important;
+    }
+    .iconBg2 {
+        background: linear-gradient(120deg, #4897F0, #29DAE9) !important;
+    }
+    .iconBg3 {
+        background: linear-gradient(120deg, #FD5264, #FF71BF) !important;
+    }
+    .parentBox {
+        .childListHide {
+            position: relative;
+            .childListCtrl {
+                display: none;
+                overflow: hidden;
+            }
+        }
+        .childListShow {
+            position: relative;
+            .childListCtrl {
+                display: block;
+                overflow: scroll;
+                // background: #F00;
+                // animation: open 1s ease 0s 1 normal forwards;
+            }
+        }
+    }
+    @keyframes open {
+        0% {
+            max-height: 10px;
+            // height: 0px;
+        }
+        100% {
+            max-height: 300px;
+            // height: 100% !important;
+        }
+    }
+    /* .childListActive {
+        background: #F00;
+        animation: open 5s ease 0s 1 normal forwards;
+    }
+    @keyframes open {
+        0% {
+            height: 0px;
+        }
+        100% {
+            height: 200px;
+        }
+    } */
+}

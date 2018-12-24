@@ -72,4 +72,12 @@ export class ComprQueryHomePage {
       }
     }
   }
+
+  /**
+   * 未开发提示
+   * @memberof HomePage
+   */
+  public noDevTit() {
+    this.gloService.showMsg("该功能正在加急开发中...", null, 2000);
+  }
 }

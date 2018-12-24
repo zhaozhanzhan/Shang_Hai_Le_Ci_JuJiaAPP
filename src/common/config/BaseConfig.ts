@@ -16,8 +16,10 @@ const ipDownload = "139.224.12.181:9527"; // 下载文件 测试服
 // const ip = "192.168.1.118:8081"; // 内网IP+端口
 // const ip = "192.168.1.118:8088"; // 内网IP+端口
 // const ip = "192.168.1.222:8088"; // 内网IP+端口
-const ip = "192.168.1.128:8980"; // 内网IP+端口
+// const ip = "192.168.1.128:8980"; // 内网IP+端口 朱石磊
+const ip = "192.168.1.139:8980"; // 内网IP+端口 倪维巍
 // const ip = "139.224.12.181:8980"; // 公网IP+端口
+// const ip = "139.224.12.181:8989"; // 公网测试IP+端口
 
 //================= 服务器IP + 端口配置 End =================//
 
@@ -37,7 +39,7 @@ export const loginInfo = {
   LoginTime: null, // 登录时间
   UserName: null, // 用户名
   Password: null, // 用户密码
-  LoginId: null, // 登录者Token
+  LoginId: null, // 登录者ID
   SessionId: null, // 登录者Token
   UserInfo: null // 后台返回用户信息对象
 };

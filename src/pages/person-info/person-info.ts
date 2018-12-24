@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import {
   AlertController,
   NavController,
@@ -14,6 +14,8 @@ import { GlobalService } from "../../common/service/GlobalService";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
 import { LoginPage } from "../login/login";
 import { loginInfo, reqObj } from "../../common/config/BaseConfig";
+import { PhotoPrevComponent } from "../../common/component/components/photo-prev/photo-prev";
+import { Local } from "../../common/service/Storage";
 // import _ from "underscore"; // underscore工具类
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
@@ -26,6 +28,9 @@ import { loginInfo, reqObj } from "../../common/config/BaseConfig";
   templateUrl: "person-info.html"
 })
 export class PersonInfoPage {
+  @ViewChild("photoPrev")
+  photoPrev: PhotoPrevComponent;
+
   public baseImgUrl: any = reqObj.baseImgUrl; // 基础图片URL
   public formInfo: any = {}; // 数据信息
 
@@ -47,7 +52,6 @@ export class PersonInfoPage {
   ionViewDidLoad() {
     console.log("ionViewDidLoad PersonInfoPage");
     const loading = this.gloService.showLoading("正在查询，请稍候...");
-
     const formData: any = {};
     if (loginInfo.LoginId) {
       formData.serverPensonID = loginInfo.LoginId;
@@ -64,7 +68,7 @@ export class PersonInfoPage {
     this.httpReq.get(
       "home/a/person/homeServerPerson/getByServerPensonID",
       formData,
-      data => {
+      (data: any) => {
         if (data["data"] && data["data"]["result"] == 0) {
           // this.gloService.showMsg("登录成功", null, 1000);
           loading.dismiss();
@@ -97,6 +101,7 @@ export class PersonInfoPage {
         }
       }
     );
+    console.log("%c photoPrev===========", "color:#C44617", this.photoPrev);
   }
 
   ionViewDidEnter() {
@@ -126,8 +131,26 @@ export class PersonInfoPage {
         loginInfo[key] = null;
       }
     }
+    Local.set("sessionId", "");
     this.ionicStorage.set("loginInfo", loginInfo); // 登录信息配置对象
     this.ionicStorage.set("userInfo", loginInfo["UserInfo"]); // 后台返回用户信息对象
+  }
+
+  /**
+   * 预览图片
+   * @param {Array<any>} arr 图片所在对象数组
+   * @param {number} index 要显示的图片索引
+   * @memberof PersonInfoPage
+   */
+  public prevImg(arr: Array<any> = [], index: number = 0) {
+    const imgArr = [];
+    for (let i = 0; i < arr.length; i++) {
+      const imgObj: any = {};
+      imgObj.url = this.baseImgUrl + arr[i].fileUrl;
+      // imgObj.title = "This is a title";
+      imgArr.push(imgObj);
+    }
+    this.photoPrev.photoViews(imgArr, "url", index);
   }
 
   /**

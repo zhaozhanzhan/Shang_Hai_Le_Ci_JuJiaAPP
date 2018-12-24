@@ -333,7 +333,7 @@ export class HomePage {
    * @memberof HomePage
    */
   public noDevTit() {
-    this.gloService.showMsg("该功能暂未开发", null, 2000);
+    this.gloService.showMsg("该功能正在加急开发中...", null, 2000);
   }
 
   /**

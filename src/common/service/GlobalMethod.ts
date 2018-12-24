@@ -10,6 +10,7 @@ import { Injectable } from "@angular/core"; // 注入服务注解
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { FormGroup } from "@angular/forms";
 import _ from "underscore"; // underscore工具类
+import moment from "moment"; // 时间格式化插件
 
 @Injectable()
 export class GlobalMethod {
@@ -296,5 +297,31 @@ export class GlobalMethod {
     }
     totalPage = Math.ceil(totalItem / everyItem); // 因为全局页码从0开始,所以总页数减1
     return totalPage;
+  }
+
+  /**
+   * 获取当前月的开始结束时间
+   * @static
+   * @param {boolean} isTime 设置是否包含时间 true [2018-12-01 00:00:00,2018-12-31 23:59:59] | false [2018-12-01,2018-12-31] 默认为false
+   * @returns 返回数组
+   * @memberof GlobalMethod
+   */
+  public static getCurrMonthDays(isTime?: boolean) {
+    const date = [];
+    let start =
+      moment()
+        .add("month", 0)
+        .format("YYYY-MM") + "-01";
+    let end = moment(start)
+      .add("month", 1)
+      .add("days", -1)
+      .format("YYYY-MM-DD");
+    if (isTime) {
+      start += " 00:00:00";
+      end += " 23:59:59";
+    }
+    date.push(start);
+    date.push(end);
+    return date;
   }
 }

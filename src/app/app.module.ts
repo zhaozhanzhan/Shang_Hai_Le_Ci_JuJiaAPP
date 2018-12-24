@@ -1,4 +1,7 @@
-import { BrowserModule } from "@angular/platform-browser";
+import {
+  BrowserModule,
+  HAMMER_GESTURE_CONFIG // 浏览器手势事件模块
+} from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { ErrorHandler, NgModule } from "@angular/core";
@@ -24,6 +27,7 @@ import { OpenNativeSettings } from "@ionic-native/open-native-settings"; // 系�
 import { InAppBrowser } from "@ionic-native/in-app-browser"; // 打开浏览器
 import { CommonServiceModule } from "../common/common.module"; // 全局自定义公共服务模块
 import { MultiPickerModule } from "ion-multi-picker"; // 多级选择器
+import * as ionicGalleryModal from "ionic-gallery-modal"; // 图片预览模块
 import { MainPageModule } from "../pages/main/main.module";
 import { MyApp } from "./app.component"; // 根组件
 import { LoginPage } from "./../pages/login/login"; // 登录页面
@@ -43,6 +47,7 @@ import { FastLoginPage } from "../pages/fast-login/fast-login"; // 快速登录
     HttpModule,
     CommonServiceModule,
     MultiPickerModule,
+    ionicGalleryModal.GalleryModalModule, // 图片预览模块
     IonicModule.forRoot(MyApp, {
       backButtonText: "", // 返回按钮文字
       mode: "ios" // 设置样式为ios模式
@@ -76,7 +81,11 @@ import { FastLoginPage } from "../pages/fast-login/fast-login"; // 快速登录
     NFC, // NFC
     InAppBrowser, // 打开浏览器
     AppAvailability, // 检查用户设备安装了某应用程序
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    {
+      provide: HAMMER_GESTURE_CONFIG, // 浏览器手势事件模块
+      useClass: ionicGalleryModal.GalleryModalHammerConfig // 图片预览模块
+    }
   ]
 })
 export class AppModule {}

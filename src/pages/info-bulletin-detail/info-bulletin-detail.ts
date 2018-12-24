@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import {
   AlertController,
   NavController,
@@ -13,6 +13,7 @@ import { NativeAudio } from "@ionic-native/native-audio";
 import { GlobalService } from "../../common/service/GlobalService";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
 import { reqObj } from "../../common/config/BaseConfig";
+import { PhotoPrevComponent } from "../../common/component/components/photo-prev/photo-prev";
 // import { Storage } from "@ionic/storage";
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
@@ -25,6 +26,9 @@ import { reqObj } from "../../common/config/BaseConfig";
   templateUrl: "info-bulletin-detail.html"
 })
 export class InfoBulletinDetailPage {
+  @ViewChild("photoPrev")
+  photoPrev: PhotoPrevComponent;
+
   public baseImgUrl: any = reqObj.baseImgUrl; // 基础图片URL
   public paramId: any = null; // 传递过来的ID
   public formInfo: any = {}; // 数据信息
@@ -51,7 +55,7 @@ export class InfoBulletinDetailPage {
       this.httpReq.get(
         "home/a/internal/homeNotice/getByNoticeID",
         sendData,
-        data => {
+        (data: any) => {
           if (data["data"] && data["data"]["result"] == 0) {
             // this.gloService.showMsg("登录成功", null, 1000);
             this.formInfo = data["data"]["homeNotice"];
@@ -79,5 +83,22 @@ export class InfoBulletinDetailPage {
    */
   public backHome() {
     this.navCtrl.setRoot("MainPage", null, { animate: true }); // 跳转到主页
+  }
+
+  /**
+   * 预览图片
+   * @param {Array<any>} arr 图片所在对象数组
+   * @param {number} index 要显示的图片索引
+   * @memberof PersonInfoPage
+   */
+  public prevImg(arr: Array<any> = [], index: number = 0) {
+    const imgArr = [];
+    for (let i = 0; i < arr.length; i++) {
+      const imgObj: any = {};
+      imgObj.url = this.baseImgUrl + arr[i].fileUrl;
+      imgObj.title = "This is a title";
+      imgArr.push(imgObj);
+    }
+    this.photoPrev.photoViews(imgArr, "url", index);
   }
 }
