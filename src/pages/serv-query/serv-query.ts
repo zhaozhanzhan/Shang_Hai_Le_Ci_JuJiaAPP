@@ -8,7 +8,8 @@ import {
   AlertController,
   Refresher,
   InfiniteScroll,
-  Content
+  Content,
+  ModalController
 } from "ionic-angular";
 import { Storage } from "@ionic/storage";
 import _ from "underscore"; // 工具类
@@ -51,7 +52,8 @@ export class ServQueryPage {
     public actionSheetCtrl: ActionSheetController, // 操作表控制器
     public platform: Platform, // 获取平台信息
     public alertCtrl: AlertController, // Alert消息弹出框
-    public iab: InAppBrowser // 打开内置浏览器
+    public iab: InAppBrowser, // 打开内置浏览器
+    public modalCtrl: ModalController // Modal弹出页控制器
   ) {}
 
   ionViewDidLoad() {
@@ -339,6 +341,21 @@ export class ServQueryPage {
       this.filePrevService.previewFile(fileUrl);
     } else {
       this.gloService.showMsg("文件地址错误！");
+    }
+  }
+
+  /**
+   * 打开Modal框
+   * @param {string} pageName 页面
+   * @param {any} obj 传递对象
+   * @memberof ServiceConfigPage
+   */
+  public openModal(pageName: string, obj?: any) {
+    console.error("打开弹出层");
+    if (obj) {
+      this.modalCtrl.create(pageName, obj).present();
+    } else {
+      this.modalCtrl.create(pageName).present();
     }
   }
 }

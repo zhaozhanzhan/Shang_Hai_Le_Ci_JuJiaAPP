@@ -278,9 +278,9 @@ export class HttpReqService {
           console.error("请求的服务器错误");
         }
         console.log(error);
-        if (this.noConsoleUrlArr.indexOf(url) == -1) {
-          that.gloService.showMsg("服务器请求出错，请检查网络连接！");
-        }
+        // if (this.noConsoleUrlArr.indexOf(url) == -1) {
+        //   that.gloService.showMsg("服务器请求出错，请检查网络连接！");
+        // }
         // 无数据返回
         const resObj = {
           data: {},
@@ -415,9 +415,9 @@ export class HttpReqService {
           }
           console.error("请求的服务器错误");
         }
-        if (this.noConsoleUrlArr.indexOf(url) == -1) {
-          that.gloService.showMsg("服务器请求出错，请检查网络连接！");
-        }
+        // if (this.noConsoleUrlArr.indexOf(url) == -1) {
+        //   that.gloService.showMsg("服务器请求出错，请检查网络连接！");
+        // }
 
         // 无数据返回
         const resObj = {
@@ -500,7 +500,7 @@ export class HttpReqService {
           console.error("请求的服务器错误");
         }
         console.log(error);
-        that.gloService.showMsg("服务器请求出错，请检查网络连接！");
+        // that.gloService.showMsg("服务器请求出错，请检查网络连接！");
         // 无数据返回
         const resObj = {
           data: {},

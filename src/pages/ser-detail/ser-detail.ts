@@ -10,7 +10,8 @@ import {
   ModalController,
   Content,
   InfiniteScroll,
-  Refresher
+  Refresher,
+  ViewController
 } from "ionic-angular";
 import { NativeAudio } from "@ionic-native/native-audio";
 import _ from "underscore"; // underscore工具类
@@ -21,7 +22,7 @@ import { reqObj, pageObj } from "../../common/config/BaseConfig";
 import { GlobalMethod } from "../../common/service/GlobalMethod";
 import { FilePreviewService } from "../../common/service/FilePreview.Service";
 import { JsUtilsService } from "../../common/service/JsUtils.Service";
-// import { Storage } from "@ionic/storage";
+import { Storage } from "@ionic/storage";
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
 // import { JsUtilsService } from "../../common/service/JsUtils.Service";
@@ -29,10 +30,10 @@ import { JsUtilsService } from "../../common/service/JsUtils.Service";
 
 @IonicPage()
 @Component({
-  selector: "page-service-info-list",
-  templateUrl: "service-info-list.html"
+  selector: "page-ser-detail",
+  templateUrl: "ser-detail.html"
 })
-export class ServiceInfoListPage {
+export class SerDetailPage {
   @ViewChild(Content)
   content: Content;
   public paramObj: any = {}; // 传过来的参数对象
@@ -42,7 +43,6 @@ export class ServiceInfoListPage {
   public formInfo: any = {}; // 数据信息
   public isShowNoData: boolean = false; // 给客户提示没有更多数据
   public infiniteScroll: InfiniteScroll = null; // 上拉加载事件对象
-  // public isActive: boolean = false;
   constructor(
     // private fb: FormBuilder, // 响应式表单
     // private jsUtil: JsUtilsService, // 自定义JS工具类
@@ -52,79 +52,98 @@ export class ServiceInfoListPage {
     public navParams: NavParams, // 导航参数传递控制
     public menuCtrl: MenuController, // 侧滑菜单控制器
     public gloService: GlobalService, // 全局自定义服务
+    public ionicStorage: Storage, // IonicStorage
     private jsUtil: JsUtilsService, // 全局自定义工具类
     public filePrevService: FilePreviewService, // PDF文件查看服务
     public actionSheetCtrl: ActionSheetController, // 操作表控制器
     public platform: Platform, // 获取平台信息
     public alertCtrl: AlertController, // Alert消息弹出框
     public nativeAudio: NativeAudio, // 音频播放
+    public viewCtrl: ViewController, // 视图控制器
     public modalCtrl: ModalController // Modal弹出页控制器
   ) {
-    this.paramObj.personCode = this.navParams.get("personCode");
-    this.paramObj.userCode = this.navParams.get("userCode");
-    if (
-      !(
-        _.isString(this.paramObj.personCode) &&
-        this.paramObj.personCode.length > 0
-      )
-    ) {
-      this.gloService.showMsg("未获取到护工ID", null, 3000);
-      if (this.navCtrl.canGoBack()) {
-        this.navCtrl.pop();
-      }
-    }
-
-    if (
-      !(_.isString(this.paramObj.userCode) && this.paramObj.userCode.length > 0)
-    ) {
-      this.gloService.showMsg("未获取到老人ID", null, 3000);
-      if (this.navCtrl.canGoBack()) {
-        this.navCtrl.pop();
-      }
-    }
-
-    this.sendData = this.jsUtil.deepClone(this.paramObj);
-    this.sendData.pageNo = pageObj.currentPage; // 定义当前页码
-    this.sendData.pageSize = pageObj.everyItem; // 定义当前页面请求条数
-    this.sendData.totalPage = pageObj.totalPage; // 定义总页数
-
-    // 请求列表数据
-    this.reqData(
-      this.reqUrl,
-      this.sendData,
-      (res: any) => {
-        // 请求数据成功
-        this.dataList = this.dataList.concat(res);
-        if (this.dataList.length == 0) {
-          this.gloService.showMsg("该列表暂无数据！");
+    console.error("this.navParams", this.navParams["data"]);
+    const sendData: any = {
+      starttime: this.navParams["data"]["bTime"],
+      endtime: this.navParams["data"]["eTime"]
+    };
+    this.ionicStorage.get("loginInfo").then((loginObj: any) => {
+      console.error("loginInfo", loginObj);
+      if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
+        // 判断是否是空对象
+        if (
+          !_.isNull(loginObj["UserInfo"]) &&
+          !_.isEmpty(loginObj["UserInfo"])
+        ) {
+          const loginId = loginObj["LoginId"]; // 用户ID
+          if (_.isString(loginId) && loginId.length > 0) {
+            sendData.personCode = loginId;
+            this.sendData = this.jsUtil.deepClone(sendData);
+            this.sendData.pageNo = pageObj.currentPage; // 定义当前页码
+            this.sendData.pageSize = pageObj.everyItem; // 定义当前页面请求条数
+            this.sendData.totalPage = pageObj.totalPage; // 定义总页数
+            // 请求列表数据
+            this.reqData(
+              this.reqUrl,
+              this.sendData,
+              (res: any) => {
+                // 请求数据成功
+                this.dataList = this.dataList.concat(res);
+                if (this.dataList.length == 0) {
+                  this.gloService.showMsg("该列表暂无数据！");
+                }
+                console.error("this.sendData", this.sendData);
+              },
+              (err: any) => {
+                // 请求数据失败
+                this.dataList = this.dataList.concat(err);
+              }
+            );
+          } else {
+            this.gloService.showMsg("未获取到用户ID", null, 3000);
+            if (this.navCtrl.canGoBack()) {
+              this.navCtrl.pop();
+            }
+          }
+        } else {
+          this.gloService.showMsg("未获取到用户ID", null, 3000);
+          if (this.navCtrl.canGoBack()) {
+            this.navCtrl.pop();
+          }
         }
-        console.error("this.sendData", this.sendData);
-      },
-      (err: any) => {
-        // 请求数据失败
-        this.dataList = this.dataList.concat(err);
+      } else {
+        this.gloService.showMsg("未获取到用户ID", null, 3000);
+        if (this.navCtrl.canGoBack()) {
+          this.navCtrl.pop();
+        }
       }
-    );
+    });
 
-    // this.httpReq.get(this.reqUrl, this.sendData, data => {
-    //   console.error("服务配置二级列表", data);
-    //   if (
-    //     data["data"] &&
-    //     _.isArray(data["data"]["serverItemsSecondTreeObjList"])
-    //   ) {
-    //     this.dataList = data["data"]["serverItemsSecondTreeObjList"];
-    //   } else {
-    //     this.dataList = [];
+    // this.paramObj.personCode = this.navParams.get("personCode");
+    // this.paramObj.userCode = this.navParams.get("userCode");
+    // if (
+    //   !(
+    //     _.isString(this.paramObj.personCode) &&
+    //     this.paramObj.personCode.length > 0
+    //   )
+    // ) {
+    //   this.gloService.showMsg("未获取到护工ID", null, 3000);
+    //   if (this.navCtrl.canGoBack()) {
+    //     this.navCtrl.pop();
     //   }
-    // });
-
-    console.error("ParamService.getParamNfc", ParamService.getParamNfc());
-    console.error("ParamService.getParamId", ParamService.getParamId());
-    console.error("this.dataList=====", this.dataList);
+    // }
+    // if (
+    //   !(_.isString(this.paramObj.userCode) && this.paramObj.userCode.length > 0)
+    // ) {
+    //   this.gloService.showMsg("未获取到老人ID", null, 3000);
+    //   if (this.navCtrl.canGoBack()) {
+    //     this.navCtrl.pop();
+    //   }
+    // }
   }
 
   ionViewDidLoad() {
-    console.log("ionViewDidLoad ServiceInfoListPage");
+    console.log("ionViewDidLoad SerDetailPage");
   }
 
   /**
@@ -204,6 +223,9 @@ export class ServiceInfoListPage {
           data["data"]["list"],
           data["data"]["count"]
         ); //定义当前总页数
+        for (let i = 0; i < data["data"]["list"].length; i++) {
+          data["data"]["list"][i]["isActive"] = false;
+        }
         suc(data["data"]["list"]);
         // this.dataList = this.dataList.concat(data["data"]);
         this.formInfo = data["data"]["otherData"];

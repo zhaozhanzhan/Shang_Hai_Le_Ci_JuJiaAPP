@@ -1,0 +1,127 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="orange" hideBackButton="true">
+        <ion-title>服务详情</ion-title>
+        <ion-buttons start>
+            <button ion-button class="pl10" (click)="backHome()">
+                <!-- <span color="primary" showWhen="ios">返回</span> -->
+                <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button class="pr10" (click)="navCtrl.canGoBack()?navCtrl.pop():viewCtrl.dismiss()">
+                <span showWhen="android,windows,ios">返回</span>
+                <!-- <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon> -->
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar no-padding>
+        <div class="pt5 pb5 pl10 pr10">
+            <div class="disFlex flexWrapW justConSB">
+                <div class="pr5">
+                    <span>{{sendData?.starttime}}&nbsp;至&nbsp;{{sendData?.endtime}}</span>
+                </div>
+            </div>
+        </div>
+    </ion-toolbar>
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 页面内容区域 Begin -->
+<ion-content>
+    <div>
+        <div>
+            <div class="parentBox">
+                <div class="" [ngClass]="{'childListHide': !x.isActive, 'childListShow': x.isActive}" *ngFor="let x of dataList;let i = index;">
+                    <div class="h40 w100p borBSCCC" (click)="menuOpenToggle(x.isActive,x,i)">
+                        <div class="disFlex aligIteS h100p pl10 pr10">
+                            <div class="disFlex aligIteC pl10">
+                                <div>
+                                    <span class="ftz16" [ngClass]="{'colorF00':x.serverState == '异常'}">{{x.homeUserArchives?.userName}}</span>
+                                </div>
+                                <div class="ml20">
+                                    <span class="ftz16" [ngClass]="{'colorF00':x.serverState == '异常'}">{{x.items}}</span>
+                                </div>
+                            </div>
+                            <div class="flexGrow1 disFlex aligIteC flexDirRR pr10">
+                                <div>
+                                    <span class="ftz16" [ngClass]="{'colorF00':x.serverState == '异常'}">{{x.serverState}}</span>
+                                </div>
+                            </div>
+                            <div class="w30 disFlex aligIteC justConC">
+                                <div>
+                                    <ion-icon class="ftz30 color999" [hidden]="!x.isActive" name="ios-arrow-forward"></ion-icon>
+                                    <ion-icon class="ftz30 color999" [hidden]="x.isActive" name="ios-arrow-down"></ion-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="childListCtrl">
+                        <div class="">
+                            <ul class="p5">
+                                <li class="h40 pl10 pr10 disFlex justConSB aligIteC iconBg3">
+                                    <div>
+                                        <span class="ftz16 colorFFF">用户编号</span>
+                                    </div>
+                                    <div>
+                                        <span class="ftz16 colorFFF">{{x.homeUserArchives?.userCode}}</span>
+                                    </div>
+                                </li>
+                                <li class="h40 pl10 pr10 disFlex justConSB aligIteC iconBg1">
+                                    <div>
+                                        <span class="ftz16 colorFFF">签入时间</span>
+                                    </div>
+                                    <div>
+                                        <span class="ftz16 colorFFF">{{x.createDate}}</span>
+                                    </div>
+                                </li>
+                                <li class="h40 pl10 pr10 disFlex justConSB aligIteC iconBg3">
+                                    <div>
+                                        <span class="ftz16 colorFFF">服务属性</span>
+                                    </div>
+                                    <div>
+                                        <span class="ftz16 colorFFF">{{x.billingMethod}}</span>
+                                    </div>
+                                </li>
+                                <li class="h40 pl10 pr10 disFlex justConSB aligIteC iconBg1">
+                                    <div>
+                                        <span class="ftz16 colorFFF">签退时间</span>
+                                    </div>
+                                    <div>
+                                        <span class="ftz16 colorFFF">{{x.endTime}}</span>
+                                    </div>
+                                </li>
+                                <li class="h40 pl10 pr10 disFlex justConSB aligIteC iconBg3">
+                                    <div>
+                                        <span class="ftz16 colorFFF">服务时长</span>
+                                    </div>
+                                    <div>
+                                        <span class="ftz16 colorFFF">{{x.serverTime}}</span>
+                                    </div>
+                                </li>
+                                <li class="h40 pl10 pr10 disFlex justConSB aligIteC iconBg1">
+                                    <div>
+                                        <span class="ftz16 colorFFF">服务金额</span>
+                                    </div>
+                                    <div>
+                                        <span class="ftz16 colorFFF">{{x.serverCost}}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<ion-footer>
+    <ion-toolbar color="dark">
+        <div class="disFlex justConSB aligIteC h100p">
+            <div class="w100p txtEll flexShrink0 tac">
+                <span class="colorFFF ftz14">合计金额：{{formInfo?.servercost}}元</span>
+            </div>
+        </div>
+    </ion-toolbar>
+</ion-footer>
+<!-- 页面内容区域 End -->

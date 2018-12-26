@@ -1,0 +1,52 @@
+<ion-content class="h100p contentBg" (click)="closeModal()">
+    <div class="h100p w100p">
+        <div class="w100p h100p disFlex justConC aligIteC">
+            <div class="w60p bgcFFF borRadius10 overflowH">
+                <div class="w100p">
+                    <div class="w100p disFlex justConC aligIteC">
+                        <div class="w100p h100p disFlex flexDirC justConSB">
+                            <div class="h40 modalBg2 w100p disFlex flexDirC justConSA colorFFF">
+                                <div class="pl5">
+                                    <span class="ftz16" *ngIf="type == 'bill'">账单查询</span>
+                                    <span class="ftz16" *ngIf="type == ''">满意度查询</span>
+                                </div>
+                                <!-- <div class="pl10">
+                                    <span class="ftz16">{{'11111'}}</span>
+                                </div> -->
+                            </div>
+                            <ion-row no-padding>
+                                <ion-col col-12 no-padding>
+                                    <ion-item no-padding>
+                                        <ion-datetime [(ngModel)]="bTime" displayFormat="YYYY/MM/DD" cancelText="取消" doneText="确认" placeholder="开始日期"></ion-datetime>
+                                    </ion-item>
+                                </ion-col>
+                                <ion-col col-12 no-padding>
+                                    <ion-item no-padding>
+                                        <ion-datetime [(ngModel)]="eTime" displayFormat="YYYY/MM/DD" cancelText="取消" doneText="确认" placeholder="结束日期"></ion-datetime>
+                                    </ion-item>
+                                </ion-col>
+                            </ion-row>
+                            <!-- <ion-col col-2 no-padding text-center>
+                                      <button ion-button small class="w80p" color="orange">查询</button>
+                                  </ion-col> -->
+                            <div class="h40 w100p disFlex justConC aligIteC">
+                                <!-- <span class="ftz22 ftwB colorFFF">{{'x.billingMethodLabel'}}</span> -->
+                                <button ion-button full class="footer-button" (click)="jumpPage($event,'SerDetailPage',{'type':type,'bTime':bTime,'eTime':eTime})">确认搜索</button>
+                            </div>
+
+                            <!-- <div class="h50 bgc0FF w100p disFlex justConC aligIteC" (click)="selType($event,'hour')">
+                                <span class="ftz22 ftwB">计时</span>
+                            </div>
+                            <div class="h50 bgcEBFFF5 w100p disFlex justConC aligIteC" (click)="selType($event,'number')">
+                                <span class="ftz22 ftwB">项目化</span>
+                            </div> -->
+                        </div>
+                    </div>
+                    <!-- <div class="posAbs b-5 w100p">
+                        <button ion-button full class="footer-button">确定</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

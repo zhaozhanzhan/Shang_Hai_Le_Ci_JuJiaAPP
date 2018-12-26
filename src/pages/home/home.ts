@@ -36,7 +36,7 @@ export class HomePage {
   public recOrderState: boolean = false; // 定义接单状态
   public noHandleOrderNum: any = null; // 未处理订单数量
   public isOpenSer: boolean = false; // 是否已经开启服务
-  public nfcId: any = null; // 是否已经开启服务
+  public nfcId: any = null; // nfcId
   public workID: any = null; // 服务ID
   public timerInter: any = null; // 定时器
 
@@ -87,9 +87,10 @@ export class HomePage {
           this.httpReq.get(
             "home/a/home/homeServerWork/getWorking",
             sendData,
-            data => {
+            (data: any) => {
               if (data["data"] && data["data"]["result"] == 0) {
                 this.isOpenSer = true;
+
                 if (
                   data["data"]["workDetailObj"] &&
                   data["data"]["workDetailObj"]["startTime"]
