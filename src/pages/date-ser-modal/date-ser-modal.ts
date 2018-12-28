@@ -11,7 +11,7 @@ import {
 } from "ionic-angular";
 import _ from "underscore"; // 工具类
 import { GlobalService } from "../../common/service/GlobalService";
-import { loginInfo } from "../../common/config/BaseConfig";
+// import { loginInfo } from "../../common/config/BaseConfig";
 // import { Storage } from "@ionic/storage";
 // import { FormBuilder } from "@angular/forms";
 // import { JsUtilsService } from "../../common/service/JsUtils.Service";

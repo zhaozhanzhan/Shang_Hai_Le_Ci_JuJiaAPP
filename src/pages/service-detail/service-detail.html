@@ -64,10 +64,10 @@
                                     </div>
                                     <div class="disFlex mt5">
                                         <div>
-                                            <span class="ftz14">应服务:{{formInfo?.homeArchiveWorktime?.appWorkTimeTotal}}&nbsp;分钟</span>
+                                            <span class="ftz14">应服务:{{formInfo?.homeArchiveWorktime?.appWorkTimeTotal | defaultNumState | number:'1.0-0'}}&nbsp;分钟</span>
                                         </div>
                                         <div class="ml10">
-                                            <span class="ftz14">剩余时长:{{formInfo?.homeArchiveWorktime?.appWorkTimeRest}}&nbsp;分钟</span>
+                                            <span class="ftz14">剩余时长:{{formInfo?.homeArchiveWorktime?.appWorkTimeRest | defaultNumState | number:'1.0-0'}}&nbsp;分钟</span>
                                         </div>
                                     </div>
                                 </div>
@@ -77,10 +77,10 @@
                                     </div>
                                     <div class="disFlex mt5">
                                         <div>
-                                            <span class="ftz14">服务金额:{{formInfo?.homeArchiveWorktime?.appWorkMoneyTotal}}&nbsp;元</span>
+                                            <span class="ftz14">服务金额:{{formInfo?.homeArchiveWorktime?.appWorkMoneyTotal | defaultNumState | number:'1.0-0'}}&nbsp;元</span>
                                         </div>
                                         <div class="ml10">
-                                            <span class="ftz14">剩余金额:{{formInfo?.homeArchiveWorktime?.appWorkMoneyRest}}&nbsp;元</span>
+                                            <span class="ftz14">剩余金额:{{formInfo?.homeArchiveWorktime?.appWorkMoneyRest | defaultNumState | number:'1.0-0'}}&nbsp;元</span>
                                         </div>
                                     </div>
                                 </div>

@@ -16,7 +16,7 @@ import _ from "underscore"; // 工具类
 import { GlobalService } from "../../common/service/GlobalService";
 import { GlobalMethod } from "../../common/service/GlobalMethod";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
-import { pageObj, reqObj, loginInfo } from "../../common/config/BaseConfig";
+import { pageObj, reqObj } from "../../common/config/BaseConfig";
 import { InAppBrowser } from "@ionic-native/in-app-browser";
 import { FilePreviewService } from "../../common/service/FilePreview.Service";
 // import { ParamService } from "../../common/service/Param.Service";

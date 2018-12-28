@@ -17,7 +17,7 @@ import _ from "underscore"; // underscore工具类
 import { GlobalService } from "../../common/service/GlobalService";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
 import { ParamService } from "../../common/service/Param.Service";
-import { reqObj, pageObj } from "../../common/config/BaseConfig";
+import { pageObj } from "../../common/config/BaseConfig";
 import { GlobalMethod } from "../../common/service/GlobalMethod";
 import { FilePreviewService } from "../../common/service/FilePreview.Service";
 import { JsUtilsService } from "../../common/service/JsUtils.Service";
