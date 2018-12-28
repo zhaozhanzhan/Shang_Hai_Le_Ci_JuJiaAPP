@@ -136,7 +136,7 @@ export class SelectServicePage {
             this.httpReq.get(
               "home/a/home/homeServerWork/start",
               sendData,
-              data => {
+              (data: any) => {
                 if (data["data"] && data["data"]["result"] == 0) {
                   this.jumpPage("ServiceConductPage");
                   // this.formInfo = data["data"]["homeUserArchives"];
@@ -156,6 +156,34 @@ export class SelectServicePage {
         }
       ]
     });
-    confirm.present();
+    if (this.paramObj.billingMethod == 1) {
+      // 按小时
+      if (
+        this.paramObj.minWorktime >
+        this.formInfo.homeArchiveWorktime.appWorkTimeRest
+      ) {
+        // 应服务最小工时大于剩余时长，剩余时长不足
+        confirm.setMessage("剩余时长小于服务最小时长，是否开启服务？");
+        confirm.present();
+      } else {
+        console.error("========confirm======", confirm);
+        confirm.setMessage("是否开启服务？");
+        confirm.present();
+      }
+    } else if (this.paramObj.billingMethod == 2) {
+      // 按项目化
+      if (
+        this.paramObj.oneTime >
+        this.formInfo.homeArchiveWorktime.appWorkTimeRest
+      ) {
+        // 应服务时项目最小时长大于剩余时长，剩余时长不足
+        confirm.setMessage("剩余时长小于服务最小时长，是否开启服务？");
+        confirm.present();
+      } else {
+        console.error("========confirm======", confirm);
+        confirm.setMessage("是否开启服务？");
+        confirm.present();
+      }
+    }
   }
 }

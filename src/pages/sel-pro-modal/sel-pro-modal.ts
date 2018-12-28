@@ -27,6 +27,8 @@ export class SelProModalPage {
   public serverItemCode: any = ""; // 项目ID
   public userCode: any = null; // 用户ID
   public typeArr: any = null; // 项目类型数组
+  public minWorktime: number = null; // 计时方式最小工时
+  public oneTime: number = null; // 一次项目最小工时
   constructor(
     // private jsUtil: JsUtilsService, // 自定义JS工具类
     // private httpReq: HttpReqService, // Http请求服务
@@ -42,6 +44,8 @@ export class SelProModalPage {
   ) {
     console.error("this.navParams", this.navParams);
     const caption = this.navParams.get("caption");
+    this.minWorktime = this.navParams.get("minWorktime"); // 计时方式最小工时
+    this.oneTime = this.navParams.get("oneTime"); // 一次项目最小工时
     if (
       _.isString(this.navParams.get("treeNames")) &&
       this.navParams.get("treeNames") != ""
@@ -110,6 +114,8 @@ export class SelProModalPage {
     paramObj.personCode = loginInfo.LoginId;
     paramObj.userCode = this.userCode;
     paramObj.serverItemCode = this.serverItemCode;
+    paramObj.minWorktime = this.minWorktime; // 计时方式最小工时
+    paramObj.oneTime = this.oneTime; // 一次项目最小工时
     this.closeModal(); // 关闭弹出层
     if (type == "hour") {
       // 按小时

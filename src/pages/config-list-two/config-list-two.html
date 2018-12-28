@@ -47,7 +47,7 @@
                 <div class="childListCtrl">
                     <div class="">
                         <ul class="p5">
-                            <li class="h40 pl10 pr10 disFlex justConSB aligIteC" [ngClass]="{'iconBg1': j%2 == 0,'iconBg3': j%2 == 1}" *ngFor="let y of x.homeServerItemsList;let j = index" (click)="openModal('SelProModalPage',{treeNames:x.treeNames,caption:y.caption,serverItemCode:y.id,typeArr:y.billingMethodObjs})">
+                            <li class="h40 pl10 pr10 disFlex justConSB aligIteC" [ngClass]="{'iconBg1': j%2 == 0,'iconBg3': j%2 == 1}" *ngFor="let y of x.homeServerItemsList;let j = index" (click)="openModal('SelProModalPage',{treeNames:x.treeNames,caption:y.caption,serverItemCode:y.id,typeArr:y.billingMethodObjs,minWorktime: y.minWorktime,oneTime: y.oneTime})">
                                 <div>
                                     <span class="ftz16 colorFFF">{{y.caption}}</span>
                                 </div>

@@ -9,7 +9,8 @@ import {
   Platform,
   MenuController,
   Events,
-  App
+  App,
+  ViewController
 } from "ionic-angular";
 import { NativeAudio } from "@ionic-native/native-audio";
 import { Storage } from "@ionic/storage";
@@ -64,6 +65,7 @@ export class HomePage {
     public navCtrl: NavController, // 导航控制器
     public navParams: NavParams, // 导航参数传递控制
     public menuCtrl: MenuController, // 侧滑菜单控制器
+    public viewCtrl: ViewController, // 视图控制器
     public gloService: GlobalService, // 全局自定义服务
     public actionSheetCtrl: ActionSheetController, // 操作表控制器
     public platform: Platform, // 获取平台信息
