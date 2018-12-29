@@ -386,8 +386,9 @@ export class ServiceConductPage {
                 this.httpReq.get(
                   "home/a/home/homeServerWork/end",
                   sendData,
-                  data => {
+                  (data: any) => {
                     if (data["data"] && data["data"]["result"] == 0) {
+                      this.serNotifi.closeServer(); // 关闭定时服务
                       this.jumpPage("ServiceCompletePage", {
                         serviceId: this.formData.workID
                       });

@@ -296,7 +296,7 @@ export class ServiceNotification {
       text: "服务时间已到达，可关闭服务！",
       sound: "file://assets/wav/overtime4.mp3"
     });
-    this.vibration.vibrate([2000, 1000, 2000]); // 震动手机
+    this.vibration.vibrate([2000, 1000, 2000, 1000, 2000]); // 震动手机
     // this.events.publish("jpush.receiveNotification");
   }
 

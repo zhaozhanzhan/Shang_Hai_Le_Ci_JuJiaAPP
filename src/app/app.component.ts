@@ -306,8 +306,12 @@ export class MyApp implements AfterViewInit {
         this.httpReq.get(
           "home/a/home/homeServerWork/abnormalEnd",
           sendData,
-          data => {
+          (data: any) => {
             if (data["data"] && data["data"]["result"] == 0) {
+              console.error(
+                "this.app.getActiveNavs()[0]",
+                this.app.getActiveNavs()[0]
+              );
               this.app.getActiveNavs()[0].setRoot("MainPage");
               this.serNotifi.closeServer(); // 关闭定时服务
             }
@@ -315,7 +319,9 @@ export class MyApp implements AfterViewInit {
         );
         // this.app.getActiveNavs()[0].setRoot("MainPage");
       });
+      //=================订阅全局服务结束事件 End=================//
 
+      //=================订阅全局通知点击事件 Begin=================//
       this.events.subscribe("notifiClickEvent", data => {
         this.ionicStorage.get("loginInfo").then(loginObj => {
           console.error("loginInfo", loginInfo);
@@ -326,12 +332,12 @@ export class MyApp implements AfterViewInit {
               loginObj.LoginState == "success"
             ) {
               this.app.getActiveNavs()[0].setRoot("MainPage");
-              this.app.getActiveNavs()[0].push("ServiceConductPage"); // 跳转到登录页面
+              this.app.getActiveNavs()[0].push("ServiceConductPage"); // 跳转到服务进行中计时页面
             }
           }
         });
       });
-      //=================订阅全局服务结束事件 End=================//
+      //=================订阅全局通知点击事件 End=================//
     });
   }
 
