@@ -92,7 +92,6 @@ export class HomePage {
             (data: any) => {
               if (data["data"] && data["data"]["result"] == 0) {
                 this.isOpenSer = true;
-
                 if (
                   data["data"]["workDetailObj"] &&
                   data["data"]["workDetailObj"]["startTime"]
@@ -113,7 +112,7 @@ export class HomePage {
                   this.serNotifi.calTimeStamp(); // 计算各种所需要的时间戳
                   this.serNotifi.getRemindArr(); // 获取提醒对象数组
 
-                  this.serNotifi.getHms(data => {
+                  this.serNotifi.getHms((data: any) => {
                     // 获取时分秒并回调
                     console.error("data", data);
                     this.hours = data.hours;
@@ -127,16 +126,19 @@ export class HomePage {
                 }
               } else {
                 this.isOpenSer = false;
+                this.serNotifi.closeServer(); // 关闭定时服务
                 // this.gloService.showMsg(data["data"]["message"]);
               }
             }
           );
         } else {
           this.isOpenSer = false;
+          this.serNotifi.closeServer(); // 关闭定时服务
           this.gloService.showMsg("未获取到用户ID!");
         }
       } else {
         this.isOpenSer = false;
+        this.serNotifi.closeServer(); // 关闭定时服务
         this.gloService.showMsg("未获取到用户ID!");
       }
     });
@@ -144,7 +146,7 @@ export class HomePage {
     this.initNfcListener(); // 初始化NFC监听
 
     //=================订阅NFC扫描成功事件 Begin=================//
-    this.events.subscribe("nfcScanSuc", nfcId => {
+    this.events.subscribe("nfcScanSuc", (nfcId: any) => {
       if (this.isOpenSer) {
         // 已经开启
         if (nfcId == this.nfcId) {
