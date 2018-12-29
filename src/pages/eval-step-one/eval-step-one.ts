@@ -119,8 +119,8 @@ export class EvalStepOnePage {
     this.httpReq.get(url, reqObj, (data: any) => {
       if (data["data"] && _.isArray(data["data"]["list"])) {
         this.sendData.totalPage = GlobalMethod.calTotalPage(
-          data["data"]["list"],
-          data["data"]["count"]
+          data["data"]["count"],
+          this.sendData.pageSize
         ); //定义当前总页数
         suc(data["data"]["list"]);
         // this.dataList = this.dataList.concat(data["data"]);

@@ -220,8 +220,8 @@ export class SerDetailPage {
     this.httpReq.get(url, reqObj, (data: any) => {
       if (data["data"] && _.isArray(data["data"]["list"])) {
         this.sendData.totalPage = GlobalMethod.calTotalPage(
-          data["data"]["list"],
-          data["data"]["count"]
+          data["data"]["count"],
+          this.sendData.pageSize
         ); //定义当前总页数
         for (let i = 0; i < data["data"]["list"].length; i++) {
           data["data"]["list"][i]["isActive"] = false;

@@ -85,13 +85,13 @@
                                 <span class="ftz14">{{x.username}}</span>
                             </div>
                             <div class="w25p txtEll flexShrink0 tac">
-                                <span class="ftz14">{{x.timing}}</span>
+                                <span class="ftz14">{{x.timing | defaultNumState | number:'1.2-2'}}</span>
                             </div>
                             <div class="w25p txtEll flexShrink0 tac">
-                                <span class="ftz14">{{x.project}}</span>
+                                <span class="ftz14">{{x.project | defaultNumState | number:'1.2-2'}}</span>
                             </div>
                             <div class="w25p txtEll flexShrink0 tac">
-                                <span class="ftz14">{{x.money}}</span>
+                                <span class="ftz14">{{x.money | defaultNumState | number:'1.2-2'}}</span>
                             </div>
                         </div>
                     </div>
@@ -117,13 +117,13 @@
                 <span class="colorFFF ftz14">合计</span>
             </div>
             <div class="w25p txtEll flexShrink0 tac">
-                <span class="colorFFF ftz14">{{formInfo?.timing}}</span>
+                <span class="colorFFF ftz14">{{formInfo?.timing | defaultNumState | number:'1.2-2'}}</span>
             </div>
             <div class="w25p txtEll flexShrink0 tac">
-                <span class="colorFFF ftz14">{{formInfo?.project}}</span>
+                <span class="colorFFF ftz14">{{formInfo?.project | defaultNumState | number:'1.2-2'}}</span>
             </div>
             <div class="w25p txtEll flexShrink0 tac">
-                <span class="colorFFF ftz14">{{formInfo?.money}}</span>
+                <span class="colorFFF ftz14">{{formInfo?.money | defaultNumState | number:'1.2-2'}}</span>
             </div>
         </div>
     </ion-toolbar>

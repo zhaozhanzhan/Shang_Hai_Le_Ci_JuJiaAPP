@@ -56,6 +56,6 @@ export const pageObj = {
   totalItem: 100, //总条数
   currentPage: 1, //当前页码
   totalPage: 99, //总页码
-  everyItem: 10 //每页条数
+  everyItem: 20 //每页条数
 };
 //================= 分页参数配置对象 End =================//

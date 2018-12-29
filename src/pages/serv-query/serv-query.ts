@@ -154,10 +154,10 @@ export class ServQueryPage {
   public reqData(url: string, reqObj: any, suc: Function, err: Function) {
     this.httpReq.get(url, reqObj, (data: any) => {
       if (data["data"] && _.isArray(data["data"]["ServiceSettlement"])) {
-        // this.sendData.totalPage = GlobalMethod.calTotalPage(
-        //   data["data"]["list"],
-        //   this.sendData.pageSize
-        // ); //定义当前总页数
+        this.sendData.totalPage = GlobalMethod.calTotalPage(
+          data["data"]["count"],
+          this.sendData.pageSize
+        ); //定义当前总页数
         this.formInfo = data["data"]["tol"];
         suc(data["data"]["ServiceSettlement"]);
         // this.dataList = this.dataList.concat(data["data"]);

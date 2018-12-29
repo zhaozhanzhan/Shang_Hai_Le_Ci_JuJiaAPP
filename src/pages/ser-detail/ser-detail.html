@@ -29,6 +29,12 @@
 
 <!-- 页面内容区域 Begin -->
 <ion-content>
+    <!-- 下拉刷新控制元素Begin -->
+    <ion-refresher (ionRefresh)="downRefresh($event,reqUrl,sendData)">
+        <ion-refresher-content pullingIcon="arrow-down" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="正在加载">
+        </ion-refresher-content>
+    </ion-refresher>
+    <!-- 下拉刷新控制元素End -->
     <div>
         <div>
             <div class="parentBox">
@@ -96,7 +102,7 @@
                                         <span class="ftz16 colorFFF">服务时长</span>
                                     </div>
                                     <div>
-                                        <span class="ftz16 colorFFF">{{x.serverTime}}</span>
+                                        <span class="ftz16 colorFFF">{{x.serverTime | defaultNumState | number:'1.2-2'}}</span>
                                     </div>
                                 </li>
                                 <li class="h40 pl10 pr10 disFlex justConSB aligIteC iconBg1">
@@ -104,7 +110,7 @@
                                         <span class="ftz16 colorFFF">服务金额</span>
                                     </div>
                                     <div>
-                                        <span class="ftz16 colorFFF">{{x.serverCost}}</span>
+                                        <span class="ftz16 colorFFF">{{x.serverCost | defaultNumState | number:'1.2-2'}}</span>
                                     </div>
                                 </li>
                             </ul>
@@ -114,12 +120,22 @@
             </div>
         </div>
     </div>
+    <!-- 上拉加载控制元素Begin -->
+    <ion-infinite-scroll (ionInfinite)="upLoad($event,reqUrl,sendData)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载更多数据..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <ion-row [hidden]="!isShowNoData" padding-bottom>
+        <ion-col col-12 text-center>
+            <span class="ftz16">没有更多数据</span>
+        </ion-col>
+    </ion-row>
+    <!-- 上拉加载控制元素End -->
 </ion-content>
 <ion-footer>
     <ion-toolbar color="dark">
         <div class="disFlex justConSB aligIteC h100p">
             <div class="w100p txtEll flexShrink0 tac">
-                <span class="colorFFF ftz14">合计金额：{{formInfo?.servercost}}元</span>
+                <span class="colorFFF ftz14">合计金额：{{formInfo?.servercost | defaultNumState | number:'1.2-2'}}元</span>
             </div>
         </div>
     </ion-toolbar>

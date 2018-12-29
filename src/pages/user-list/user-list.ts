@@ -131,10 +131,10 @@ export class UserListPage {
     // this.httpReq.post(url, null, reqObj, data => {
     //   if (data["status"] == 200) {
     //     if (data["code"] == 0) {
-    //       this.sendData.totalPage = GlobalMethod.calTotalPage(
-    //         data["data"]["objectMap"]["count"],
-    //         this.sendData.size
-    //       ); //定义当前总页数
+    // this.sendData.totalPage = GlobalMethod.calTotalPage(
+    //   data["data"]["count"],
+    //   this.sendData.pageSize
+    // ); //定义当前总页数
     //       suc(data["data"]["list"]);
     //       // this.dataList = this.dataList.concat(data["data"]);
     //     } else {

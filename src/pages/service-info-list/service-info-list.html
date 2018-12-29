@@ -85,7 +85,7 @@
                                         <span class="ftz16 colorFFF">服务时长</span>
                                     </div>
                                     <div>
-                                        <span class="ftz16 colorFFF">{{x.serverTime}}</span>
+                                        <span class="ftz16 colorFFF">{{x.serverTime | defaultNumState | number:'1.2-2'}}</span>
                                     </div>
                                 </li>
                                 <li class="h40 pl10 pr10 disFlex justConSB aligIteC iconBg1">
@@ -93,7 +93,7 @@
                                         <span class="ftz16 colorFFF">服务金额</span>
                                     </div>
                                     <div>
-                                        <span class="ftz16 colorFFF">{{x.serverCost}}</span>
+                                        <span class="ftz16 colorFFF">{{x.serverCost | defaultNumState | number:'1.2-2'}}</span>
                                     </div>
                                 </li>
                             </ul>
@@ -108,7 +108,7 @@
     <ion-toolbar color="dark">
         <div class="disFlex justConSB aligIteC h100p">
             <div class="w100p txtEll flexShrink0 tac">
-                <span class="colorFFF ftz14">合计金额：{{formInfo?.servercost}}元</span>
+                <span class="colorFFF ftz14">合计金额：{{formInfo?.servercost | defaultNumState | number:'1.2-2'}}元</span>
             </div>
         </div>
     </ion-toolbar>

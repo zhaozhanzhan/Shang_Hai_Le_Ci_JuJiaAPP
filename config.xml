@@ -116,7 +116,7 @@
     <plugin name="phonegap-nfc" spec="^1.0.3" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-appavailability" spec="^0.4.2" />
-    <allow-navigation href="http://192.168.1.129:8100" sessionid="5cc627d1" />
+    <allow-navigation href="http://192.168.1.129:8100" sessionid="ca8c18ba" />
     <engine name="browser" spec="5.0.4" />
     <engine name="android" spec="7.1.4" />
 </widget>
