@@ -219,5 +219,13 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "cordova-plugin-media": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-media@5.0.2"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

@@ -21,6 +21,7 @@ import { LocalNotifications } from "@ionic-native/local-notifications"; // 本�
 import { NativeAudio } from "@ionic-native/native-audio"; // 音频播放
 import { Vibration } from "@ionic-native/vibration"; // 震动插件
 import { QRScanner } from "@ionic-native/qr-scanner"; // 条码、二维码扫描
+import { Media } from "@ionic-native/media"; // 录音及音频播放
 import { AppAvailability } from "@ionic-native/app-availability"; // 检查用户设备安装了某应用程序
 import { AndroidPermissions } from "@ionic-native/android-permissions"; // Android权限控制
 import { OpenNativeSettings } from "@ionic-native/open-native-settings"; // 系统设置
@@ -78,6 +79,7 @@ import { FastLoginPage } from "../pages/fast-login/fast-login"; // 快速登录
     NativeAudio, // 音频播放
     Vibration, // 震动插件
     QRScanner, // 条码、二维码扫描
+    Media, // 录单及音频播放
     NFC, // NFC
     InAppBrowser, // 打开浏览器
     AppAvailability, // 检查用户设备安装了某应用程序

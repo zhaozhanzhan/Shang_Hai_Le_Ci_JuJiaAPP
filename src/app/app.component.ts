@@ -112,7 +112,6 @@ export class MyApp implements AfterViewInit {
 
       this.androidPermissions.checkPermission(gpsPermission).then(
         result => {
-          console.log("Has permission?", result.hasPermission);
           const isPermission = result.hasPermission;
           if (isPermission) {
             //=================获取GPS定位信息 Begin=================//

@@ -21,6 +21,7 @@ import { GlobalService } from "./GlobalService";
 @Injectable()
 export class BackButtonService {
   public registerBackButton: boolean = false; // 控制硬件返回按钮是否触发，默认false
+  public isDisabled: boolean = false; // 是否禁用安卓物理返回键
 
   //构造函数 依赖注入
   constructor(
@@ -36,12 +37,33 @@ export class BackButtonService {
   ) {}
 
   /**
+   * 设置物理返回键状态
+   * @memberof BackButtonService
+   */
+  public setDisabled(state: boolean) {
+    this.isDisabled = state;
+  }
+
+  /**
+   * 返回是否禁用物理返回键状态
+   * @returns
+   * @memberof BackButtonService
+   */
+  public getDisabled() {
+    return this.isDisabled;
+  }
+
+  /**
    * 返回按钮事件处理
    * @param {Tabs} tabRef Tabs标签 如果有tabs可控制
    * @memberof BackButtonService
    */
   public registerBackButtonAction(tabRef: Tabs): void {
     this.platform.registerBackButtonAction(() => {
+      if (this.isDisabled) {
+        return;
+      }
+
       if (this.keyboard.isOpen()) {
         //如果键盘开启则隐藏键盘
         this.keyboard.close();

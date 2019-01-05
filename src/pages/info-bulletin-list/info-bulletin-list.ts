@@ -15,8 +15,8 @@ import { GlobalService } from "../../common/service/GlobalService";
 import { GlobalMethod } from "../../common/service/GlobalMethod";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
 import { ParamService } from "../../common/service/Param.Service";
+import { Storage } from "@ionic/storage";
 import { pageObj } from "../../common/config/BaseConfig";
-// import { Storage } from "@ionic/storage";
 // import { JsUtilsService } from "../../common/service/JsUtils.Service";
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
@@ -38,7 +38,7 @@ export class InfoBulletinListPage {
     // private jsUtil: JsUtilsService, // 自定义JS工具类
     // private fb: FormBuilder, // 响应式表单
     // private jsUtil: JsUtilsService, // 自定义JS工具类
-    // private ionicStorage: Storage, // IonicStorage
+    private ionicStorage: Storage, // IonicStorage
     public navCtrl: NavController, // 导航控制器
     public navParams: NavParams, // 导航参数传递控制
     private httpReq: HttpReqService, // Http请求服务
@@ -51,66 +51,54 @@ export class InfoBulletinListPage {
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad InfoBulletinListPage");
-    this.sendData.pageNo = pageObj.currentPage; // 定义当前页码
-    this.sendData.pageSize = pageObj.everyItem; // 定义当前页面请求条数
-    this.sendData.totalPage = pageObj.totalPage; // 定义当前页面请求条数
-    // 请求列表数据
-    this.reqData(
-      this.reqUrl,
-      this.sendData,
-      (res: any) => {
-        // 请求数据成功
-        this.dataList = this.dataList.concat(res);
-        console.error("this.sendData", this.sendData);
-      },
-      (err: any) => {
-        // 请求数据失败
-        this.dataList = this.dataList.concat(err);
+
+    this.ionicStorage.get("loginInfo").then((loginObj: any) => {
+      console.error("loginInfo", loginObj);
+      if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
+        // 判断是否是空对象
+        if (
+          !_.isNull(loginObj["UserInfo"]) &&
+          !_.isEmpty(loginObj["UserInfo"])
+        ) {
+          const loginId = loginObj["LoginId"]; // 用户ID
+          if (_.isString(loginId) && loginId.length > 0) {
+            this.sendData.personId = loginId;
+            this.sendData.pageNo = pageObj.currentPage; // 定义当前页码
+            this.sendData.pageSize = pageObj.everyItem; // 定义当前页面请求条数
+            this.sendData.totalPage = pageObj.totalPage; // 定义当前页面请求条数
+            // 请求列表数据
+            this.reqData(
+              this.reqUrl,
+              this.sendData,
+              (res: any) => {
+                // 请求数据成功
+                this.dataList = this.dataList.concat(res);
+                console.error("this.sendData", this.sendData);
+              },
+              (err: any) => {
+                // 请求数据失败
+                this.dataList = this.dataList.concat(err);
+              }
+            );
+          } else {
+            this.gloService.showMsg("未获取到用户ID", null, 3000);
+            if (this.navCtrl.canGoBack()) {
+              this.navCtrl.pop();
+            }
+          }
+        } else {
+          this.gloService.showMsg("未获取到用户ID", null, 3000);
+          if (this.navCtrl.canGoBack()) {
+            this.navCtrl.pop();
+          }
+        }
+      } else {
+        this.gloService.showMsg("未获取到用户ID", null, 3000);
+        if (this.navCtrl.canGoBack()) {
+          this.navCtrl.pop();
+        }
       }
-    );
-    // this.ionicStorage.get("loginInfo").then(loginObj => {
-    //   console.error("loginInfo", loginObj);
-    //   if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
-    //     // 判断是否是空对象
-    //     if (
-    //       !_.isNull(loginObj["UserInfo"]) &&
-    //       !_.isEmpty(loginObj["UserInfo"])
-    //     ) {
-    //       const userId = loginObj["UserInfo"]["id"]; // 拉包工信息ID
-    //       if (
-    //         !_.isUndefined(userId) &&
-    //         !_.isNull(userId) &&
-    //         userId.length > 0
-    //       ) {
-    //         this.sendData.id = userId; // 拉包工信息ID
-    //         this.sendData.status = 2; // 人员属于（1：发货人，2：收货人）
-    //         // 请求列表数据
-    //         this.reqData(
-    //           this.reqUrl,
-    //           this.sendData,
-    //           res => {
-    //             // 请求数据成功
-    //             this.dataList = this.dataList.concat(res);
-    //             console.error("this.sendData", this.sendData);
-    //           },
-    //           err => {
-    //             // 请求数据失败
-    //             this.dataList = this.dataList.concat(err);
-    //           }
-    //         );
-    //       } else {
-    //         this.gloService.showMsg("未获取到用户ID", null, 3000);
-    //         return;
-    //       }
-    //     } else {
-    //       this.gloService.showMsg("未获取到用户ID", null, 3000);
-    //       return;
-    //     }
-    //   } else {
-    //     this.gloService.showMsg("未获取到用户ID", null, 3000);
-    //     return;
-    //   }
-    // });
+    });
   }
 
   /**
@@ -283,6 +271,36 @@ export class InfoBulletinListPage {
         console.error("");
       }
     );
+  }
+
+  // /?notice.id=123&readMan=123
+
+  /**
+   * 消息设置为已读
+   * @param {*} obj
+   * @param {boolean} isRead
+   * @memberof InfoBulletinListPage
+   */
+  public notiRead(obj: any, isRead: boolean) {
+    if (!isRead) {
+      // 消息未读
+      if (obj.hasOwnProperty("readFlag")) {
+        obj["readFlag"] = true;
+      }
+      const sendObj: any = {};
+      sendObj.noticeId = obj["id"]; // 消息ID
+      sendObj.readMan = this.sendData.personId; // 用户ID
+      this.httpReq.get(
+        "home/a/internal/homeNotice/readNotic",
+        sendObj,
+        (data: any) => {
+          if (data["data"] && data["data"]["result"] == 0) {
+          } else {
+            this.gloService.showMsg(data["message"], null, 3000);
+          }
+        }
+      );
+    }
   }
 
   /**

@@ -8,6 +8,7 @@ page-eval-step-one {
             list-style-type: none;
             background-color: #FFF;
             display: flex;
+            // padding-left: 4px;
             .active {
                 color: #fff;
                 background: #33D6AD;
@@ -17,6 +18,7 @@ page-eval-step-one {
             }
             li {
                 // display: inline-block;
+                // list-style-type: none;
                 position: relative;
                 margin-right: 5px;
                 line-height: 18px;
@@ -43,7 +45,7 @@ page-eval-step-one {
                 }
                 &:nth-child(2) {
                     // color: #F00;
-                    width: 36% !important;
+                    width: 39% !important;
                     padding-left: 25px;
                 }
                 &:not(.active) {

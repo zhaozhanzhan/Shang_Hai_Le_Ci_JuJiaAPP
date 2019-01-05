@@ -28,16 +28,16 @@
     </ion-refresher>
     <!-- 下拉刷新控制元素End -->
 
-    <div class="bgcEEE">
-        <div class="pt10 pl5 pr5 pb10">
-            <div class="w100p borRadius6 p10 bgcFFF mb10" *ngFor="let x of dataList;let i = index;" (click)="jumpPage('InfoBulletinDetailPage',{id:x.id})">
+    <div class="bgcF5F7F6">
+        <div class="pt10 pb10">
+            <div class="w100p p10 bgcFFF mb10" *ngFor="let x of dataList;let i = index;" (click)="notiRead(x,x.readFlag);jumpPage('InfoBulletinDetailPage',{id:x.id})">
                 <div class="w100p h100p posRel">
                     <div class="disFlex flexDirC">
                         <div class="">
-                            <span class="ftz18 color09F">{{x?.noticeTitle}}</span>
+                            <span class="ftz18" [ngClass]="{'colorB4B4B4': x.readFlag,'color5A5E61': !x.readFlag}">{{x?.noticeTitle}}</span>
                         </div>
                         <div class="mt5 disFlex">
-                            <span class="ftz14">{{x?.createDate}}</span>
+                            <span class="ftz14" [ngClass]="{'colorD3D3D3': x.readFlag,'colorCECECE': !x.readFlag}">{{x?.createDate}}</span>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,90 @@
+page-eval-step-two {
+    .btnActive {
+        color: #FFF;
+        background-color: #18B8A1;
+    }
+    .footer-ios .toolbar-background-ios {
+        border-style: solid;
+        border-color: rgba(0, 0, 0, 0.3);
+    }
+    .stepPar {
+        ul {
+            list-style-type: none;
+            background-color: #FFF;
+            display: flex;
+            // padding-left: 4px;
+            .active {
+                color: #fff;
+                background: #33D6AD;
+                &:after {
+                    border-left-color: #33D6AD;
+                }
+            }
+            li {
+                // display: inline-block;
+                // list-style-type: none;
+                position: relative;
+                margin-right: 5px;
+                line-height: 18px;
+                list-style: none;
+                width: 30%;
+                padding: 12px 17px 10px 12px;
+                text-align: center;
+                background: #efefef;
+                font-size: 1.0em !important;
+                zoom: 1;
+                &:first-child {
+                    border-radius: 4px 0 0 4px;
+                    // padding-left: 12px;
+                    &:before {
+                        border: 0;
+                    }
+                }
+                &:last-child {
+                    border-radius: 0 4px 4px 0;
+                    margin-right: 0;
+                    &:after {
+                        border: 0;
+                    }
+                }
+                &:nth-child(2) {
+                    // color: #F00;
+                    width: 39% !important;
+                    padding-left: 25px;
+                }
+                &:not(.active) {
+                    background: #ccc;
+                    &:after {
+                        border-left-color: #ccc;
+                    }
+                }
+                &:before {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    height: 0;
+                    width: 0;
+                    content: "";
+                    border: {
+                        bottom: 20px inset transparent;
+                        left: 20px solid #fff;
+                        top: 20px inset transparent;
+                    }
+                }
+                &:after {
+                    position: absolute;
+                    right: -20px;
+                    top: 0;
+                    height: 0;
+                    width: 0;
+                    content: "";
+                    border: {
+                        bottom: 20px inset transparent;
+                        left: 20px solid #efefef;
+                        top: 20px inset transparent;
+                    }
+                }
+            }
+        }
+    }
+}

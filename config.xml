@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.mirrortech.jujiaapp" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.mirrortech.jujiaapp" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>居家APP</name>
     <description>镜子信息技术有限公司居家APP</description>
     <author email="799316652@qq.com" href="http://ionicframework.com/">ZZZ</author>
-    <content original-src="index.html" src="http://192.168.1.129:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -116,7 +116,7 @@
     <plugin name="phonegap-nfc" spec="^1.0.3" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-appavailability" spec="^0.4.2" />
-    <allow-navigation href="http://192.168.1.129:8100" sessionid="ca8c18ba" />
     <engine name="browser" spec="5.0.4" />
     <engine name="android" spec="7.1.4" />
+    <plugin name="cordova-plugin-media" spec="5.0.2" />
 </widget>
