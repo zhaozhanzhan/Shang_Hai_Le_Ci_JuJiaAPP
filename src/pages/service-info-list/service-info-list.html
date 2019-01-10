@@ -33,8 +33,8 @@
         <div>
             <div class="parentBox">
                 <div class="" [ngClass]="{'childListHide': !x.isActive, 'childListShow': x.isActive}" *ngFor="let x of dataList;let i = index;">
-                    <div class="h40 w100p borBSCCC" (click)="menuOpenToggle(x.isActive,x,i)">
-                        <div class="disFlex aligIteS h100p pl10 pr10">
+                    <div class="h60 w100p borBSCCC" (click)="menuOpenToggle(x.isActive,x,i)">
+                        <div class="disFlex h30 pl10 pr10">
                             <div class="disFlex aligIteC pl10">
                                 <div>
                                     <span class="ftz16" [ngClass]="{'colorF00':x.serverState == '异常'}">{{x.items}}</span>
@@ -49,6 +49,13 @@
                                 <div>
                                     <ion-icon class="ftz30 color999" [hidden]="!x.isActive" name="ios-arrow-forward"></ion-icon>
                                     <ion-icon class="ftz30 color999" [hidden]="x.isActive" name="ios-arrow-down"></ion-icon>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="disFlex h30 pl10 pr10">
+                            <div class="disFlex aligIteC pl10">
+                                <div>
+                                    <span class="ftz16" [ngClass]="{'colorF00':x.serverState == '异常'}">{{x.createDate}}</span>
                                 </div>
                             </div>
                         </div>
