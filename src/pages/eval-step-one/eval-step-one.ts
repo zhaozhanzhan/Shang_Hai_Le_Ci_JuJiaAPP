@@ -12,7 +12,11 @@ import {
 import { Storage } from "@ionic/storage";
 import { Media, MediaObject } from "@ionic-native/media";
 import { File } from "@ionic-native/file"; // 文件选择
-import { FileTransfer } from "@ionic-native/file-transfer";
+import {
+  FileTransfer,
+  FileTransferObject,
+  FileUploadOptions
+} from "@ionic-native/file-transfer";
 import _ from "underscore"; // 工具类
 import { GlobalService } from "../../common/service/GlobalService";
 import { HttpReqService } from "../../common/service/HttpUtils.Service";
@@ -21,10 +25,11 @@ import { FilePreviewService } from "../../common/service/FilePreview.Service";
 import { BackButtonService } from "../../common/service/BackButton.Service";
 import { AndroidPermissions } from "@ionic-native/android-permissions";
 import { OpenNativeSettings } from "@ionic-native/open-native-settings";
-import { pageObj } from "../../common/config/BaseConfig";
+import { pageObj, reqObj } from "../../common/config/BaseConfig";
+import { JsUtilsService } from "../../common/service/JsUtils.Service";
+import { Local } from "../../common/service/Storage";
 // import { GlobalMethod } from "../../common/service/GlobalMethod";
 // import { ParamService } from "../../common/service/Param.Service";
-// import { JsUtilsService } from "../../common/service/JsUtils.Service";
 // import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormValidService } from "../../common/service/FormValid.Service";
 declare var cordova: any;
@@ -41,8 +46,8 @@ export class EvalStepOnePage {
   public soundFileName: string = null; // 声音文件名
   public soundStorageDir: string = null; // 声音存储目录
   public mediaObj: any = null; // 录音对象
+  public paramId: any = null; // 传递过来的服务ID
 
-  // public paramType: any = null; // 传递过来的参数类型
   // public baseImgUrl: any = reqObj.baseImgUrl; // 基础图片URL
   // public reqUrl: string = "home/a/internal/homeTrain/listTrains"; // 请求数据URL
   // public sendData: any = {}; // 定义请求数据时的对象
@@ -52,10 +57,10 @@ export class EvalStepOnePage {
   constructor(
     // private jsUtil: JsUtilsService, // 自定义JS工具类
     // private fb: FormBuilder, // 响应式表单
-    // private jsUtil: JsUtilsService, // 自定义JS工具类
     public app: App,
     private file: File, // 文件
     public openNativeSettings: OpenNativeSettings, // 系统设置
+    private jsUtil: JsUtilsService, // 自定义JS工具类
     public transfer: FileTransfer, // 文件上传下载
     public navCtrl: NavController, // 导航控制器
     public navParams: NavParams, // 导航参数传递控制
@@ -90,6 +95,19 @@ export class EvalStepOnePage {
           this.androidPermissions.requestPermission(recPermission);
         }
       });
+
+      this.paramId = this.navParams.get("serviceId");
+      console.error("this.paramObj", this.paramId);
+      if (_.isString(this.paramId) && this.paramId.length > 0) {
+        const sendData: any = {};
+        sendData.id = this.paramId;
+      } else {
+        this.gloService.showMsg("未获取到服务ID！");
+        if (this.navCtrl.canGoBack()) {
+          this.navCtrl.pop();
+        }
+        return;
+      }
     }
   }
 
@@ -444,44 +462,44 @@ export class EvalStepOnePage {
   }
 
   /**
-   * 上传声音文件使用
-   * @param {*} filePath
+   * 上传声音文件
+   * @param {string} fileKey 后台需要取值的key,input标签类型file上的name
+   * @param {string} fileName 文件名称
+   * @param {string} filePath 文件设备路径
+   * @param {string} uploadUrl 上传文件地址URL
+   * @returns {Promise<any>}
    * @memberof EvalStepOnePage
    */
-  // public uploadFile(filePath: string) {
-  //   // 设置上传参数
-  //   let options: FileUploadOptions = {
-  //     fileKey: "file",
-  //     fileName: this.soundFileName,
-  //     mimeType: "audio/wav"
-  //   };
+  public uploadFile(
+    fileKey: string,
+    fileName: string,
+    filePath: string,
+    uploadUrl: string
+  ): Promise<any> {
+    // 设置上传参数
+    const options: FileUploadOptions = {
+      fileKey: fileKey,
+      fileName: fileName,
+      chunkedMode: false,
+      mimeType: "audio/wav"
+    };
 
-  //   const fileTransfer: FileTransferObject = this.transfer.create();
-  //   alert("filePath:" + filePath);
-  //   fileTransfer
-  //     .upload(
-  //       filePath,
-  //       "http://ec2-52-87-177-182.compute.amazonaws.com/upload.php",
-  //       options
-  //     )
-  //     .then(data => {
-  //       // resolve(data);
-  //       // loading.dismiss();
-  //       // this.gloService.showMsg("图片上传成功", null, 3000);
-  //     })
-  //     .catch(err => {
-  //       this.gloService.showMsg("录音上传发生错误,请重试", null, 3000);
-  //       // reject(err);
-  //     });
-  //   // fileTransfer.upload(filePath,
-  //   //     encodeURI("http://ec2-52-87-177-182.compute.amazonaws.com/upload.php"), options).then(
-  //   //     (data) => {
-  //   //         alert("File upload success!");
-  //   //     },
-  //   //     (err) => {
-  //   //         alert("File upload fail! error:" + err.code);
-  //   //     });
-  // }
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    console.error("filePath:" + filePath);
+    console.error("uploadUrl:" + uploadUrl);
+    console.error("options:", options);
+    return new Promise((resolve, reject) => {
+      fileTransfer
+        .upload(filePath, uploadUrl, options)
+        .then(data => {
+          resolve(data);
+        })
+        .catch(err => {
+          this.gloService.showMsg("录音上传发生错误,请重试", "top", 3000);
+          reject(err);
+        });
+    });
+  }
 
   /**
    * 添加成功返回刷新列表
@@ -494,7 +512,7 @@ export class EvalStepOnePage {
     console.error("backRefresh");
     console.error(that);
     // console.error(this.reqUrl, this.sendData);
-    const url = that.reqUrl;
+    // const url = that.reqUrl;
     const reqObj = that.sendData;
     reqObj.page = pageObj.currentPage; //重置当前页码
     reqObj.size = pageObj.everyItem; //重置当前页面请求条数
@@ -511,6 +529,71 @@ export class EvalStepOnePage {
       // this.filePrevService.previewFile(fileUrl);
     } else {
       this.gloService.showMsg("文件地址错误！");
+    }
+  }
+
+  /**
+   * 拼接完整请求URL
+   * @param url 传入接口的部分URL
+   */
+  private getFullUrl(url: string): string {
+    const baseUrl: String = reqObj.baseUrl;
+    return baseUrl + url;
+  }
+
+  /**
+   * 下一步
+   * @memberof EvalStepOnePage
+   */
+  public nextStep() {
+    if (this.platform.is("android") || this.platform.is("ios")) {
+      // applicationDirectory: "file:///android_asset/"
+      // applicationStorageDirectory: "file:///data/user/0/com.mirrortech.jujiaapp/"
+      // cacheDirectory: "file:///data/user/0/com.mirrortech.jujiaapp/cache/"
+      // dataDirectory: "file:///data/user/0/com.mirrortech.jujiaapp/files/"
+      // documentsDirectory: null
+      // externalApplicationStorageDirectory: "file:///storage/emulated/0/Android/data/com.mirrortech.jujiaapp/"
+      // externalCacheDirectory: "file:///storage/emulated/0/Android/data/com.mirrortech.jujiaapp/cache/"
+      // externalDataDirectory: "file:///storage/emulated/0/Android/data/com.mirrortech.jujiaapp/files/"
+      // externalRootDirectory: "file:///storage/emulated/0/"
+      // sharedDirectory: null
+      // syncedDataDirectory: null
+      // tempDirectory: null
+      const upUrl = "home/a/home/homeServerWork/fileUpload";
+      const queryObj: any = {};
+      queryObj.fileName = this.soundFileName; // 文件名称
+      queryObj.bizKey = this.paramId; // 服务ID
+      queryObj.isPicture = false; // 文件类型
+
+      const sid: any = Local.get("sessionId");
+      if (_.isString(sid) && sid.length > 0) {
+        queryObj.__sid = sid;
+      } else {
+        this.gloService.showMsg("未获取到sessionId", "top");
+        return;
+      }
+      const queryParam = this.jsUtil.queryStr(queryObj);
+      let uploadUrl: string = this.getFullUrl(upUrl) + "?" + queryParam;
+      const fs: string = cordova.file.externalRootDirectory; // 音频文件存储目录
+
+      const loading = this.gloService.showLoading("上传中...");
+
+      this.uploadFile(
+        "multipartFile",
+        this.soundFileName,
+        fs + this.soundFileName,
+        uploadUrl
+      ).then(
+        upSuc => {
+          console.error("upSuc", upSuc);
+          loading.dismiss();
+          this.jumpPage("EvalStepTwoPage", { serviceId: this.paramId });
+        },
+        upErr => {
+          console.error("upErr", upErr);
+          loading.dismiss();
+        }
+      );
     }
   }
 }

@@ -1,0 +1,112 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="orange" hideBackButton="true">
+        <ion-title>服务评价</ion-title>
+        <ion-buttons start>
+            <!-- (click)="backHome()" -->
+            <button ion-button class="pl10">
+                <!-- <span color="primary" showWhen="ios">返回</span>
+                <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon> -->
+            </button>
+        </ion-buttons>
+        <!-- <ion-buttons end>
+            <button ion-button class="pr10" (click)="navCtrl.canGoBack()?navCtrl.pop():''">
+                <span showWhen="android,windows,ios">返回</span>
+                <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon>
+            </button>
+        </ion-buttons> -->
+    </ion-navbar>
+    <!-- <ion-toolbar no-padding>
+      <div class="bgcFFF">
+          <ion-row no-padding align-items-center>
+              <ion-col col-5 no-padding>
+                  <ion-item no-padding>
+                      <ion-datetime displayFormat="YYYY/MM/DD" cancelText="取消" doneText="确认" placeholder="开始日期"></ion-datetime>
+                  </ion-item>
+              </ion-col>
+              <ion-col col-5 no-padding>
+                  <ion-item no-padding>
+                      <ion-datetime no-padding displayFormat="YYYY/MM/DD" cancelText="取消" doneText="确认" placeholder="结束日期"></ion-datetime>
+                  </ion-item>
+              </ion-col>
+              <ion-col col-2 no-padding text-center>
+                  <button ion-button small class="w80p" color="orange">查询</button>
+              </ion-col>
+          </ion-row>
+      </div>
+      <div class="h50">
+          <div class="h100p borBS39B5EC">
+              <div class="disFlex justConSA aligIteC h100p">
+                  <div class="w25p txtEll flexShrink0 tac">
+                      <span class="color39B5EC ftz16 ftwB">姓名</span>
+                  </div>
+                  <div class="w25p txtEll flexShrink0 tac">
+                      <span class="color39B5EC ftz16 ftwB">计时</span>
+                  </div>
+                  <div class="w25p txtEll flexShrink0 tac">
+                      <span class="color39B5EC ftz16 ftwB">项目化</span>
+                  </div>
+                  <div class="w25p txtEll flexShrink0 tac">
+                      <span class="color39B5EC ftz16 ftwB">小计金额</span>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </ion-toolbar> -->
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 页面内容区域 Begin -->
+<ion-content>
+    <div>
+        <div>
+            <div>
+                <div class="stepPar mt5">
+                    <ul>
+                        <li class="zIndex3 active">评价语音</li>
+                        <li class="zIndex2 active">满意度选择</li>
+                        <li class="zIndex1 active">完成</li>
+                    </ul>
+                </div>
+                <div class="w100p h160 disFlex flexDirCR aligIteC">
+                    <div class="">
+                        <span>
+                            <i class="iconfont icon-Info ftz50 colorSec"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="w100p disFlex justConC mt20">
+                    <span class="colorSec ftz28">服务评价已完成</span>
+                </div>
+                <!-- <div class="posAbs w100p b80 disFlex flexDirC aligIteC color999">
+                  <div>
+                      <div>
+                          <span>提示</span>
+                      </div>
+                      <div>
+                          <span>&emsp;1.请按住录音图标进行录音</span>
+                      </div>
+                      <div>
+                          <span>&emsp;2.松开手指即录音完毕</span>
+                      </div>
+                  </div>
+              </div> -->
+                <div class="posAbs w100p b10">
+                    <div text-center>
+                        <button ion-button round class="w90p" color="danger" (click)="backHome()">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<ion-footer>
+    <ion-toolbar class="" color="">
+        <div class="disFlex justConSB aligIteC h100p">
+            <div class="w100p txtEll flexShrink0 tac">
+                <span class="ftz14">友情提示：未完成当页操作则无法进入下一步</span>
+            </div>
+        </div>
+    </ion-toolbar>
+</ion-footer>
+<!-- 页面内容区域 End -->

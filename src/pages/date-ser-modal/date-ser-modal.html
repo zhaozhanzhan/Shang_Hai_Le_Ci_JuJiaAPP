@@ -8,7 +8,7 @@
                             <div class="h40 modalBg2 w100p disFlex flexDirC justConSA colorFFF">
                                 <div class="pl5">
                                     <span class="ftz16" *ngIf="type == 'bill'">账单查询</span>
-                                    <span class="ftz16" *ngIf="type == ''">满意度查询</span>
+                                    <span class="ftz16" *ngIf="type == 'sati'">满意度查询</span>
                                 </div>
                                 <!-- <div class="pl10">
                                     <span class="ftz16">{{'11111'}}</span>
@@ -31,7 +31,8 @@
                                   </ion-col> -->
                             <div class="h40 w100p disFlex justConC aligIteC">
                                 <!-- <span class="ftz22 ftwB colorFFF">{{'x.billingMethodLabel'}}</span> -->
-                                <button ion-button full class="footer-button" (click)="jumpPage($event,'SerDetailPage',{'type':type,'bTime':bTime,'eTime':eTime})">确认搜索</button>
+                                <button ion-button full class="footer-button" *ngIf="type == 'bill'" (click)="jumpPage($event,'SerDetailPage',{'type':type,'bTime':bTime,'eTime':eTime})">确认搜索</button>
+                                <button ion-button full class="footer-button" *ngIf="type == 'sati'" (click)="jumpPage($event,'StaiDetailPage',{'type':type,'bTime':bTime,'eTime':eTime})">确认搜索</button>
                             </div>
 
                             <!-- <div class="h50 bgc0FF w100p disFlex justConC aligIteC" (click)="selType($event,'hour')">

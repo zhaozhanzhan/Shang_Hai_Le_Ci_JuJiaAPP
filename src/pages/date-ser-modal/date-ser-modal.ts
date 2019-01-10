@@ -69,25 +69,21 @@ export class DateSerModalPage {
       ev.stopPropagation();
     }
     if (_.isObject(obj) && !_.isEmpty(obj)) {
-      if (pageName == "SerDetailPage") {
-        if (!(_.isString(obj["bTime"]) && obj["bTime"].length > 0)) {
-          this.gloService.showMsg("请选择开始日期！");
-          return;
-        }
-        if (!(_.isString(obj["eTime"]) && obj["eTime"].length > 0)) {
-          this.gloService.showMsg("请选择结束日期！");
-          return;
-        }
-        const bTime = new Date(obj["bTime"]).getTime();
-        const eTime = new Date(obj["eTime"]).getTime();
-        if (bTime - eTime >= 0) {
-          this.gloService.showMsg("开始日期不能大于等于结束日期");
-          return;
-        }
-        this.navCtrl.push(pageName, obj);
-      } else {
-        this.navCtrl.push(pageName, obj);
+      if (!(_.isString(obj["bTime"]) && obj["bTime"].length > 0)) {
+        this.gloService.showMsg("请选择开始日期！");
+        return;
       }
+      if (!(_.isString(obj["eTime"]) && obj["eTime"].length > 0)) {
+        this.gloService.showMsg("请选择结束日期！");
+        return;
+      }
+      const bTime = new Date(obj["bTime"]).getTime();
+      const eTime = new Date(obj["eTime"]).getTime();
+      if (bTime - eTime >= 0) {
+        this.gloService.showMsg("开始日期不能大于等于结束日期");
+        return;
+      }
+      this.navCtrl.push(pageName, obj);
     } else {
       if (pageName == "ScanPage") {
         this.navCtrl.push(pageName, null, opts);
