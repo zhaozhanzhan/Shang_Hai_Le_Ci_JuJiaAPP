@@ -333,6 +333,7 @@ export class SelectServicePage {
               ).then(
                 suc => {
                   queryObj.fileName = this.imgArr[0]["fileName"]; // 文件名称
+                  queryObj.bizType = "homeServerWork_before"; // 开启服务图片标识
 
                   const queryParam = this.jsUtil.queryStr(queryObj);
                   let uploadUrl: string =
@@ -415,6 +416,7 @@ export class SelectServicePage {
           ).then(
             suc => {
               queryObj.fileName = this.imgArr[0]["fileName"]; // 文件名称
+              queryObj.bizType = "homeServerWork_before"; // 开启服务图片标识
 
               const queryParam = this.jsUtil.queryStr(queryObj);
               let uploadUrl: string = this.getFullUrl(upUrl) + "?" + queryParam;

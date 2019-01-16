@@ -566,6 +566,7 @@ export class ServiceConductPage {
               ).then(
                 suc => {
                   queryObj.fileName = this.imgArr[0]["fileName"]; // 文件名称
+                  queryObj.bizType = "homeServerWork_after"; // 关闭服务图片标识
 
                   const queryParam = this.jsUtil.queryStr(queryObj);
                   let uploadUrl: string =
@@ -676,6 +677,7 @@ export class ServiceConductPage {
           ).then(
             suc => {
               queryObj.fileName = this.imgArr[0]["fileName"]; // 文件名称
+              queryObj.bizType = "homeServerWork_after"; // 关闭服务图片标识
 
               const queryParam = this.jsUtil.queryStr(queryObj);
               let uploadUrl: string = this.getFullUrl(upUrl) + "?" + queryParam;

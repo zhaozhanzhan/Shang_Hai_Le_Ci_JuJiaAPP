@@ -3,14 +3,7 @@
     <name>居家APP</name>
     <description>镜子信息技术有限公司居家APP</description>
     <author email="799316652@qq.com" href="http://ionicframework.com/">ZZZ</author>
-    <chcp>
-        <config-file url="http://139.224.12.181:9527/JuJiaUpdate/chcp.json" />
-        <auto-download enabled="true" />
-        <auto-install enabled="true" />
-        <local-development enabled="true" />
-        <native-interface version="5" />
-    </chcp>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.1.129:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -124,6 +117,7 @@
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-appavailability" spec="^0.4.2" />
     <plugin name="cordova-plugin-media" spec="5.0.2" />
+    <allow-navigation href="http://192.168.1.129:8100" sessionid="a04879f9" />
     <engine name="browser" spec="5.0.4" />
     <engine name="android" spec="7.1.4" />
 </widget>
