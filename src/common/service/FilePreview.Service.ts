@@ -20,6 +20,7 @@ import { OpenNativeSettings } from "@ionic-native/open-native-settings";
 import { FileTransfer, FileTransferObject } from "@ionic-native/file-transfer";
 import { GlobalMethod } from "./GlobalMethod";
 import _ from "underscore";
+import { reqObj } from "../config/BaseConfig";
 
 declare var cordova: any; //导入第三方的库定义到 TS 项目中
 // import { JsUtilsService } from "./JsUtils.Service";
@@ -31,8 +32,7 @@ declare var cordova: any; //导入第三方的库定义到 TS 项目中
 export class FilePreviewService {
   public fileUrl: string = null; // 文件URL路径地址
   public localDirName: string = "pdfDir"; // pdf文件存储目录
-  public pdfReadApp: string =
-    "http://139.224.12.181:9527/JuJiaAppDownload/AdobeReader.apk";
+  public pdfReadApp: string = reqObj.pdfReadApp; // PDF阅读器下载APP包地址
   public appPkgName: string = "com.adobe.reader"; // PDF阅读器包名
 
   constructor(

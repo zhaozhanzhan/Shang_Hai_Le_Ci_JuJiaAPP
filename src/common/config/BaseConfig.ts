@@ -31,6 +31,7 @@ export const reqObj = {
   baseUrl: "http://" + ip + "/",
   baseImgUrl: "http://" + ip + "/home/", // 基础图片URL
   andUpdAppUrl: "http://" + ipDownload + "/JuJiaAppDownload/update.apk", // 安卓下载更新APP包地址
+  pdfReadApp: "http://" + ipDownload + "/JuJiaAppDownload/AdobeReader.apk", // PDF阅读器下载APP包地址
   iosUpdAppUrl:
     "itms-apps://itunes.apple.com/us/app/domainsicle-domain-name-search/id511364723?ls=1&mt=8" // IOS下载更新APP包地址
 };
