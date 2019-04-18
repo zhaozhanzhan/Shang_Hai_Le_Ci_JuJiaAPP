@@ -82,8 +82,8 @@ export class LoginPage {
           let loginHour = loginObj.LoginTime; // 登录成功小时数
           let curTime = new Date().getTime(); // 当前时间
           let interHour = Math.floor((curTime - loginHour) / 1000 / 3600); // 登录间隔小时数
-          if (interHour < 24) {
-            // 间隔时间小于24小时,可自动登录,不需要重新登录
+          if (interHour < 8760) {
+            // 间隔时间小于1年,可自动登录,不需要重新登录
             loginObj.LoginTime = new Date().getTime(); // 重置登录时间
             for (const key in loginObj) {
               // 更新全局信息对象
