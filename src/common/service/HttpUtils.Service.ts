@@ -269,13 +269,13 @@ export class HttpReqService {
           if (this.noConsoleUrlArr.indexOf(url) == -1) {
             that.gloService.showMsg("请检查路径是否正确");
           }
-          console.log("请检查路径是否正确");
+          console.error("请检查路径是否正确");
         }
         if (error.status == 500) {
           if (this.noConsoleUrlArr.indexOf(url) == -1) {
             that.gloService.showMsg("请求的服务器错误");
           }
-          console.log("请求的服务器错误");
+          console.error("请求的服务器错误");
         }
         console.log(error);
         // if (this.noConsoleUrlArr.indexOf(url) == -1) {
@@ -407,13 +407,13 @@ export class HttpReqService {
           if (this.noConsoleUrlArr.indexOf(url) == -1) {
             that.gloService.showMsg("请检查路径是否正确");
           }
-          console.log("请检查路径是否正确");
+          console.error("请检查路径是否正确");
         }
         if (error.status == 500) {
           if (this.noConsoleUrlArr.indexOf(url) == -1) {
             that.gloService.showMsg("请求的服务器错误");
           }
-          console.log("请求的服务器错误");
+          console.error("请求的服务器错误");
         }
         // if (this.noConsoleUrlArr.indexOf(url) == -1) {
         //   that.gloService.showMsg("服务器请求出错，请检查网络连接！");
@@ -493,11 +493,11 @@ export class HttpReqService {
         }
         if (error.status == 404) {
           that.gloService.showMsg("请检查路径是否正确");
-          console.log("请检查路径是否正确");
+          console.error("请检查路径是否正确");
         }
         if (error.status == 500) {
           that.gloService.showMsg("请求的服务器错误");
-          console.log("请求的服务器错误");
+          console.error("请求的服务器错误");
         }
         console.log(error);
         // that.gloService.showMsg("服务器请求出错，请检查网络连接！");
