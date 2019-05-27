@@ -155,7 +155,7 @@ export class GlobalService {
           handler: cancelFun
             ? cancelFun
             : () => {
-                console.error("取消");
+                console.log("取消");
               }
         },
         {

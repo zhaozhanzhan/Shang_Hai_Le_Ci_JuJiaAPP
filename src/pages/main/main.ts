@@ -44,7 +44,7 @@ export class MainPage {
   ionViewDidLoad() {
     //获取上一次登录的信息
     this.ionicStorage.get("loginInfo").then(loginObj => {
-      console.error("loginInfo", loginInfo);
+      console.log("loginInfo", loginInfo);
       if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
         // 判断是否是空对象
         if (

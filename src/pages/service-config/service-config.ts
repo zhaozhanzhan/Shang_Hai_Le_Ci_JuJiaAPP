@@ -58,7 +58,7 @@ export class ServiceConfigPage {
     );
 
     this.infoWay = this.navParams.get("intoWay");
-    console.error(this.infoWay);
+    console.log(this.infoWay);
   }
 
   ionViewDidLoad() {
@@ -67,7 +67,7 @@ export class ServiceConfigPage {
 
   ionViewDidEnter() {
     console.log("ionViewDidEnter");
-    console.error("this.navCtrl", this.navCtrl);
+    console.log("this.navCtrl", this.navCtrl);
   }
 
   /**

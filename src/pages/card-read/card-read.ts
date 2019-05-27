@@ -49,7 +49,7 @@ export class CardReadPage {
   ) {
     const nfcId = this.navParams.get("nfcId");
     ParamService.setParamNfc(nfcId);
-    console.error("ParamService.getParamNfc", ParamService.getParamNfc());
+    console.log("ParamService.getParamNfc", ParamService.getParamNfc());
     if (_.isString(nfcId) && nfcId.length > 0) {
       const sendData: any = {};
       sendData.nfcNo = nfcId;
@@ -68,7 +68,7 @@ export class CardReadPage {
           if (data["data"] && data["data"]["result"] == 0) {
             this.formInfo = data["data"]["userArchivesObj"];
             ParamService.setParamId(data["data"]["userArchivesObj"]["userID"]);
-            console.error("ParamService.getParamId", ParamService.getParamId());
+            console.log("ParamService.getParamId", ParamService.getParamId());
           } else {
             this.formInfo = {};
             this.gloService.showMsg(data["data"]["message"]);

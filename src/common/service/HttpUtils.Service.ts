@@ -76,20 +76,20 @@ export class HttpReqService {
     //   sessionId => {
     //     const sessId: any = sessionId;
     //     Local.set("sessionId", sessId);
-    //     console.error("获取SessionId成功", sessId);
+    //     console.log("获取SessionId成功", sessId);
     //   },
     //   err => {
-    //     console.error("获取SessionId失败", err);
+    //     console.log("获取SessionId失败", err);
     //     Local.set("sessionId", "");
     //   }
     // );
     // setTimeout(() => {
-    // console.error("=====================", this.app);
+    // console.log("=====================", this.app);
     // this.defOptions.headers.set("token", "");
-    // console.error("=====================", this.defOptions);
+    // console.log("=====================", this.defOptions);
     // this.events.publish("exitLogin");
     // this.app.getRootNav().setRoot("");
-    // console.error();
+    // console.log();
     // this.app.getActiveNavs()[0].setRoot(LoginPage);
     // }, 3000);
   }
@@ -111,7 +111,7 @@ export class HttpReqService {
       this.ionicStorage.get("loginInfo").then(loginObj => {
         if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
           if (_.isString(loginObj.SessionId) && loginObj.SessionId.length > 0) {
-            console.error("loginObj.SessionId==========", loginObj.SessionId);
+            console.log("loginObj.SessionId==========", loginObj.SessionId);
             reslove(loginObj.SessionId);
           } else {
             reject("");
@@ -134,7 +134,7 @@ export class HttpReqService {
   //   !_.isUndefined(loginInfo.Token) &&
   //   loginInfo.Token.length > 0
   // ) {
-  //   // console.error("loginObj.Token==========", loginInfo.Token);
+  //   // console.log("loginObj.Token==========", loginInfo.Token);
   //   this.defOptions.headers.set("token", loginInfo.Token);
   // } else {
   //   this.defOptions.headers.set("token", "");
@@ -147,7 +147,7 @@ export class HttpReqService {
   //       !_.isUndefined(loginObj.Token) &&
   //       loginObj.Token.length > 0
   //     ) {
-  //       console.error("loginObj.Token==========", loginObj.Token);
+  //       console.log("loginObj.Token==========", loginObj.Token);
   //       this.defOptions.headers.set("token", loginObj.Token);
   //     } else {
   //       this.defOptions.headers.set("token", "");
@@ -269,13 +269,13 @@ export class HttpReqService {
           if (this.noConsoleUrlArr.indexOf(url) == -1) {
             that.gloService.showMsg("请检查路径是否正确");
           }
-          console.error("请检查路径是否正确");
+          console.log("请检查路径是否正确");
         }
         if (error.status == 500) {
           if (this.noConsoleUrlArr.indexOf(url) == -1) {
             that.gloService.showMsg("请求的服务器错误");
           }
-          console.error("请求的服务器错误");
+          console.log("请求的服务器错误");
         }
         console.log(error);
         // if (this.noConsoleUrlArr.indexOf(url) == -1) {
@@ -407,13 +407,13 @@ export class HttpReqService {
           if (this.noConsoleUrlArr.indexOf(url) == -1) {
             that.gloService.showMsg("请检查路径是否正确");
           }
-          console.error("请检查路径是否正确");
+          console.log("请检查路径是否正确");
         }
         if (error.status == 500) {
           if (this.noConsoleUrlArr.indexOf(url) == -1) {
             that.gloService.showMsg("请求的服务器错误");
           }
-          console.error("请求的服务器错误");
+          console.log("请求的服务器错误");
         }
         // if (this.noConsoleUrlArr.indexOf(url) == -1) {
         //   that.gloService.showMsg("服务器请求出错，请检查网络连接！");
@@ -443,7 +443,7 @@ export class HttpReqService {
       .timeout(10000)
       .toPromise()
       .then((res: Response) => {
-        console.error(res);
+        console.log(res);
         let body = res["_body"];
         // console.log("接口返回成功信息：" + body);
         if (body) {
@@ -493,11 +493,11 @@ export class HttpReqService {
         }
         if (error.status == 404) {
           that.gloService.showMsg("请检查路径是否正确");
-          console.error("请检查路径是否正确");
+          console.log("请检查路径是否正确");
         }
         if (error.status == 500) {
           that.gloService.showMsg("请求的服务器错误");
-          console.error("请求的服务器错误");
+          console.log("请求的服务器错误");
         }
         console.log(error);
         // that.gloService.showMsg("服务器请求出错，请检查网络连接！");

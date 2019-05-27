@@ -42,7 +42,7 @@ export class SelProModalPage {
     public platform: Platform, // 获取平台信息
     public alertCtrl: AlertController // Alert消息弹出框
   ) {
-    console.error("this.navParams", this.navParams);
+    console.log("this.navParams", this.navParams);
     const caption = this.navParams.get("caption");
     this.minWorktime = this.navParams.get("minWorktime"); // 计时方式最小工时
     this.oneTime = this.navParams.get("oneTime"); // 一次项目最小工时
@@ -55,11 +55,11 @@ export class SelProModalPage {
         treeArr.push(caption);
         this.hierarchy = treeArr.join(">");
       }
-      console.error("this.hierarchy", treeArr, this.hierarchy);
+      console.log("this.hierarchy", treeArr, this.hierarchy);
     }
     this.serverItemCode = this.navParams.get("serverItemCode");
     this.userCode = this.navParams.get("userCode");
-    console.error(
+    console.log(
       "this.serverItemCode,this.userCode",
       this.serverItemCode,
       this.userCode
@@ -125,6 +125,6 @@ export class SelProModalPage {
       paramObj.billingMethod = 2;
     }
     this.jumpPage("SelectServicePage", paramObj);
-    console.error(type);
+    console.log(type);
   }
 }

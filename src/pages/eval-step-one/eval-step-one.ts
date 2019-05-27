@@ -89,7 +89,7 @@ export class EvalStepOnePage {
       this.androidPermissions.checkPermission(recPermission).then(result => {
         const isPermission = result.hasPermission;
         if (isPermission) {
-          console.error("已经获取到录音权限");
+          console.log("已经获取到录音权限");
         } else {
           this.gloService.showMsg("获取录音权限失败，请开启应用权限", "top");
           this.androidPermissions.requestPermission(recPermission);
@@ -97,7 +97,7 @@ export class EvalStepOnePage {
       });
 
       this.paramId = this.navParams.get("serviceId");
-      console.error("this.paramObj", this.paramId);
+      console.log("this.paramObj", this.paramId);
       if (_.isString(this.paramId) && this.paramId.length > 0) {
         const sendData: any = {};
         sendData.id = this.paramId;
@@ -127,7 +127,7 @@ export class EvalStepOnePage {
     //     if (this.dataList.length == 0) {
     //       this.gloService.showMsg("该列表暂无数据！");
     //     }
-    //     console.error("this.sendData", this.sendData);
+    //     console.log("this.sendData", this.sendData);
     //   },
     //   (err: any) => {
     //     // 请求数据失败
@@ -156,14 +156,14 @@ export class EvalStepOnePage {
       // syncedDataDirectory: null
       // tempDirectory: null
       const fs: string = cordova.file.externalRootDirectory; // 音频文件存储目录
-      console.error(fs);
+      console.log(fs);
       this.file.listDir(fs, "").then(
         listDirSuc => {
-          console.error("查看文件夹下文件成功", listDirSuc);
+          console.log("查看文件夹下文件成功", listDirSuc);
           if (_.isArray(listDirSuc) && listDirSuc.length > 0) {
             for (let i = 0; i < listDirSuc.length; i++) {
-              // console.error(listDirSuc[i].hasOwnProperty("name"));
-              // console.error(listDirSuc[i]["name"]);
+              // console.log(listDirSuc[i].hasOwnProperty("name"));
+              // console.log(listDirSuc[i]["name"]);
               const fileNameArr: Array<string> = listDirSuc[i]["name"].split(
                 "."
               );
@@ -172,14 +172,14 @@ export class EvalStepOnePage {
                 fileNameArr[0].length == 14 &&
                 fileNameArr[1] == "wav"
               ) {
-                console.error(fs);
-                console.error(listDirSuc[i]["name"]);
+                console.log(fs);
+                console.log(listDirSuc[i]["name"]);
                 this.file.removeFile(fs, listDirSuc[i]["name"]).then(
                   rmFileSuc => {
-                    console.error("删除文件成功", rmFileSuc);
+                    console.log("删除文件成功", rmFileSuc);
                   },
                   rmFileErr => {
-                    console.error("删除文件失败", rmFileErr);
+                    console.log("删除文件失败", rmFileErr);
                   }
                 );
               }
@@ -187,7 +187,7 @@ export class EvalStepOnePage {
           }
         },
         listDirErr => {
-          console.error("查看文件夹下文件失败", listDirErr);
+          console.log("查看文件夹下文件失败", listDirErr);
         }
       );
     }
@@ -256,7 +256,7 @@ export class EvalStepOnePage {
     mediaObj.onStatusUpdate.subscribe(status => this.showRecordStatus(status)); // 监测录音状态的回调
     mediaObj.onSuccess.subscribe(() => {
       // 录音成功后的处理，如上传录音
-      console.error("录制或播放完成");
+      console.log("录制或播放完成");
       // this.uploadFile(
       //   this.file.documentsDirectory.replace(/^file:\/\//, "") +
       //     this.soundFileName
@@ -264,7 +264,7 @@ export class EvalStepOnePage {
     });
     mediaObj.onError.subscribe(error => {
       // 录音失败后的处理，如提示错误码
-      console.error("录制或播放失败", error);
+      console.log("录制或播放失败", error);
     });
     window.setTimeout(() => mediaObj.stopRecord(), 10 * 1000); // 设置录音的长度，单位毫秒，ios / android 均有效
     // startRecord() // 开始录制音频文件。
@@ -307,7 +307,7 @@ export class EvalStepOnePage {
       default:
         statusStr = "None";
     }
-    console.error("status: " + statusStr);
+    console.log("status: " + statusStr);
   }
   /**
    * 长按录音
@@ -315,9 +315,9 @@ export class EvalStepOnePage {
    */
   public longPress() {
     try {
-      console.error("cordova=======", cordova);
+      console.log("cordova=======", cordova);
     } catch (error) {
-      console.error("==========未找到cordova=======");
+      console.log("==========未找到cordova=======");
       return;
     }
 
@@ -325,14 +325,14 @@ export class EvalStepOnePage {
     this.androidPermissions.checkPermission(recPermission).then(result => {
       const isPermission = result.hasPermission;
       if (isPermission) {
-        console.error("已经获取到录音权限");
+        console.log("已经获取到录音权限");
         if (this.recordState == 1 || this.recordState == 3) {
           this.recordState = 2; // 设置状态为正在录制
           if (!_.isNull(this.soundStorageDir)) {
             // 判断是否获取到存储目录
             if (!_.isNull(this.mediaObj)) {
               // 已有录音对象
-              console.error("恢复录制");
+              console.log("恢复录制");
               this.gloService.showMsg("已有录音，如需重录请删除录音！", "top");
               this.recordState = 3; // 录制完成
               return;
@@ -421,7 +421,7 @@ export class EvalStepOnePage {
   public stopPress() {
     this.recordState = 3;
     this.mediaObj.stopRecord(); // 暂停录音
-    console.error("暂停录音");
+    console.log("暂停录音");
   }
 
   /**
@@ -431,7 +431,7 @@ export class EvalStepOnePage {
    */
   public playSound() {
     this.mediaObj.play(); // 开始或恢复播放音频文件
-    console.error("插放录音", this.mediaObj);
+    console.log("插放录音", this.mediaObj);
   }
 
   /**
@@ -485,9 +485,9 @@ export class EvalStepOnePage {
     };
 
     const fileTransfer: FileTransferObject = this.transfer.create();
-    console.error("filePath:" + filePath);
-    console.error("uploadUrl:" + uploadUrl);
-    console.error("options:", options);
+    console.log("filePath:" + filePath);
+    console.log("uploadUrl:" + uploadUrl);
+    console.log("options:", options);
     return new Promise((resolve, reject) => {
       fileTransfer
         .upload(filePath, uploadUrl, options)
@@ -509,14 +509,14 @@ export class EvalStepOnePage {
    * @memberof ConsignorListPage
    */
   public backRefresh(that: any) {
-    console.error("backRefresh");
-    console.error(that);
-    // console.error(this.reqUrl, this.sendData);
+    console.log("backRefresh");
+    console.log(that);
+    // console.log(this.reqUrl, this.sendData);
     // const url = that.reqUrl;
     const reqObj = that.sendData;
     reqObj.page = pageObj.currentPage; //重置当前页码
     reqObj.size = pageObj.everyItem; //重置当前页面请求条数
-    console.error("reqObj", reqObj);
+    console.log("reqObj", reqObj);
   }
 
   /**
@@ -585,12 +585,12 @@ export class EvalStepOnePage {
         uploadUrl
       ).then(
         upSuc => {
-          console.error("upSuc", upSuc);
+          console.log("upSuc", upSuc);
           loading.dismiss();
           this.jumpPage("EvalStepTwoPage", { serviceId: this.paramId });
         },
         upErr => {
-          console.error("upErr", upErr);
+          console.log("upErr", upErr);
           loading.dismiss();
         }
       );

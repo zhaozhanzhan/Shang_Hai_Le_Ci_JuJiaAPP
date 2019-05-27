@@ -51,7 +51,7 @@ export class ConfigListPage {
       "home/a/server/homeServerItems/listSecondTree",
       sendData,
       data => {
-        console.error("服务配置二级列表", data);
+        console.log("服务配置二级列表", data);
         if (
           data["data"] &&
           _.isArray(data["data"]["serverItemsSecondTreeObjList"])
@@ -73,7 +73,7 @@ export class ConfigListPage {
     // }
     // this.dataList = this.navParams.get("dataList");
 
-    console.error("this.dataList=====", this.dataList);
+    console.log("this.dataList=====", this.dataList);
   }
 
   ionViewDidLoad() {

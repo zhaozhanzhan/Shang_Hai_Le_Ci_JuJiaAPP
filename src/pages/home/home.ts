@@ -81,7 +81,7 @@ export class HomePage {
     this.ionicStorage.get("loginInfo").then(loginObj => {
       if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
         // 判断是否是空对象
-        console.error("loginObj========", loginObj);
+        console.log("loginObj========", loginObj);
         const loginId = loginObj.LoginId;
         if (_.isString(loginId) && loginId.length > 0) {
           const sendData: any = {};
@@ -114,7 +114,7 @@ export class HomePage {
 
                   this.serNotifi.getHms((data: any) => {
                     // 获取时分秒并回调
-                    console.error("data", data);
+                    console.log("data", data);
                     this.hours = data.hours;
                     this.minutes = data.minutes;
                     this.seconds = data.seconds;
@@ -142,7 +142,7 @@ export class HomePage {
         this.gloService.showMsg("未获取到用户ID!");
       }
     });
-    console.error("this.navCtrl", this.navCtrl);
+    console.log("this.navCtrl", this.navCtrl);
     this.initNfcListener(); // 初始化NFC监听
 
     //=================订阅NFC扫描成功事件 Begin=================//
@@ -173,7 +173,7 @@ export class HomePage {
 
     ParamService.setParamNfc(null);
     ParamService.setParamId(null);
-    console.error("ParamService.getParamNfc", ParamService.getParamNfc());
+    console.log("ParamService.getParamNfc", ParamService.getParamNfc());
     // setTimeout(() => {
     //   this.navCtrl.push("MyTaskPage");
     // }, 3000);
@@ -260,8 +260,8 @@ export class HomePage {
     } else {
       eTimeStamp = new Date(eTime).getTime();
     }
-    console.error("bTimeStamp", bTimeStamp);
-    console.error("eTimeStamp", eTimeStamp);
+    console.log("bTimeStamp", bTimeStamp);
+    console.log("eTimeStamp", eTimeStamp);
     if (bTimeStamp - eTimeStamp > 10000) {
       this.gloService.showMsg("开始时间不能大于结束时间");
       return;

@@ -102,35 +102,35 @@ export class FilePreviewService {
         andPermObj.checkPermission(writeStoragePerm).then(
           checkSuc => {
             const isPerm = checkSuc.hasPermission; // 是否有写入权限
-            console.error("isPerm==========", isPerm);
+            console.log("isPerm==========", isPerm);
             if (!isPerm) {
               // 没有权限
               this.gloService.showMsg("获取文件存储权限失败", null, 3000);
               andPermObj.requestPermission(writeStoragePerm).then(
                 reqSuc => {
                   // 请求权限成功
-                  console.error("请求权限成功", reqSuc);
+                  console.log("请求权限成功", reqSuc);
                   resolve(reqSuc);
                 },
                 reqErr => {
                   // 请求权限失败
-                  console.error("请求权限失败", reqErr);
+                  console.log("请求权限失败", reqErr);
                   try {
-                    console.error("cordova=======", cordova);
+                    console.log("cordova=======", cordova);
                     this.openPermSetting(); // 权限设置提示弹了框
                   } catch (error) {
-                    console.error("==========未找到cordova=======");
+                    console.log("==========未找到cordova=======");
                     return;
                   }
                   reject(reqErr);
                 }
               ); // 申请权限
             } else {
-              console.error("请求权限成功");
+              console.log("请求权限成功");
               try {
-                console.error("cordova=======", cordova);
+                console.log("cordova=======", cordova);
               } catch (error) {
-                console.error("==========未找到cordova=======");
+                console.log("==========未找到cordova=======");
                 return;
               }
               // this.openPermSetting(); // 权限设置提示弹了框
@@ -138,11 +138,11 @@ export class FilePreviewService {
             }
           },
           checkErr => {
-            console.error("请求权限失败", checkErr);
+            console.log("请求权限失败", checkErr);
             try {
-              console.error("cordova=======", cordova);
+              console.log("cordova=======", cordova);
             } catch (error) {
-              console.error("==========未找到cordova=======");
+              console.log("==========未找到cordova=======");
               return;
             }
             this.openPermSetting(); // 权限设置提示弹了框
@@ -232,22 +232,22 @@ export class FilePreviewService {
       this.file.checkDir(fs, this.localDirName).then(
         checkDirSuc => {
           // 检测成功，已有该目录，直接返回
-          console.error("检测已有该目录", checkDirSuc);
+          console.log("检测已有该目录", checkDirSuc);
           resolve(checkDirSuc);
         },
         checkDirErr => {
           // 检测失败，没有该目录，创建目录
           // createDir(path, dirName, replace) 在特定路径中创建新目录。
-          console.error("检测没有该目录", checkDirErr);
+          console.log("检测没有该目录", checkDirErr);
           this.file.createDir(fs, this.localDirName, true).then(
             createDirSuc => {
               // 创建目录成功
-              console.error("创建目录成功" + JSON.stringify(createDirSuc));
+              console.log("创建目录成功" + JSON.stringify(createDirSuc));
               resolve(createDirSuc);
             },
             createDirErr => {
               // 创建目录失败
-              console.error("创建目录失败" + JSON.stringify(createDirErr));
+              console.log("创建目录失败" + JSON.stringify(createDirErr));
               reject(createDirErr);
             }
           );
@@ -263,20 +263,20 @@ export class FilePreviewService {
    * @memberof FilePreviewService
    */
   public checkIsHasFile(fileName: string) {
-    console.error("fileName", fileName);
+    console.log("fileName", fileName);
     const fs: string = cordova.file.externalRootDirectory; // 外部存储（SD卡）根目录
     return new Promise((resolve, reject) => {
       this.file.listDir(fs, this.localDirName).then(
         listDirSuc => {
-          console.error("查看文件夹下文件成功", listDirSuc);
+          console.log("查看文件夹下文件成功", listDirSuc);
 
           if (_.isArray(listDirSuc) && listDirSuc.length > 0) {
             let isHasFile: boolean = false;
 
             for (let i = 0; i < listDirSuc.length; i++) {
-              console.error(listDirSuc[i].hasOwnProperty("name"));
-              console.error(listDirSuc[i]["name"]);
-              console.error(fileName);
+              console.log(listDirSuc[i].hasOwnProperty("name"));
+              console.log(listDirSuc[i]["name"]);
+              console.log(fileName);
               if (
                 listDirSuc[i].hasOwnProperty("name") &&
                 listDirSuc[i]["name"] == fileName
@@ -286,7 +286,7 @@ export class FilePreviewService {
               }
             }
 
-            console.error("=====isHasFile=====", isHasFile);
+            console.log("=====isHasFile=====", isHasFile);
             if (isHasFile) {
               resolve(); // 已有文件并已经下载在本地
             } else {
@@ -300,7 +300,7 @@ export class FilePreviewService {
         },
         listDirErr => {
           reject(); // 文件未下载在本地
-          console.error("查看文件夹下文件失败", listDirErr);
+          console.log("查看文件夹下文件失败", listDirErr);
         }
       );
     });
@@ -342,14 +342,14 @@ export class FilePreviewService {
         .download(this.fileUrl, fs + this.localDirName + "/" + fileNameAndType)
         .then(
           downloadSuc => {
-            console.error("下载文件成功", downloadSuc);
+            console.log("下载文件成功", downloadSuc);
             if (loading) {
               loading.dismiss();
             }
             resolve(downloadSuc);
           },
           downloadErr => {
-            console.error("下载文件失败", downloadErr);
+            console.log("下载文件失败", downloadErr);
             if (loading) {
               loading.dismiss();
             }
@@ -385,9 +385,9 @@ export class FilePreviewService {
     const fs: string = cordova.file.externalRootDirectory; // 外部存储（SD卡）根目录
     return new Promise((resolve, reject) => {
       try {
-        console.error("cordova=======", cordova);
+        console.log("cordova=======", cordova);
       } catch (error) {
-        console.error("=======cordova未找到=======");
+        console.log("=======cordova未找到=======");
         reject();
         return;
       }
@@ -399,11 +399,11 @@ export class FilePreviewService {
         {
           // 以APK文件方式打开
           error: (err: any) => {
-            console.error("打开PDF文件失败", err);
+            console.log("打开PDF文件失败", err);
             reject(err);
           },
           success: () => {
-            console.error("打开PDF文件成功");
+            console.log("打开PDF文件成功");
             resolve();
           }
         }
@@ -419,9 +419,9 @@ export class FilePreviewService {
     // const fs: string = cordova.file.externalRootDirectory; // 外部存储（SD卡）根目录
     // return new Promise((resolve, reject) => {
     //   try {
-    //     console.error("cordova=======", cordova);
+    //     console.log("cordova=======", cordova);
     //   } catch (error) {
-    //     console.error("=======cordova未找到=======");
+    //     console.log("=======cordova未找到=======");
     //     reject();
     //     return;
     //   }
@@ -431,7 +431,7 @@ export class FilePreviewService {
     // const options: DocumentViewerOptions = {
     //   title: fileName
     // };
-    // console.error(fs + this.localDirName + "/" + fileNameAndType);
+    // console.log(fs + this.localDirName + "/" + fileNameAndType);
     // this.docView.viewDocument(
     //   fs + this.localDirName + "/" + fileNameAndType,
     //   fileMimeType,
@@ -447,9 +447,9 @@ export class FilePreviewService {
   public openAppIns(appFileUrl: string) {
     return new Promise((resolve, reject) => {
       try {
-        console.error("cordova=======", cordova);
+        console.log("cordova=======", cordova);
       } catch (error) {
-        console.error("=======cordova未找到=======");
+        console.log("=======cordova未找到=======");
         reject();
         return;
       }
@@ -461,10 +461,10 @@ export class FilePreviewService {
           error: (err: any) => {
             this.gloService.showMsg("打开安装包失败", null, 2000);
             reject(err);
-            console.error("打开APP安装包失败err", err);
+            console.log("打开APP安装包失败err", err);
           },
           success: () => {
-            console.error("打开APP安装包成功data");
+            console.log("打开APP安装包成功data");
             resolve();
           }
         }
@@ -486,11 +486,11 @@ export class FilePreviewService {
       }
       this.appAva.check(app).then(
         checkAppSuc => {
-          console.error("PDF阅读器已经安装", checkAppSuc);
+          console.log("PDF阅读器已经安装", checkAppSuc);
           resolve(checkAppSuc);
         },
         checkAppErr => {
-          console.error("PDF阅读器未安装", checkAppErr);
+          console.log("PDF阅读器未安装", checkAppErr);
           const fs: string = cordova.file.externalRootDirectory; // 外部存储（SD卡）根目录
           const fileTransfer: FileTransferObject = this.transfer.create();
           // const fileNameAndType = GlobalMethod.getFileNameAndType(
@@ -501,37 +501,37 @@ export class FilePreviewService {
           // 检查PDF安装包是否存在
           this.checkIsHasFile(pdfAppName).then(
             hasFileSuc => {
-              console.error("已经找到PDF阅读器安装包", hasFileSuc);
+              console.log("已经找到PDF阅读器安装包", hasFileSuc);
               this.openAppIns(appFileUrl).then(
                 openAppSuc => {
-                  console.error("打开PDF安装包成功！", openAppSuc);
+                  console.log("打开PDF安装包成功！", openAppSuc);
                 },
                 openAppErr => {
-                  console.error("打开PDF安装包失败！", openAppErr);
+                  console.log("打开PDF安装包失败！", openAppErr);
                   this.gloService.showMsg("打开PDF安装包失败！");
                   reject();
                 }
               );
             },
             hasFileErr => {
-              console.error("没有找到PDF阅读器安装包", hasFileErr);
+              console.log("没有找到PDF阅读器安装包", hasFileErr);
               const loading = this.gloService.showLoading("下载PDF查看器：0%");
               fileTransfer.download(this.pdfReadApp, appFileUrl).then(
                 downloadSuc => {
-                  console.error("下载文件成功", downloadSuc);
+                  console.log("下载文件成功", downloadSuc);
                   this.openAppIns(appFileUrl).then(
                     openAppSuc => {
-                      console.error("打开PDF安装包成功！", openAppSuc);
+                      console.log("打开PDF安装包成功！", openAppSuc);
                     },
                     openAppErr => {
-                      console.error("打开PDF安装包失败！", openAppErr);
+                      console.log("打开PDF安装包失败！", openAppErr);
                       this.gloService.showMsg("打开PDF安装包失败！");
                       reject();
                     }
                   );
                 },
                 downloadErr => {
-                  console.error("下载文件失败", downloadErr);
+                  console.log("下载文件失败", downloadErr);
                   this.gloService.showMsg("下载PDF查看器失败");
                   reject();
                 }
@@ -590,11 +590,11 @@ export class FilePreviewService {
       );
       startApp.start(
         (suc: any) => {
-          console.error("启动PDF阅读器并打开文件成功！", suc);
+          console.log("启动PDF阅读器并打开文件成功！", suc);
           resolve(suc);
         },
         (err: any) => {
-          console.error("启动PDF阅读器并打开文件失败！", err);
+          console.log("启动PDF阅读器并打开文件失败！", err);
           reject(err);
         }
       );
@@ -608,16 +608,16 @@ export class FilePreviewService {
    */
   public previewFile(fileUrl: string) {
     try {
-      console.error("cordova=======", cordova);
+      console.log("cordova=======", cordova);
     } catch (error) {
-      console.error("=======cordova未找到=======");
+      console.log("=======cordova未找到=======");
       return;
     }
 
     this.setFileUrl(fileUrl);
 
     const fileType = GlobalMethod.getFileType(this.fileUrl); // 获取文件扩展名
-    console.error("fileType", fileType);
+    console.log("fileType", fileType);
     if (fileType != "pdf") {
       this.gloService.showMsg("远程服务器文件非PDF文档，暂无法打开");
       return;
@@ -625,47 +625,44 @@ export class FilePreviewService {
 
     this.checkPermission().then(
       checkPermSuc => {
-        console.error("获取权限成功AAAAA", checkPermSuc);
+        console.log("获取权限成功AAAAA", checkPermSuc);
         this.creatLocalDir().then(
           creatDirSuc => {
-            console.error("目录获取成功GGGGG", creatDirSuc);
+            console.log("目录获取成功GGGGG", creatDirSuc);
             this.checkAppInstall().then(
               appInsSuc => {
-                console.error("PDF阅读器已经安装", appInsSuc);
+                console.log("PDF阅读器已经安装", appInsSuc);
                 const fileNameAndType = GlobalMethod.getFileNameAndType(
                   this.fileUrl
                 ); // 截取文件名和文件类型
-                console.error("fileNameAndType", fileNameAndType);
+                console.log("fileNameAndType", fileNameAndType);
                 this.checkIsHasFile(fileNameAndType).then(
                   getPdfSuc => {
-                    console.error("检测本地已有PDF文件", getPdfSuc);
+                    console.log("检测本地已有PDF文件", getPdfSuc);
                     this.openAppAndFile().then(
                       openAppSuc => {
-                        console.error("打开本地已有文件成功CCCCC", openAppSuc);
+                        console.log("打开本地已有文件成功CCCCC", openAppSuc);
                       },
                       openAppErr => {
-                        console.error("打开本地已有文件失败CCCCC", openAppErr);
+                        console.log("打开本地已有文件失败CCCCC", openAppErr);
                         // this.gloService.showMsg("打开文件失败，请选择阅读器！");
                       }
                     );
                   },
                   getPdfErr => {
-                    console.error("检测本地没有PDF文件", getPdfErr);
+                    console.log("检测本地没有PDF文件", getPdfErr);
                     this.downloadFile().then(
                       downloadFileSuc => {
-                        console.error(
-                          "下载服务器文件成功EEEEE",
-                          downloadFileSuc
-                        );
+                        console.log("下载服务器文件成功EEEEE", downloadFileSuc);
                         this.openAppAndFile().then(
                           openAppSuc => {
-                            console.error(
+                            console.log(
                               "打开本地已有文件成功CCCCC",
                               openAppSuc
                             );
                           },
                           openAppErr => {
-                            console.error(
+                            console.log(
                               "打开本地已有文件失败CCCCC",
                               openAppErr
                             );
@@ -676,10 +673,7 @@ export class FilePreviewService {
                         );
                       },
                       downloadFileErr => {
-                        console.error(
-                          "下载服务器文件失败EEEEE",
-                          downloadFileErr
-                        );
+                        console.log("下载服务器文件失败EEEEE", downloadFileErr);
                         this.gloService.showMsg("下载远程服务器文件失败！");
                       }
                     );
@@ -687,18 +681,18 @@ export class FilePreviewService {
                 );
               },
               appInsErr => {
-                console.error("PDF阅读器没有安装", appInsErr);
+                console.log("PDF阅读器没有安装", appInsErr);
               }
             );
           },
           creatDirErr => {
-            console.error("目录获取失败GGGGG", creatDirErr);
+            console.log("目录获取失败GGGGG", creatDirErr);
             this.gloService.showMsg("创建存储目录失败！");
           }
         );
       },
       checkPermErr => {
-        console.error("获取权限失败AAAAA", checkPermErr);
+        console.log("获取权限失败AAAAA", checkPermErr);
         this.openPermSetting();
       }
     );

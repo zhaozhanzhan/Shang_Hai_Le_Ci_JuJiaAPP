@@ -106,7 +106,7 @@ export class PersonInfoPage {
 
   ionViewDidEnter() {
     console.log("ionViewDidEnter");
-    console.error("this.navCtrl", this.navCtrl);
+    console.log("this.navCtrl", this.navCtrl);
   }
 
   /**
@@ -228,7 +228,7 @@ export class PersonInfoPage {
     const formData: any = {};
     formData.__ajax = "json";
     this.httpReq.get("home/a/logout", formData, data => {
-      console.error(data);
+      console.log(data);
       if (data["data"] && data["data"]["result"] == "true") {
         this.gloService.showMsg("退出成功", null, 1000);
         loading.dismiss();

@@ -122,7 +122,7 @@ export class BaiduMapComponent {
     this.posAddress += e.addressComponent.street; // 街道
     this.posAddress += e.addressComponent.streetNumber; // 号
     this.map.clearOverlays();
-    console.error(e);
+    console.log(e);
     // point: J {lng: 120.3054559, lat: 31.57003745}
     this.setCenterPoint(e.point.lng, e.point.lat);
     this.setCenPointIcon(this.point);

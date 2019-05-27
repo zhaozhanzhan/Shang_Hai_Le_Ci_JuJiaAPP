@@ -55,7 +55,7 @@ export class ConfigListTwoPage {
       "home/a/server/homeServerItems/listSecondTree",
       sendData,
       data => {
-        console.error("服务配置二级列表", data);
+        console.log("服务配置二级列表", data);
         if (
           data["data"] &&
           _.isArray(data["data"]["serverItemsSecondTreeObjList"])
@@ -67,9 +67,9 @@ export class ConfigListTwoPage {
       }
     );
 
-    console.error("ParamService.getParamNfc", ParamService.getParamNfc());
+    console.log("ParamService.getParamNfc", ParamService.getParamNfc());
     this.userCode = ParamService.getParamId();
-    console.error("ParamService.getParamId", ParamService.getParamId());
+    console.log("ParamService.getParamId", ParamService.getParamId());
     // const nfcNum = ParamService.getParamNfc();
     // const reqObj: any = {};
     // if (nfcNum) {
@@ -101,7 +101,7 @@ export class ConfigListTwoPage {
     // }
     // this.dataList = this.navParams.get("dataList");
 
-    console.error("this.dataList=====", this.dataList);
+    console.log("this.dataList=====", this.dataList);
   }
 
   ionViewDidLoad() {
@@ -162,7 +162,7 @@ export class ConfigListTwoPage {
    * @memberof ServiceConfigPage
    */
   public openModal(pageName: string, obj?: any) {
-    console.error("打开弹出层");
+    console.log("打开弹出层");
     if (obj) {
       obj.userCode = this.userCode;
       this.modalCtrl.create(pageName, obj).present();

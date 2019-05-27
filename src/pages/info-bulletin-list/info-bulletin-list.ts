@@ -53,7 +53,7 @@ export class InfoBulletinListPage {
     console.log("ionViewDidLoad InfoBulletinListPage");
 
     this.ionicStorage.get("loginInfo").then((loginObj: any) => {
-      console.error("loginInfo", loginObj);
+      console.log("loginInfo", loginObj);
       if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
         // 判断是否是空对象
         if (
@@ -73,7 +73,7 @@ export class InfoBulletinListPage {
               (res: any) => {
                 // 请求数据成功
                 this.dataList = this.dataList.concat(res);
-                console.error("this.sendData", this.sendData);
+                console.log("this.sendData", this.sendData);
               },
               (err: any) => {
                 // 请求数据失败
@@ -157,7 +157,7 @@ export class InfoBulletinListPage {
   public downRefresh(ev: Refresher, url: string, reqObj: any) {
     reqObj.pageNo = pageObj.currentPage; //重置当前页码
     reqObj.pageSize = pageObj.everyItem; //重置当前页面请求条数
-    console.error("下拉刷新执行");
+    console.log("下拉刷新执行");
     this.reqData(
       url,
       reqObj,
@@ -172,14 +172,14 @@ export class InfoBulletinListPage {
             this.infiniteScroll.enable(!this.isShowNoData); // 启用上拉加载事件侦听器并隐藏提示
           }
         }, 1000);
-        console.error("下拉刷新请求数据成功");
+        console.log("下拉刷新请求数据成功");
       },
       (err: any) => {
         this.dataList = this.dataList.concat(err); // 添加新增数据
         setTimeout(() => {
           ev.complete(); // 关闭下拉刷新动画
         }, 1000);
-        console.error("下拉刷新请求数据失败");
+        console.log("下拉刷新请求数据失败");
       }
     );
   }
@@ -220,7 +220,7 @@ export class InfoBulletinListPage {
           setTimeout(() => {
             ev.complete(); // 关闭上拉加载动画
           }, 1000);
-          console.error("下拉刷新请求数据失败");
+          console.log("下拉刷新请求数据失败");
         }
       );
     }
@@ -264,11 +264,11 @@ export class InfoBulletinListPage {
   public clickDelBtn(id: any, arr: any, index: number): void {
     this.globalService.delAlert(
       () => {
-        console.error(id, arr, index);
+        console.log(id, arr, index);
         this.delFun(id, arr, index);
       },
       () => {
-        console.error("");
+        console.log("");
       }
     );
   }
@@ -311,14 +311,14 @@ export class InfoBulletinListPage {
    * @memberof ConsignorListPage
    */
   public backRefresh(that: any) {
-    console.error("backRefresh");
-    console.error(that);
-    // console.error(this.reqUrl, this.sendData);
+    console.log("backRefresh");
+    console.log(that);
+    // console.log(this.reqUrl, this.sendData);
     const url = that.reqUrl;
     const reqObj = that.sendData;
     reqObj.page = pageObj.currentPage; //重置当前页码
     reqObj.size = pageObj.everyItem; //重置当前页面请求条数
-    console.error("reqObj", reqObj);
+    console.log("reqObj", reqObj);
     that.reqData(
       url,
       reqObj,
@@ -331,11 +331,11 @@ export class InfoBulletinListPage {
         if (!_.isNull(that.infiniteScroll)) {
           that.infiniteScroll.enable(!this.isShowNoData); // 启用上拉加载事件侦听器并隐藏提示
         }
-        console.error("下拉刷新请求数据成功");
+        console.log("下拉刷新请求数据成功");
       },
       err => {
         that.dataList = that.dataList.concat(err); // 添加新增数据
-        console.error("下拉刷新请求数据失败");
+        console.log("下拉刷新请求数据失败");
       }
     );
   }

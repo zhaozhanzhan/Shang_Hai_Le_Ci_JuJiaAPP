@@ -49,7 +49,7 @@ export class SatiQueryPage {
     this.ionicStorage.get("loginInfo").then(loginObj => {
       if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
         // 判断是否是空对象
-        console.error("loginObj========", loginObj);
+        console.log("loginObj========", loginObj);
         const loginId = loginObj.LoginId;
         if (_.isString(loginId) && loginId.length > 0) {
           const sendData: any = {};
@@ -123,7 +123,7 @@ export class SatiQueryPage {
    * @memberof ServiceConfigPage
    */
   public openModal(pageName: string, obj?: any) {
-    console.error("打开弹出层");
+    console.log("打开弹出层");
     if (obj) {
       this.modalCtrl.create(pageName, obj).present();
     } else {

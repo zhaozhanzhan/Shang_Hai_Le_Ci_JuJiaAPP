@@ -86,7 +86,7 @@ export class RegisterPage {
   ionViewWillEnter() {
     // 当将要进入页面时触发
     this.ionicStorage.get("idCardInfo").then(idCardInfo => {
-      console.error("idCardInfo", idCardInfo);
+      console.log("idCardInfo", idCardInfo);
       if (_.isArray(idCardInfo) && idCardInfo.length == 2) {
         const userInfo: any = {};
         idCardInfo.forEach(curVal => {
@@ -100,7 +100,7 @@ export class RegisterPage {
           }
         });
         GlobalMethod.setForm(this.formData, userInfo); // 表单赋值
-        console.error("this.formData", this.formData);
+        console.log("this.formData", this.formData);
       }
     });
   }
@@ -148,7 +148,7 @@ export class RegisterPage {
         if (data["code"] == 0) {
           this.gloService.showMsg("验证码已发送，请注意查收", null, 3000);
           this.interObj = window.setInterval(() => {
-            // console.error(this.remnantTime);
+            // console.log(this.remnantTime);
             if (this.remnantTime == 0) {
               window.clearInterval(this.interObj); // 停止计时器
               this.verifiState = false; // 启用按钮
@@ -173,7 +173,7 @@ export class RegisterPage {
    * @memberof RegisterPage
    */
   public saveForm() {
-    console.error("this.formData.value:", this.formData.value);
+    console.log("this.formData.value:", this.formData.value);
     const formDataCtrl = this.formData.controls;
     const formData = this.jsUtil.deepClone(this.formData.value); // 深度拷贝表单数据
     for (const i in formDataCtrl) {
@@ -209,6 +209,6 @@ export class RegisterPage {
         this.gloService.showMsg("请求服务器出错", null, 3000);
       }
     });
-    console.error(formData);
+    console.log(formData);
   }
 }

@@ -75,7 +75,7 @@ export class SelectServicePage {
     this.paramObj = this.jsUtil.deepClone(this.navParams["data"]);
     this.hierarchy = this.navParams.get("hierarchy");
     delete this.paramObj["hierarchy"];
-    console.error("this.paramObj", this.paramObj, this.hierarchy);
+    console.log("this.paramObj", this.paramObj, this.hierarchy);
     const nfcId = ParamService.getParamNfc();
     if (_.isString(nfcId) && nfcId.length > 0) {
       const sendData: any = {};
@@ -97,7 +97,7 @@ export class SelectServicePage {
           if (data["data"] && data["data"]["result"] == 0) {
             this.formInfo = data["data"]["userArchivesObj"];
             ParamService.setParamId(data["data"]["userArchivesObj"]["userID"]);
-            console.error("ParamService.getParamId", ParamService.getParamId());
+            console.log("ParamService.getParamId", ParamService.getParamId());
           } else {
             this.formInfo = {};
             this.gloService.showMsg(data["data"]["message"]);
@@ -155,7 +155,7 @@ export class SelectServicePage {
     let dateObj = new Date();
     let timeMill = dateObj.getTime(); // 时间戳
     let newFileName = timeMill + "." + fileType; //拼接文件名
-    console.error("新文件名AAAAAAAAAAA");
+    console.log("新文件名AAAAAAAAAAA");
     return newFileName;
   }
 
@@ -193,12 +193,12 @@ export class SelectServicePage {
         .then(
           success => {
             // this.lastImg = newFileName;
-            console.error(
+            console.log(
               "cordova.file.dataDirectory",
               cordova.file.dataDirectory
             );
-            console.error("newFileNameCCCCCCCCCCCCCCCCCC", newFileName);
-            console.error(
+            console.log("newFileNameCCCCCCCCCCCCCCCCCC", newFileName);
+            console.log(
               "fileFullPathDDDDDDDDDDDDDDDDDDD",
               normalizeURL(cordova.file.dataDirectory + newFileName)
             );
@@ -250,9 +250,9 @@ export class SelectServicePage {
     };
 
     const fileTransfer: FileTransferObject = this.transfer.create();
-    console.error("filePath:" + filePath);
-    console.error("uploadUrl:" + uploadUrl);
-    console.error("options:", options);
+    console.log("filePath:" + filePath);
+    console.log("uploadUrl:" + uploadUrl);
+    console.log("options:", options);
     return new Promise((resolve, reject) => {
       fileTransfer
         .upload(filePath, uploadUrl, options)
@@ -309,7 +309,7 @@ export class SelectServicePage {
             .resolveNativePath(imagePath) //获取 android 平台下的真实路径
             .then(filePath => {
               // 解析获取Android真实路径
-              console.error(window);
+              console.log(window);
               // 获取图片正确的路径;
               const correctPath = GlobalMethod.getFilePath(filePath);
               // 获取图片文件名和文件类型;
@@ -321,9 +321,9 @@ export class SelectServicePage {
 
               // 获取图片文件类型;
               const correctType = GlobalMethod.getFileType(filePath);
-              console.error("correctPath", correctPath);
-              console.error("correctNameType", correctNameType);
-              console.error("correctType", correctType);
+              console.log("correctPath", correctPath);
+              console.log("correctNameType", correctNameType);
+              console.log("correctType", correctType);
               this.imgArr[0]["fileType"] = correctType; // 文件类型扩展名
 
               this.copyFileToLocalDir(
@@ -349,9 +349,9 @@ export class SelectServicePage {
                     uploadUrl
                   ).then(
                     upSuc => {
-                      console.error("upSuc", upSuc);
+                      console.log("upSuc", upSuc);
                       loading.dismiss();
-                      console.error("JSON", JSON.parse(upSuc.response));
+                      console.log("JSON", JSON.parse(upSuc.response));
                       this.pictureId = JSON.parse(upSuc.response).pictureId;
                       if (
                         _.isString(this.pictureId) &&
@@ -384,7 +384,7 @@ export class SelectServicePage {
                       }
                     },
                     upErr => {
-                      console.error("upErr", upErr);
+                      console.log("upErr", upErr);
                       loading.dismiss();
                     }
                   );
@@ -394,7 +394,7 @@ export class SelectServicePage {
             });
         } else {
           // 非安卓Android平台及相册
-          console.error(window);
+          console.log(window);
           // 获取图片正确的路径;
           const correctPath = GlobalMethod.getFilePath(imagePath);
           // 获取图片文件名和文件类型;
@@ -404,9 +404,9 @@ export class SelectServicePage {
           // 获取图片文件类型;
           const correctType = GlobalMethod.getFileType(imagePath);
           // this.imgArr[0]["fileType"] = correctType; // 文件类型扩展名
-          console.error("correctPath", correctPath);
-          console.error("correctNameType", correctNameType);
-          console.error("correctType", correctType);
+          console.log("correctPath", correctPath);
+          console.log("correctNameType", correctNameType);
+          console.log("correctType", correctType);
           this.imgArr[0]["fileType"] = correctType; // 文件类型扩展名
 
           this.copyFileToLocalDir(
@@ -431,9 +431,9 @@ export class SelectServicePage {
                 uploadUrl
               ).then(
                 upSuc => {
-                  console.error("upSuc", upSuc);
+                  console.log("upSuc", upSuc);
                   loading.dismiss();
-                  console.error("JSON", JSON.parse(upSuc.response));
+                  console.log("JSON", JSON.parse(upSuc.response));
                   this.pictureId = JSON.parse(upSuc.response).pictureId;
                   if (_.isString(this.pictureId) && this.pictureId.length > 0) {
                     const sendData = this.jsUtil.deepClone(this.paramObj);
@@ -462,7 +462,7 @@ export class SelectServicePage {
                   // this.jumpPage("EvalStepTwoPage", { serviceId: this.paramId });
                 },
                 upErr => {
-                  console.error("upErr", upErr);
+                  console.log("upErr", upErr);
                   loading.dismiss();
                 }
               );
@@ -492,7 +492,7 @@ export class SelectServicePage {
         {
           text: "确定",
           handler: () => {
-            console.error("进入拍照页面");
+            console.log("进入拍照页面");
             this.getPicture(this.camera.PictureSourceType.CAMERA);
           }
         }
@@ -551,7 +551,7 @@ export class SelectServicePage {
         confirm.setMessage("剩余时长小于服务最小时长，是否开启服务？");
         confirm.present();
       } else {
-        console.error("========confirm======", confirm);
+        console.log("========confirm======", confirm);
         confirm.setMessage("是否开启服务？");
         confirm.present();
       }
@@ -565,7 +565,7 @@ export class SelectServicePage {
         confirm.setMessage("剩余时长小于服务最小时长，是否开启服务？");
         confirm.present();
       } else {
-        console.error("========confirm======", confirm);
+        console.log("========confirm======", confirm);
         confirm.setMessage("是否开启服务？");
         confirm.present();
       }

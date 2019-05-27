@@ -90,7 +90,7 @@ export class ServiceConductPage {
     this.ionicStorage.get("loginInfo").then(loginObj => {
       if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
         // 判断是否是空对象
-        console.error("loginObj========", loginObj);
+        console.log("loginObj========", loginObj);
         const loginId = loginObj.LoginId;
         if (_.isString(loginId) && loginId.length > 0) {
           const sendData: any = {};
@@ -163,7 +163,7 @@ export class ServiceConductPage {
     });
     // const nfcId = this.navParams.get("nfcId");
     // ParamService.setParamNfc(nfcId);
-    // console.error("ParamService.getParamNfc", ParamService.getParamNfc());
+    // console.log("ParamService.getParamNfc", ParamService.getParamNfc());
     // const sendData: any = {};
     // sendData.nfcNo = nfcId;
     // this.httpReq.get(
@@ -242,8 +242,8 @@ export class ServiceConductPage {
     } else {
       eTimeStamp = new Date(eTime).getTime();
     }
-    console.error("bTimeStamp", bTimeStamp);
-    console.error("eTimeStamp", eTimeStamp);
+    console.log("bTimeStamp", bTimeStamp);
+    console.log("eTimeStamp", eTimeStamp);
     if (bTimeStamp - eTimeStamp > 10000) {
       this.gloService.showMsg("开始时间不能大于结束时间");
       return;
@@ -388,7 +388,7 @@ export class ServiceConductPage {
     let dateObj = new Date();
     let timeMill = dateObj.getTime(); // 时间戳
     let newFileName = timeMill + "." + fileType; //拼接文件名
-    console.error("新文件名AAAAAAAAAAA");
+    console.log("新文件名AAAAAAAAAAA");
     return newFileName;
   }
 
@@ -426,12 +426,12 @@ export class ServiceConductPage {
         .then(
           success => {
             // this.lastImg = newFileName;
-            console.error(
+            console.log(
               "cordova.file.dataDirectory",
               cordova.file.dataDirectory
             );
-            console.error("newFileNameCCCCCCCCCCCCCCCCCC", newFileName);
-            console.error(
+            console.log("newFileNameCCCCCCCCCCCCCCCCCC", newFileName);
+            console.log(
               "fileFullPathDDDDDDDDDDDDDDDDDDD",
               normalizeURL(cordova.file.dataDirectory + newFileName)
             );
@@ -483,9 +483,9 @@ export class ServiceConductPage {
     };
 
     const fileTransfer: FileTransferObject = this.transfer.create();
-    console.error("filePath:" + filePath);
-    console.error("uploadUrl:" + uploadUrl);
-    console.error("options:", options);
+    console.log("filePath:" + filePath);
+    console.log("uploadUrl:" + uploadUrl);
+    console.log("options:", options);
     return new Promise((resolve, reject) => {
       fileTransfer
         .upload(filePath, uploadUrl, options)
@@ -542,7 +542,7 @@ export class ServiceConductPage {
             .resolveNativePath(imagePath) //获取 android 平台下的真实路径
             .then(filePath => {
               // 解析获取Android真实路径
-              console.error(window);
+              console.log(window);
               // 获取图片正确的路径;
               const correctPath = GlobalMethod.getFilePath(filePath);
               // 获取图片文件名和文件类型;
@@ -554,9 +554,9 @@ export class ServiceConductPage {
 
               // 获取图片文件类型;
               const correctType = GlobalMethod.getFileType(filePath);
-              console.error("correctPath", correctPath);
-              console.error("correctNameType", correctNameType);
-              console.error("correctType", correctType);
+              console.log("correctPath", correctPath);
+              console.log("correctNameType", correctNameType);
+              console.log("correctType", correctType);
               this.imgArr[0]["fileType"] = correctType; // 文件类型扩展名
 
               this.copyFileToLocalDir(
@@ -582,9 +582,9 @@ export class ServiceConductPage {
                     uploadUrl
                   ).then(
                     upSuc => {
-                      console.error("upSuc", upSuc);
+                      console.log("upSuc", upSuc);
                       loading.dismiss();
-                      console.error("JSON", JSON.parse(upSuc.response));
+                      console.log("JSON", JSON.parse(upSuc.response));
                       this.pictureId = JSON.parse(upSuc.response).pictureId;
                       if (
                         _.isString(this.pictureId) &&
@@ -645,7 +645,7 @@ export class ServiceConductPage {
                       }
                     },
                     upErr => {
-                      console.error("upErr", upErr);
+                      console.log("upErr", upErr);
                       loading.dismiss();
                     }
                   );
@@ -655,7 +655,7 @@ export class ServiceConductPage {
             });
         } else {
           // 非安卓Android平台及相册
-          console.error(window);
+          console.log(window);
           // 获取图片正确的路径;
           const correctPath = GlobalMethod.getFilePath(imagePath);
           // 获取图片文件名和文件类型;
@@ -665,9 +665,9 @@ export class ServiceConductPage {
           // 获取图片文件类型;
           const correctType = GlobalMethod.getFileType(imagePath);
           // this.imgArr[0]["fileType"] = correctType; // 文件类型扩展名
-          console.error("correctPath", correctPath);
-          console.error("correctNameType", correctNameType);
-          console.error("correctType", correctType);
+          console.log("correctPath", correctPath);
+          console.log("correctNameType", correctNameType);
+          console.log("correctType", correctType);
           this.imgArr[0]["fileType"] = correctType; // 文件类型扩展名
 
           this.copyFileToLocalDir(
@@ -692,9 +692,9 @@ export class ServiceConductPage {
                 uploadUrl
               ).then(
                 upSuc => {
-                  console.error("upSuc", upSuc);
+                  console.log("upSuc", upSuc);
                   loading.dismiss();
-                  console.error("JSON", JSON.parse(upSuc.response));
+                  console.log("JSON", JSON.parse(upSuc.response));
                   this.pictureId = JSON.parse(upSuc.response).pictureId;
                   if (_.isString(this.pictureId) && this.pictureId.length > 0) {
                     const serId = this.formData.workID;
@@ -728,7 +728,7 @@ export class ServiceConductPage {
                   }
                 },
                 upErr => {
-                  console.error("upErr", upErr);
+                  console.log("upErr", upErr);
                   loading.dismiss();
                 }
               );
@@ -759,7 +759,7 @@ export class ServiceConductPage {
         {
           text: "确定",
           handler: () => {
-            console.error("进入拍照页面");
+            console.log("进入拍照页面");
             this.getPicture(this.camera.PictureSourceType.CAMERA, nfcId);
           }
         }

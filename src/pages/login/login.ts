@@ -66,7 +66,7 @@ export class LoginPage {
     //获取上一次登录的信息
 
     this.ionicStorage.get("loginInfo").then(loginObj => {
-      console.error("loginInfo", loginInfo);
+      console.log("loginInfo", loginInfo);
       if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
         // 判断是否是空对象
         if (
@@ -74,10 +74,7 @@ export class LoginPage {
           loginObj.LoginState == "success"
         ) {
           // 判断以前是否登录成功过
-          console.error(
-            "=================loginInfo=================",
-            loginInfo
-          );
+          console.log("=================loginInfo=================", loginInfo);
 
           let loginHour = loginObj.LoginTime; // 登录成功小时数
           let curTime = new Date().getTime(); // 当前时间
@@ -145,7 +142,7 @@ export class LoginPage {
 
   ionViewDidEnter() {
     this.ionicStorage.get("loginInfo").then(loginObj => {
-      console.error("loginInfo", loginInfo);
+      console.log("loginInfo", loginInfo);
       if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
         // 判断是否是空对象
         if (!_.isNull(loginObj.UserName)) {
@@ -229,7 +226,7 @@ export class LoginPage {
    * @memberof RegisterPage
    */
   public clickLogin() {
-    console.error("this.formData.value:", this.formData.value);
+    console.log("this.formData.value:", this.formData.value);
     const formDataCtrl = this.formData.controls;
     const formData = this.jsUtil.deepClone(this.formData.value); // 深度拷贝表单数据
     for (const i in formDataCtrl) {
@@ -336,7 +333,7 @@ export class LoginPage {
     //     GlobalMethod.setForm(this.formData, formData); // 重新设置表单
     //   }
     // });
-    console.error(formData);
+    console.log(formData);
   }
 
   /**

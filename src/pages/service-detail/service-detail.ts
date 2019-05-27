@@ -40,7 +40,7 @@ export class ServiceDetailPage {
     public alertCtrl: AlertController // Alert消息弹出框
   ) {
     this.paramId = this.navParams.get("serviceId");
-    console.error("this.paramObj", this.paramId);
+    console.log("this.paramObj", this.paramId);
     if (_.isString(this.paramId) && this.paramId.length > 0) {
       const sendData: any = {};
       sendData.id = this.paramId;

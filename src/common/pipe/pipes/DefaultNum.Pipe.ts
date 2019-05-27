@@ -15,9 +15,9 @@ export class DefaultNumState implements PipeTransform {
   constructor() {}
   transform(value: any) {
     let num: number = 0;
-    // console.error("!_.isNull(value)", !_.isNull(value));
-    // console.error("!_.isUndefined(value)", !_.isUndefined(value));
-    // console.error('value === ""', value === "");
+    // console.log("!_.isNull(value)", !_.isNull(value));
+    // console.log("!_.isUndefined(value)", !_.isUndefined(value));
+    // console.log('value === ""', value === "");
     if (_.isNull(value) || _.isUndefined(value) || value === "") {
       return num;
     } else {

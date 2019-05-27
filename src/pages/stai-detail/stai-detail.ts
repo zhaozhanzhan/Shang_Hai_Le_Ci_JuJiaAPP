@@ -54,13 +54,13 @@ export class StaiDetailPage {
     public viewCtrl: ViewController, // 视图控制器
     public modalCtrl: ModalController // Modal弹出页控制器
   ) {
-    console.error("this.navParams", this.navParams["data"]);
+    console.log("this.navParams", this.navParams["data"]);
     const sendData: any = {
       startTime: this.navParams["data"]["bTime"],
       endTime: this.navParams["data"]["eTime"]
     };
     this.ionicStorage.get("loginInfo").then((loginObj: any) => {
-      console.error("loginInfo", loginObj);
+      console.log("loginInfo", loginObj);
       if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
         // 判断是否是空对象
         if (

@@ -61,7 +61,7 @@ export class UserListPage {
       res => {
         // 请求数据成功
         this.dataList = this.dataList.concat(res);
-        console.error("this.sendData", this.sendData);
+        console.log("this.sendData", this.sendData);
       },
       err => {
         // 请求数据失败
@@ -111,7 +111,7 @@ export class UserListPage {
    */
   public reqData(url: string, reqObj: any, suc: Function, err: Function) {
     this.httpReq.get(url, reqObj, data => {
-      console.error("data======", data);
+      console.log("data======", data);
       if (data["data"] && data["data"]["result"] == 0) {
         // if (_.isObject(data["data"]["homeServerPerson"])) {
         //   this.formInfo = data["data"]["homeServerPerson"];
@@ -158,7 +158,7 @@ export class UserListPage {
   public downRefresh(ev: Refresher, url: string, reqObj: any) {
     reqObj.page = pageObj.currentPage; //重置当前页码
     reqObj.size = pageObj.everyItem; //重置当前页面请求条数
-    console.error("下拉刷新执行");
+    console.log("下拉刷新执行");
     this.reqData(
       url,
       reqObj,
@@ -173,14 +173,14 @@ export class UserListPage {
             this.infiniteScroll.enable(!this.isShowNoData); // 启用上拉加载事件侦听器并隐藏提示
           }
         }, 1000);
-        console.error("下拉刷新请求数据成功");
+        console.log("下拉刷新请求数据成功");
       },
       err => {
         this.dataList = this.dataList.concat(err); // 添加新增数据
         setTimeout(() => {
           ev.complete(); // 关闭下拉刷新动画
         }, 1000);
-        console.error("下拉刷新请求数据失败");
+        console.log("下拉刷新请求数据失败");
       }
     );
   }
@@ -221,7 +221,7 @@ export class UserListPage {
           setTimeout(() => {
             ev.complete(); // 关闭上拉加载动画
           }, 1000);
-          console.error("下拉刷新请求数据失败");
+          console.log("下拉刷新请求数据失败");
         }
       );
     }
@@ -265,11 +265,11 @@ export class UserListPage {
   public clickDelBtn(id: any, arr: any, index: number): void {
     this.globalService.delAlert(
       () => {
-        console.error(id, arr, index);
+        console.log(id, arr, index);
         this.delFun(id, arr, index);
       },
       () => {
-        console.error("");
+        console.log("");
       }
     );
   }
@@ -282,14 +282,14 @@ export class UserListPage {
    * @memberof UserListPage
    */
   public backRefresh(that: any) {
-    console.error("backRefresh");
-    console.error(that);
-    // console.error(this.reqUrl, this.sendData);
+    console.log("backRefresh");
+    console.log(that);
+    // console.log(this.reqUrl, this.sendData);
     const url = that.reqUrl;
     const reqObj = that.sendData;
     reqObj.page = pageObj.currentPage; //重置当前页码
     reqObj.size = pageObj.everyItem; //重置当前页面请求条数
-    console.error("reqObj", reqObj);
+    console.log("reqObj", reqObj);
     that.reqData(
       url,
       reqObj,
@@ -302,11 +302,11 @@ export class UserListPage {
         if (!_.isNull(that.infiniteScroll)) {
           that.infiniteScroll.enable(!this.isShowNoData); // 启用上拉加载事件侦听器并隐藏提示
         }
-        console.error("下拉刷新请求数据成功");
+        console.log("下拉刷新请求数据成功");
       },
       err => {
         that.dataList = that.dataList.concat(err); // 添加新增数据
-        console.error("下拉刷新请求数据失败");
+        console.log("下拉刷新请求数据失败");
       }
     );
   }

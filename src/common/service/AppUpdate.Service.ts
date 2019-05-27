@@ -28,19 +28,19 @@ export class AppUpdateService {
     // private fileOpener: FileOpener, // 打开文件
     public alertCtrl: AlertController // private filePath: FilePath, // 文件路径
   ) {
-    console.error("===============AppUpdateService=====================");
-    console.error("this=======", this);
-    // console.error("this.fileOpener=======", this.fileOpener);
+    console.log("===============AppUpdateService=====================");
+    console.log("this=======", this);
+    // console.log("this.fileOpener=======", this.fileOpener);
     if (this.platform.is("android") || this.platform.is("ios")) {
       try {
-        console.error("cordova=======", cordova);
+        console.log("cordova=======", cordova);
       } catch (error) {
-        console.error("==========未找到cordova=======");
+        console.log("==========未找到cordova=======");
       }
       try {
-        console.error("chcp=======", chcp);
+        console.log("chcp=======", chcp);
       } catch (error) {
-        console.error("==========未找到chcp=======");
+        console.log("==========未找到chcp=======");
       }
       this.bindEvents();
     }
@@ -55,7 +55,7 @@ export class AppUpdateService {
     document.addEventListener(
       "deviceready",
       () => {
-        console.error("onDeviceReady");
+        console.log("onDeviceReady");
       },
       false
     );
@@ -64,10 +64,10 @@ export class AppUpdateService {
     document.addEventListener(
       "chcp_updateLoadFailed",
       (eventData: any) => {
-        console.error("chcp_updateLoadFailed");
+        console.log("chcp_updateLoadFailed");
         let error = eventData.detail.error;
 
-        console.error(
+        console.log(
           "123" +
             error.code +
             "," +
@@ -89,13 +89,13 @@ export class AppUpdateService {
                 text: "取消",
                 role: "cancel",
                 handler: () => {
-                  console.error("Cancel clicked");
+                  console.log("Cancel clicked");
                 }
               },
               {
                 text: "更新",
                 handler: () => {
-                  console.error("Update App");
+                  console.log("Update App");
                   if (this.platform.is("ios")) {
                     // IOS跳转更新
                     this.gloService.showMsg(
@@ -130,7 +130,7 @@ export class AppUpdateService {
     document.addEventListener(
       "chcp_nothingToUpdate",
       eventData => {
-        console.error("chcp_nothingToUpdate");
+        console.log("chcp_nothingToUpdate");
       },
       false
     );
@@ -139,7 +139,7 @@ export class AppUpdateService {
     document.addEventListener(
       "chcp_beforeAssetsInstalledOnExternalStorage",
       eventData => {
-        console.error("chcp_beforeAssetsInstalledOnExternalStorage");
+        console.log("chcp_beforeAssetsInstalledOnExternalStorage");
       },
       false
     );
@@ -148,7 +148,7 @@ export class AppUpdateService {
     document.addEventListener(
       "chcp_assetsInstallationError",
       eventData => {
-        console.error("chcp_assetsInstallationError");
+        console.log("chcp_assetsInstallationError");
       },
       false
     );
@@ -157,7 +157,7 @@ export class AppUpdateService {
     document.addEventListener(
       "chcp_assetsInstalledOnExternalStorage",
       eventData => {
-        console.error("chcp_assetsInstalledOnExternalStorage");
+        console.log("chcp_assetsInstalledOnExternalStorage");
       },
       false
     );
@@ -166,7 +166,7 @@ export class AppUpdateService {
     document.addEventListener(
       "chcp_updateIsReadyToInstall",
       eventData => {
-        console.error("chcp_updateIsReadyToInstall");
+        console.log("chcp_updateIsReadyToInstall");
       },
       false
     );
@@ -175,7 +175,7 @@ export class AppUpdateService {
     document.addEventListener(
       "chcp_beforeInstall",
       eventData => {
-        console.error("chcp_beforeInstall");
+        console.log("chcp_beforeInstall");
       },
       false
     );
@@ -184,7 +184,7 @@ export class AppUpdateService {
     document.addEventListener(
       "chcp_updateInstallFailed",
       eventData => {
-        console.error("chcp_updateInstallFailed");
+        console.log("chcp_updateInstallFailed");
       },
       false
     );
@@ -193,7 +193,7 @@ export class AppUpdateService {
     document.addEventListener(
       "chcp_updateInstalled",
       eventData => {
-        console.error("chcp_updateInstalled");
+        console.log("chcp_updateInstalled");
       },
       false
     );
@@ -202,7 +202,7 @@ export class AppUpdateService {
     document.addEventListener(
       "chcp_nothingToInstall",
       eventData => {
-        console.error("chcp_nothingToInstall");
+        console.log("chcp_nothingToInstall");
       },
       false
     );
@@ -220,7 +220,7 @@ export class AppUpdateService {
    * @memberof AppUpdateService
    */
   public downloadfile(loading: any) {
-    console.error("downloadfile");
+    console.log("downloadfile");
     //下载代码
 
     const fileTransfer: FileTransferObject = this.transfer.create();
@@ -232,7 +232,7 @@ export class AppUpdateService {
     this.file
       .createDir(fs, "updatePackage", true)
       .then((dir: any) => {
-        console.error("create dir success" + JSON.stringify(dir));
+        console.log("create dir success" + JSON.stringify(dir));
         // {"isFile":false,"isDirectory":true,"name":"updatePackage","fullPath":"/updatePackage/","filesystem":"<FileSystem: sdcard>","nativeURL":"file:///storage/emulated/0/updatePackage/"}
         fileTransfer
           .download(reqObj.andUpdAppUrl, dir.nativeURL + "update.apk")
@@ -240,11 +240,11 @@ export class AppUpdateService {
             entry => {
               // 打开下载下来的APP
               // open(filePath, fileMIMEType)
-              console.error(dir.nativeURL + "update.apk");
+              console.log(dir.nativeURL + "update.apk");
               try {
-                console.error("cordova=======", cordova);
+                console.log("cordova=======", cordova);
               } catch (error) {
-                console.error("=======cordova未找到=======");
+                console.log("=======cordova未找到=======");
                 return;
               }
               cordova["plugins"].fileOpener2.open(
@@ -254,23 +254,23 @@ export class AppUpdateService {
                   //以APK文件方式打开
                   error: (err: any) => {
                     this.gloService.showMsg("打开更新包失败", null, 2000);
-                    console.error("打开失败err", err);
+                    console.log("打开失败err", err);
                   },
                   success: () => {
-                    console.error("打开成功data");
+                    console.log("打开成功data");
                   }
                 }
               );
             },
             error => {
               this.gloService.showMsg("下载失败", null, 2000);
-              console.error("下载失败" + JSON.stringify(error));
+              console.log("下载失败" + JSON.stringify(error));
             }
           );
       })
       .catch(err => {
         this.gloService.showMsg("保存安装包失败", null, 2000);
-        console.error("create dir err" + err);
+        console.log("create dir err" + err);
       });
 
     // 文件下载进度,注册每当传输新数据块时调用的侦听器
@@ -280,7 +280,7 @@ export class AppUpdateService {
         (progressEvent.loaded / progressEvent.total) *
         100
       ).toFixed(2);
-      // console.error("已下载:" + downloadProgress);
+      // console.log("已下载:" + downloadProgress);
       downNum = parseFloat(downloadProgress);
       // loading.setContent("已下载:" + downloadProgress + "%");
       if (parseFloat(downloadProgress) > 99) {

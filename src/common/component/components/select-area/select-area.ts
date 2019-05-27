@@ -18,14 +18,14 @@ export class SelectAreaComponent {
   // @ViewChild("selectArea")
   // selectArea;
   // showAreasSelect() {
-  //   console.error("this.selectArea.open");
+  //   console.log("this.selectArea.open");
   //   this.selectArea.open();
   // }
   // done(data) {
-  //   console.error(data);
+  //   console.log(data);
   // }
   // closeSelect() {
-  //   console.error("you click close");
+  //   console.log("you click close");
   // }
 
   // import { Component, ViewChild, ElementRef, Injector } from "@angular/core";
@@ -131,7 +131,7 @@ export class SelectAreaComponent {
     this.validate(this.picker); // 渲染验证数据
     this.picker.ionChange.subscribe(() => {
       // Change事件执行
-      // console.error("Change事件执行===============");
+      // console.log("Change事件执行===============");
       this.validate(this.picker); // 渲染验证数据
     });
 
@@ -157,13 +157,13 @@ export class SelectAreaComponent {
    */
   public generate() {
     let values = this.value.toString().split(this.separator); // 选中后的数据用定义的符号分割成数组
-    // console.error("this.value=============", values);
+    // console.log("this.value=============", values);
     // 添加省份数据到选择器 picker
     let provinceCol = {
       name: "province",
       options: this.citiesData.map(province => {
         // 每个省的数据
-        // console.error("province==============", province);
+        // console.log("province==============", province);
         return { text: province.name, value: province.code, disabled: false };
       }),
       selectedIndex: 0
@@ -171,14 +171,14 @@ export class SelectAreaComponent {
 
     // 数组实例的findIndex方法的用法返回第一个符合条件的数组成员的位置，如果所有成员都不符合条件，则返回-1
     let provinceIndex = this.citiesData.findIndex(option => {
-      // console.error("option==============", option);
+      // console.log("option==============", option);
       return option.name == values[0];
     });
 
     provinceIndex = provinceIndex === -1 ? 0 : provinceIndex; // 省的索引
 
     provinceCol.selectedIndex = provinceIndex;
-    // console.error("provinceCol==============", provinceCol);
+    // console.log("provinceCol==============", provinceCol);
 
     this.picker.addColumn(provinceCol); // 添加省列数据
 
@@ -232,7 +232,7 @@ export class SelectAreaComponent {
    */
   public divyColumns(picker) {
     let pickerColumns = this.picker.getColumns(); // 获取所有列数据
-    // console.error("this.picker.getColumns=====", pickerColumns);
+    // console.log("this.picker.getColumns=====", pickerColumns);
     let columns = [];
     pickerColumns.forEach((col, i) => {
       columns.push(0);
@@ -267,7 +267,7 @@ export class SelectAreaComponent {
   public validate(picker) {
     let that = this;
     let columns = picker.getColumns();
-    // console.error("columns==========", columns);
+    // console.log("columns==========", columns);
     let provinceCol = columns[0];
     let cityCol = columns[1];
     let regionCol = columns[2];

@@ -20,7 +20,7 @@ export class SelectCityService {
     public gloService: GlobalService, // 全局自定义服务
     public httpReq: HttpReqService // Http请求服务
   ) {
-    console.error("===============城市数据===============");
+    console.log("===============城市数据===============");
     this.getCityData(data => {
       this.cityArr = data["data"];
     });

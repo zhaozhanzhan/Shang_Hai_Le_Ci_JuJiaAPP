@@ -59,7 +59,7 @@ export class MapPage {
    * @memberof MapPage
    */
   public serInput(ev: any) {
-    console.error(this.serVal);
+    console.log(this.serVal);
     this.baiduMap.serFun(this.serVal, data => {
       if (_.isArray(data) && data.length > 0) {
         console.log("%c 搜索完成事件===========", "color:#C44617", data);

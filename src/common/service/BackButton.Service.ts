@@ -77,28 +77,28 @@ export class BackButtonService {
       }
 
       let rootNav = this.app.getRootNavs()[0]; // 获取根导航
-      console.error("this.app", this.app);
-      console.error("rootNav", rootNav);
+      console.log("this.app", this.app);
+      console.log("rootNav", rootNav);
 
       //如果想点击返回按钮隐藏toast或loading或Overlay就把下面加上
       // ionicApp._toastPortal.getActive() || ionicApp._loadingPortal.getActive() ||
       let ionicApp = rootNav._app._appRoot;
-      console.error("ionicApp", ionicApp);
-      console.error("rootNav._views", rootNav._views);
-      console.error("rootNav._views.length", rootNav._views.length);
-      console.error(
+      console.log("ionicApp", ionicApp);
+      console.log("rootNav._views", rootNav._views);
+      console.log("rootNav._views.length", rootNav._views.length);
+      console.log(
         "rootNav._views[rootNav._views.length-1]",
         rootNav._views[rootNav._views.length - 1]
       );
-      console.error(
+      console.log(
         "rootNav._views[rootNav._views.length-1].enableBack()",
         rootNav._views[rootNav._views.length - 1].enableBack()
       ); // 检查您是否可以返回导航堆栈
-      console.error(
+      console.log(
         "rootNav._views[rootNav._views.length-1].index",
         rootNav._views[rootNav._views.length - 1].index
       ); // 获取当前导航堆栈中当前组件的索引
-      console.error(
+      console.log(
         "rootNav._views[rootNav._views.length-1].isFirst()",
         rootNav._views[rootNav._views.length - 1].isFirst()
       ); // Page是其NavController中页面堆栈中的第一个页面

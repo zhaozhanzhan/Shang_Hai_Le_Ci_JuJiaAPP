@@ -62,13 +62,13 @@ export class SerDetailPage {
     public viewCtrl: ViewController, // 视图控制器
     public modalCtrl: ModalController // Modal弹出页控制器
   ) {
-    console.error("this.navParams", this.navParams["data"]);
+    console.log("this.navParams", this.navParams["data"]);
     const sendData: any = {
       starttime: this.navParams["data"]["bTime"],
       endtime: this.navParams["data"]["eTime"]
     };
     this.ionicStorage.get("loginInfo").then((loginObj: any) => {
-      console.error("loginInfo", loginObj);
+      console.log("loginInfo", loginObj);
       if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
         // 判断是否是空对象
         if (
@@ -92,7 +92,7 @@ export class SerDetailPage {
                 if (this.dataList.length == 0) {
                   this.gloService.showMsg("该列表暂无数据！");
                 }
-                console.error("this.sendData", this.sendData);
+                console.log("this.sendData", this.sendData);
               },
               (err: any) => {
                 // 请求数据失败
@@ -200,7 +200,7 @@ export class SerDetailPage {
    * @memberof ServiceConfigPage
    */
   public openModal(pageName: string, obj?: any) {
-    console.error("打开弹出层");
+    console.log("打开弹出层");
     if (obj) {
       this.modalCtrl.create(pageName, obj).present();
     } else {
@@ -246,7 +246,7 @@ export class SerDetailPage {
   public downRefresh(ev: Refresher, url: string, reqObj: any) {
     reqObj.pageNo = pageObj.currentPage; //重置当前页码
     reqObj.pageSize = pageObj.everyItem; //重置当前页面请求条数
-    console.error("下拉刷新执行");
+    console.log("下拉刷新执行");
     this.reqData(
       url,
       reqObj,
@@ -261,14 +261,14 @@ export class SerDetailPage {
             this.infiniteScroll.enable(!this.isShowNoData); // 启用上拉加载事件侦听器并隐藏提示
           }
         }, 1000);
-        console.error("下拉刷新请求数据成功");
+        console.log("下拉刷新请求数据成功");
       },
       (err: any) => {
         this.dataList = this.dataList.concat(err); // 添加新增数据
         setTimeout(() => {
           ev.complete(); // 关闭下拉刷新动画
         }, 1000);
-        console.error("下拉刷新请求数据失败");
+        console.log("下拉刷新请求数据失败");
       }
     );
   }
@@ -309,7 +309,7 @@ export class SerDetailPage {
           setTimeout(() => {
             ev.complete(); // 关闭上拉加载动画
           }, 1000);
-          console.error("下拉刷新请求数据失败");
+          console.log("下拉刷新请求数据失败");
         }
       );
     }
@@ -353,11 +353,11 @@ export class SerDetailPage {
   public clickDelBtn(id: any, arr: any, index: number): void {
     this.gloService.delAlert(
       () => {
-        console.error(id, arr, index);
+        console.log(id, arr, index);
         this.delFun(id, arr, index);
       },
       () => {
-        console.error("");
+        console.log("");
       }
     );
   }
@@ -370,14 +370,14 @@ export class SerDetailPage {
    * @memberof ConsignorListPage
    */
   public backRefresh(that: any) {
-    console.error("backRefresh");
-    console.error(that);
-    // console.error(this.reqUrl, this.sendData);
+    console.log("backRefresh");
+    console.log(that);
+    // console.log(this.reqUrl, this.sendData);
     const url = that.reqUrl;
     const reqObj = that.sendData;
     reqObj.page = pageObj.currentPage; //重置当前页码
     reqObj.size = pageObj.everyItem; //重置当前页面请求条数
-    console.error("reqObj", reqObj);
+    console.log("reqObj", reqObj);
     that.reqData(
       url,
       reqObj,
@@ -390,11 +390,11 @@ export class SerDetailPage {
         if (!_.isNull(that.infiniteScroll)) {
           that.infiniteScroll.enable(!this.isShowNoData); // 启用上拉加载事件侦听器并隐藏提示
         }
-        console.error("下拉刷新请求数据成功");
+        console.log("下拉刷新请求数据成功");
       },
       (err: any) => {
         that.dataList = that.dataList.concat(err); // 添加新增数据
-        console.error("下拉刷新请求数据失败");
+        console.log("下拉刷新请求数据失败");
       }
     );
   }

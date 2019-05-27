@@ -70,11 +70,16 @@ export class MyApp implements AfterViewInit {
     public nativeAudio: NativeAudio, // 音频播放
     public events: Events // 事件发布与订阅
   ) {
-    console.error("window", window);
-    console.error("this", this);
-    console.error("this.nav：", this.nav);
-    console.error("this.appUpdate：", this.appUpdate);
-    console.error("this.serNotifi", this.serNotifi);
+    // console.log = () => {};
+    // console.info = () => {};
+    // console.log = () => {};
+    // console.log = () => {};
+
+    console.log("window", window);
+    console.log("this", this);
+    console.log("this.nav：", this.nav);
+    console.log("this.appUpdate：", this.appUpdate);
+    console.log("this.serNotifi", this.serNotifi);
     this.initializeApp(); // 初始化APP
     this.pages = [{ title: "Login", component: LoginPage }]; // 页面组件数组
   }
@@ -97,7 +102,7 @@ export class MyApp implements AfterViewInit {
       //=================是否第一次开启应用 Begin=================//
       this.ionicStorage.get("isOpen").then(result => {
         if (result) {
-          console.error("是否是第一次进入程序" + result); //不是就直接
+          console.log("是否是第一次进入程序" + result); //不是就直接
           // this.rootPage = LoginPage;
         } else {
           this.ionicStorage.set("isOpen", true);
@@ -128,12 +133,12 @@ export class MyApp implements AfterViewInit {
             //=================是否第一次开启应用 Begin=================//
             this.ionicStorage.get("isOpen").then(result => {
               if (result) {
-                console.error("是否是第一次进入程序" + result); //不是就直接
+                console.log("是否是第一次进入程序" + result); //不是就直接
                 if (this.platform.is("android") || this.platform.is("ios")) {
                   try {
-                    console.error("cordova=======", cordova);
+                    console.log("cordova=======", cordova);
                   } catch (error) {
-                    console.error("==========未找到cordova=======");
+                    console.log("==========未找到cordova=======");
                     return;
                   }
                   this.openGpsSetting(); // 打开GPS设置页面提示
@@ -157,11 +162,11 @@ export class MyApp implements AfterViewInit {
           //=================是否第一次开启应用 Begin=================//
           this.ionicStorage.get("isOpen").then(result => {
             if (result) {
-              console.error("是否是第一次进入程序" + result); //不是就直接
+              console.log("是否是第一次进入程序" + result); //不是就直接
               try {
-                console.error("cordova=======", cordova);
+                console.log("cordova=======", cordova);
               } catch (error) {
-                console.error("==========未找到cordova=======");
+                console.log("==========未找到cordova=======");
                 return;
               }
               this.openGpsSetting(); // 打开GPS设置页面提示
@@ -183,13 +188,13 @@ export class MyApp implements AfterViewInit {
       //=================获取通知权限处理 Begin=================//
       this.localNotifications.hasPermission().then(
         notifiPermission => {
-          console.error("notifiPermission权限=======", notifiPermission);
+          console.log("notifiPermission权限=======", notifiPermission);
           if (!notifiPermission) {
             // 没有通知权限
             try {
-              console.error("cordova=======", cordova);
+              console.log("cordova=======", cordova);
             } catch (error) {
-              console.error("==========未找到cordova=======");
+              console.log("==========未找到cordova=======");
               return;
             }
             this.openNotifiSetting(); // 打开通知权限设置页面提示
@@ -198,9 +203,9 @@ export class MyApp implements AfterViewInit {
         err => {
           // 没有通知权限
           try {
-            console.error("cordova=======", cordova);
+            console.log("cordova=======", cordova);
           } catch (error) {
-            console.error("==========未找到cordova=======");
+            console.log("==========未找到cordova=======");
             return;
           }
           this.openNotifiSetting(); // 打开通知权限设置页面提示
@@ -211,15 +216,15 @@ export class MyApp implements AfterViewInit {
       //   .BIND_NOTIFICATION_LISTENER_SERVICE;
       // this.androidPermissions.checkPermission(notifiPermission).then(
       //   result => {
-      //     console.error(
+      //     console.log(
       //       "Has permission notifiPermission?",
       //       result.hasPermission
       //     );
       //     const isPermission = result.hasPermission;
       //     try {
-      //       console.error("cordova=======", cordova);
+      //       console.log("cordova=======", cordova);
       //     } catch (error) {
-      //       console.error("==========未找到cordova=======");
+      //       console.log("==========未找到cordova=======");
       //       return;
       //     }
       //     if (!isPermission) {
@@ -228,9 +233,9 @@ export class MyApp implements AfterViewInit {
       //   },
       //   err => {
       //     try {
-      //       console.error("cordova=======", cordova);
+      //       console.log("cordova=======", cordova);
       //     } catch (error) {
-      //       console.error("==========未找到cordova=======");
+      //       console.log("==========未找到cordova=======");
       //       return;
       //     }
       //     this.openNotifiSetting(); // 打开通知权限设置页面提示
@@ -284,9 +289,9 @@ export class MyApp implements AfterViewInit {
 
       //=================订阅全局服务结束事件 Begin=================//
       this.events.subscribe("serviceEndEvent", data => {
-        console.error("nfcNo", data.nfcNo);
-        console.error("workId", data.workId);
-        // console.error("loginId", loginInfo.LoginId);
+        console.log("nfcNo", data.nfcNo);
+        console.log("workId", data.workId);
+        // console.log("loginId", loginInfo.LoginId);
         // const loginId = loginInfo.LoginId;
         // const workId = loginInfo.LoginId;
         const sendData: any = {};
@@ -307,7 +312,7 @@ export class MyApp implements AfterViewInit {
           sendData,
           (data: any) => {
             if (data["data"] && data["data"]["result"] == 0) {
-              console.error(
+              console.log(
                 "this.app.getActiveNavs()[0]",
                 this.app.getActiveNavs()[0]
               );
@@ -323,7 +328,7 @@ export class MyApp implements AfterViewInit {
       //=================订阅全局通知点击事件 Begin=================//
       this.events.subscribe("notifiClickEvent", data => {
         this.ionicStorage.get("loginInfo").then(loginObj => {
-          console.error("loginInfo", loginInfo);
+          console.log("loginInfo", loginInfo);
           if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
             // 判断是否是空对象
             if (
@@ -361,10 +366,10 @@ export class MyApp implements AfterViewInit {
    * @memberof MyApp
    */
   // public goBackLogic() {
-  //   console.error(this.app);
+  //   console.log(this.app);
 
   //   const currentCmp = this.app.getActiveNav().getActive().component; // 获取当前激活的页面组件
-  //   console.error(currentCmp);
+  //   console.log(currentCmp);
   //   const isRootPage =
   //     currentCmp == LoginPage ||
   //     currentCmp == MainPage ||
@@ -538,7 +543,7 @@ export class MyApp implements AfterViewInit {
       ]
     });
     this.ionicStorage.get("loginInfo").then(loginObj => {
-      console.error("loginInfo", loginInfo);
+      console.log("loginInfo", loginInfo);
       if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
         // 判断是否是空对象
         if (

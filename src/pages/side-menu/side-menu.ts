@@ -53,7 +53,7 @@ export class SideMenuPage implements OnInit {
 
   ngOnInit(): void {
     this.ionicStorage.get("loginInfo").then(loginObj => {
-      console.error("loginInfo", loginInfo);
+      console.log("loginInfo", loginInfo);
       if (!_.isNull(loginObj) && !_.isEmpty(loginObj)) {
         // 判断是否是空对象
         if (!_.isNull(loginObj["UserName"])) {

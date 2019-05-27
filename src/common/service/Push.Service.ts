@@ -39,10 +39,10 @@ export class PushService {
     this.jPushAddEventListener(); //判断系统设置中是否允许当前应用推送
     this.nativeAudio.preloadSimple("order2", "assets/wav/order2.wav").then(
       suc => {
-        console.error("音频文件预加载成功！", suc);
+        console.log("音频文件预加载成功！", suc);
       },
       err => {
-        console.error("音频文件预加载失败！", err);
+        console.log("音频文件预加载失败！", err);
       }
     );
   }
@@ -52,9 +52,9 @@ export class PushService {
       //判断系统设置中是否允许当前应用推送
       window["plugins"].jPushPlugin.getUserNotificationSettings(result => {
         if (result == 0) {
-          console.error("系统设置中已关闭应用推送");
+          console.log("系统设置中已关闭应用推送");
         } else if (result > 0) {
-          console.error("系统设置中打开了应用推送");
+          console.log("系统设置中打开了应用推送");
         }
       });
     }
@@ -64,7 +64,7 @@ export class PushService {
       "jpush.openNotification",
       event => {
         let content = this.plt.is("ios") ? event["aps"].alert : event["alert"];
-        console.error("jpush.openNotification：" + content);
+        console.log("jpush.openNotification：" + content);
         this.events.publish("jpush.openNotification");
       },
       false
@@ -75,14 +75,14 @@ export class PushService {
       "jpush.receiveNotification",
       event => {
         let content = this.plt.is("ios") ? event["aps"].alert : event["alert"];
-        console.error("jpush.receiveNotification：" + content);
+        console.log("jpush.receiveNotification：" + content);
         if (content == "您有新的订单，请及时完成派送！") {
           this.nativeAudio.play("order2").then(
             res => {
-              console.error("调用音频成功！", res);
+              console.log("调用音频成功！", res);
             },
             err => {
-              console.error("调用音频失败！", err);
+              console.log("调用音频失败！", err);
             }
           );
           this.vibration.vibrate([2000, 1000, 2000]); // 震动手机
@@ -102,7 +102,7 @@ export class PushService {
       "jpush.receiveMessage",
       event => {
         let message = this.plt.is("ios") ? event["content"] : event["message"];
-        console.error("jpush.receiveMessage：" + message);
+        console.log("jpush.receiveMessage：" + message);
       },
       false
     );
@@ -111,11 +111,11 @@ export class PushService {
     document.addEventListener(
       "jpush.setTagsWithAlias",
       event => {
-        console.error("设置标签/别名回调函数", event);
+        console.log("设置标签/别名回调函数", event);
         let result = "result code:" + event["resultCode"] + " ";
         result += "tags:" + event["tags"] + " ";
         result += "alias:" + event["alias"] + " ";
-        console.error("设置标签/别名回调函数", result);
+        console.log("设置标签/别名回调函数", result);
       },
       false
     );
@@ -124,7 +124,7 @@ export class PushService {
     document.addEventListener(
       "jpush.receiveRegistrationId",
       function(event) {
-        console.error("event['registrationId']：" + event["registrationId"]);
+        console.log("event['registrationId']：" + event["registrationId"]);
       },
       false
     );
@@ -140,7 +140,7 @@ export class PushService {
       return;
     }
     let tags = this.plt.is("android") ? ["android"] : ["ios"];
-    console.error("设置setTags:" + tags);
+    console.log("设置setTags:" + tags);
     if (window["plugins"] && window["plugins"].jPushPlugin) {
       // window["plugins"].jPushPlugin.setTags(tags);
       window["plugins"].jPushPlugin.setTags(
@@ -148,14 +148,14 @@ export class PushService {
         result => {
           const sequence = result.sequence;
           const resTags = result.tags; // 数组类型
-          console.error("JPushPlugin setTags result :sequence is " + sequence);
-          console.error("JPushPlugin setTags result :alias is ", resTags);
+          console.log("JPushPlugin setTags result :sequence is " + sequence);
+          console.log("JPushPlugin setTags result :alias is ", resTags);
         },
         error => {
           const sequence = error.sequence;
           const errorCode = error.code; // 数组类型
-          console.error("JPushPlugin setTags error :sequence is " + sequence);
-          console.error("JPushPlugin setTags error :errorCode is ", errorCode);
+          console.log("JPushPlugin setTags error :sequence is " + sequence);
+          console.log("JPushPlugin setTags error :errorCode is ", errorCode);
         }
       );
     }
@@ -171,7 +171,7 @@ export class PushService {
     if (!(this.plt.is("ios") || this.plt.is("android"))) {
       return;
     }
-    console.error("设置setAlias:" + userId);
+    console.log("设置setAlias:" + userId);
     //ios设置setAlias有bug,值必须为string类型,不能是number类型
     if (window["plugins"] && window["plugins"].jPushPlugin) {
       // window["plugins"].jPushPlugin.setAlias("" + userId);
@@ -180,16 +180,14 @@ export class PushService {
         result => {
           const sequence = result.sequence;
           const alias = result.alias;
-          console.error("JPushPlugin setAlias result :sequence is " + sequence);
-          console.error("JPushPlugin setAlias result :alias is " + alias);
+          console.log("JPushPlugin setAlias result :sequence is " + sequence);
+          console.log("JPushPlugin setAlias result :alias is " + alias);
         },
         error => {
           const sequence = error.sequence;
           const errorCode = error.code;
-          console.error("JPushPlugin setAlias error :sequence is " + sequence);
-          console.error(
-            "JPushPlugin setAlias error :errorCode is " + errorCode
-          );
+          console.log("JPushPlugin setAlias error :sequence is " + sequence);
+          console.log("JPushPlugin setAlias error :errorCode is " + errorCode);
         }
       );
     }
@@ -204,7 +202,7 @@ export class PushService {
     if (window["plugins"] && window["plugins"].jPushPlugin) {
       // window["plugins"].jPushPlugin.setAlias("" + userId);
       window["plugins"].jPushPlugin.getRegistrationID(regId => {
-        console.error("JPushPlugin:registrationID is " + regId);
+        console.log("JPushPlugin:registrationID is " + regId);
       });
     }
   }

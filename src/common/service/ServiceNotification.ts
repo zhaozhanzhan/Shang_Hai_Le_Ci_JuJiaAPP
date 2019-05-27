@@ -40,7 +40,7 @@ export class ServiceNotification {
     public events: Events, // 事件发布与订阅
     public gloService: GlobalService // 全局自定义服务
   ) {
-    console.error("===============ServiceNotification=====================");
+    console.log("===============ServiceNotification=====================");
     // this.initSerNotif(); // 初始化服务通知
   }
 
@@ -144,10 +144,10 @@ export class ServiceNotification {
     }
     this.nativeAudio.preloadSimple("overtime", "assets/wav/overtime4.mp3").then(
       suc => {
-        console.error("overtime音频文件预加载成功！", suc);
+        console.log("overtime音频文件预加载成功！", suc);
       },
       err => {
-        console.error("overtime音频文件预加载失败！", err);
+        console.log("overtime音频文件预加载失败！", err);
       }
     );
   }
@@ -177,7 +177,7 @@ export class ServiceNotification {
     this.eTime = this.bTime + this.manyMin * 60 * 1000; // 服务可结束的时间
     this.maxTime = this.eTime + this.xMin * this.yRemind * 60 * 1000; // 服务最大提醒时间，未结束则服务异常
     this.nowTime = new Date().getTime(); // 系统当前时间时间戳
-    console.error(
+    console.log(
       "eTime,maxTime,nowTime",
       this.eTime,
       this.maxTime,
@@ -204,7 +204,7 @@ export class ServiceNotification {
         remObj.state = false; // 提醒状态，是否已经提醒过
         this.remindArr.push(remObj);
       }
-      console.error("this.remindArr", this.remindArr);
+      console.log("this.remindArr", this.remindArr);
     }
   }
 
@@ -235,7 +235,7 @@ export class ServiceNotification {
       callback(timeObj);
       return;
     } else {
-      console.error("获取起始时间失败！");
+      console.log("获取起始时间失败！");
       callback(timeObj);
       return;
     }
@@ -272,7 +272,7 @@ export class ServiceNotification {
       timeObj.hours = hours;
       timeObj.minutes = minutes;
       timeObj.seconds = seconds;
-      console.error(timeObj);
+      console.log(timeObj);
       callback(timeObj);
     }, 1000);
   }
@@ -284,10 +284,10 @@ export class ServiceNotification {
   public voiceVibrate() {
     // this.nativeAudio.play("overtime").then(
     //   res => {
-    //     console.error("调用overtime音频成功！", res);
+    //     console.log("调用overtime音频成功！", res);
     //   },
     //   err => {
-    //     console.error("调用overtime音频失败！", err);
+    //     console.log("调用overtime音频失败！", err);
     //   }
     // );
     this.localNotif.schedule({
@@ -306,24 +306,24 @@ export class ServiceNotification {
    */
   public openServer() {
     if (this.isTimingOpen) {
-      console.error("定时服务已经开启！");
+      console.log("定时服务已经开启！");
       return;
     }
     let timePoint: any = null; // 当前时间处于哪一段
     for (let i = 0; i < this.remindArr.length; i++) {
       if (this.nowTime > this.remindArr[i]["timeStamp"]) {
         timePoint = i;
-        // console.error("在范围内！" + " " + i);
+        // console.log("在范围内！" + " " + i);
       } else {
-        // console.error("不在时间段范围内！" + " " + i);
+        // console.log("不在时间段范围内！" + " " + i);
       }
     }
-    // console.error("timePoint", timePoint);
+    // console.log("timePoint", timePoint);
 
     if (timePoint == this.remindArr.length - 1) {
       // 已经超出最大超时时间，直接结束服务
-      // console.error("当前时间大于最大超出时间，直接结束服务");
-      console.error("结束服务。。。");
+      // console.log("当前时间大于最大超出时间，直接结束服务");
+      console.log("结束服务。。。");
       this.remindArr = [];
       this.isTimingOpen = false; // 服务已关闭
       this.publishExcEvent(); // 服务异常，关闭服务并调用接口
@@ -331,10 +331,10 @@ export class ServiceNotification {
     }
 
     window.clearInterval(this.timerInter); // 清除定时器
-    console.error("页面已经重载。。。");
+    console.log("页面已经重载。。。");
     this.timerInter = setInterval(() => {
-      // console.error("定时服务正在运行中。。。");
-      console.error("正在统计服务时间");
+      // console.log("定时服务正在运行中。。。");
+      console.log("正在统计服务时间");
       this.nowTime = new Date().getTime(); // 系统当前时间时间戳
       if (this.nowTime < this.eTime) {
         // 现在时间小于服务应该结束时间
@@ -349,11 +349,11 @@ export class ServiceNotification {
         ) {
           // 当前时间大于最大超出时间，直接结束服务
           // TODO: 发送结束服务事件
-          // console.error("当前时间大于最大超出时间，直接结束服务");
-          console.error("结束服务。。。");
+          // console.log("当前时间大于最大超出时间，直接结束服务");
+          console.log("结束服务。。。");
           this.remindArr = [];
           this.isTimingOpen = false; // 服务已关闭
-          console.error(this.timerInter);
+          console.log(this.timerInter);
           this.publishExcEvent(); // 服务异常，关闭服务并调用接口
           window.clearInterval(this.timerInter); // 清除定时器
           return;
@@ -362,12 +362,12 @@ export class ServiceNotification {
         for (let i = 0; i < this.remindArr.length; i++) {
           if (this.nowTime > this.remindArr[i]["timeStamp"]) {
             timePoint = i;
-            // console.error("在范围内！" + " " + i);
+            // console.log("在范围内！" + " " + i);
             // break;
           } else {
             // if (timePoint == this.remindArr.length - 1) {
             //   // 已经超出最大超时时间，直接结束服务
-            //   console.error("当前时间大于最大超出时间，直接结束服务");
+            //   console.log("当前时间大于最大超出时间，直接结束服务");
             //   this.isTimingOpen = false; // 服务已关闭
             //   return;
             // }
@@ -382,28 +382,28 @@ export class ServiceNotification {
             this.remindArr[i]["state"] = true; // 改变当前时间状态为已提醒
             if (timePoint == i && i == this.remindArr.length - 1) {
               // 是最后一次
-              // console.error("this.remindArr", this.remindArr);
-              // console.error("发送通知第" + (i + 1) + "次！");
-              console.error("发送通知第" + (i + 1) + "次！");
-              console.error("结束服务。。。");
+              // console.log("this.remindArr", this.remindArr);
+              // console.log("发送通知第" + (i + 1) + "次！");
+              console.log("发送通知第" + (i + 1) + "次！");
+              console.log("结束服务。。。");
               this.voiceVibrate(); // 声音与震动
               this.remindArr = [];
               this.isTimingOpen = false; // 服务已关闭
               this.publishExcEvent(); // 服务异常，关闭服务并调用接口
-              console.error(this.timerInter);
+              console.log(this.timerInter);
               window.clearInterval(this.timerInter); // 清除定时器
               return;
             } else {
               // 不是最后一次通知
               if (timePoint == i) {
                 this.voiceVibrate(); // 声音与震动
-                console.error("发送未过时通知！");
+                console.log("发送未过时通知！");
               } else {
-                console.error("发送已过时通知！");
+                console.log("发送已过时通知！");
               }
               break;
-              // console.error("当前时间大于最大超出时间，直接结束服务");
-              // console.error("结束服务。。。");
+              // console.log("当前时间大于最大超出时间，直接结束服务");
+              // console.log("结束服务。。。");
             }
           }
         }
@@ -419,7 +419,7 @@ export class ServiceNotification {
     this.localNotif.clearAll();
     this.isTimingOpen = false; // 服务已关闭
     this.remindArr = [];
-    console.error(this.timerInter);
+    console.log(this.timerInter);
     window.clearInterval(this.timerInter); // 清除定时器
   }
 

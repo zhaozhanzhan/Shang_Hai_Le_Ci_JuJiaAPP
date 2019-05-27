@@ -269,8 +269,8 @@ export class GlobalMethod {
   public static keyboardHandle(content: any) {
     let contentTop = null;
     window.addEventListener("keyboardDidShow", event => {
-      // console.error("event", event);
-      // console.error("this.content：", content);
+      // console.log("event", event);
+      // console.log("this.content：", content);
       contentTop = content.contentTop;
       content.scrollTo(0, event["keyboardHeight"] / 3);
     });
