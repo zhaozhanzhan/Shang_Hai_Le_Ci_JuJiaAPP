@@ -107,6 +107,8 @@ export class ServiceConfigPage {
       this.jumpPage("ConfigListPage", obj);
     } else if (this.infoWay == "nfcScanInto") {
       this.jumpPage("ConfigListTwoPage", obj);
+    } else if (this.infoWay == "leaveLine") {
+      this.jumpPage("ConfigListThrPage", obj);
     } else {
       this.gloService.showMsg("未获取到进入配置列表时的状态！");
     }

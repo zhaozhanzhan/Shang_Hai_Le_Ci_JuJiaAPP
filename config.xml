@@ -3,13 +3,6 @@
     <name>居家APP</name>
     <description>镜子信息技术有限公司居家APP</description>
     <author email="799316652@qq.com" href="http://ionicframework.com/">ZZZ</author>
-    <chcp>
-        <config-file url="http://139.224.12.181:9527/JuJiaUpdate/chcp.json" />
-        <auto-download enabled="true" />
-        <auto-install enabled="true" />
-        <local-development enabled="true" />
-        <native-interface version="6" />
-    </chcp>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -124,6 +117,10 @@
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-appavailability" spec="^0.4.2" />
     <plugin name="cordova-plugin-media" spec="5.0.2" />
+    <plugin name="cordova-android-support-gradle-release" spec="^3.0.0">
+        <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
+    </plugin>
+    <plugin name="cordova-plugin-imgdata-zzz" spec="^1.0.4" />
     <engine name="browser" spec="5.0.4" />
     <engine name="android" spec="7.1.4" />
 </widget>

@@ -1,0 +1,141 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="orange" hideBackButton="true">
+        <ion-title>离线服务老人</ion-title>
+        <ion-buttons start>
+            <button ion-button class="pl10" (click)="backHome()">
+                <!-- <span color="primary" showWhen="ios">返回</span> -->
+                <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button class="pr10" (click)="navCtrl.canGoBack()?navCtrl.pop():''">
+                <span showWhen="android,windows,ios">返回</span>
+                <!-- <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon> -->
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar no-padding>
+        <div class="bgcFFF">
+            <ion-row no-padding align-items-center>
+                <ion-col col-10 no-padding>
+                    <ion-item>
+                        <ion-input type="text" value="" placeholder="请输入姓名" [(ngModel)]="serName"></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-2 no-padding text-center>
+                    <button ion-button small class="w80p" color="orange" (click)="serFun(serName)">查询</button>
+                </ion-col>
+            </ion-row>
+        </div>
+    </ion-toolbar>
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 页面内容区域 Begin -->
+<ion-content no-padding>
+    <!-- 下拉刷新控制元素Begin -->
+    <ion-refresher (ionRefresh)="downRefresh($event,reqUrl,sendData)">
+        <ion-refresher-content pullingIcon="arrow-down" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="正在加载">
+        </ion-refresher-content>
+    </ion-refresher>
+    <!-- 下拉刷新控制元素End -->
+    <div class="">
+        <div class="bgcF5F7F6">
+            <div class="pt0 pb0">
+                <div class="w100p bgcFFF mb10" *ngFor="let x of dataList;let i = index;">
+                    <ion-card no-padding>
+                        <ion-card-header>
+                            <div class="disFlex justConSB">
+                                <div>
+                                    <span>姓名：{{x?.userName}}</span>
+                                </div>
+                                <!-- <div>
+                                    <span>标签:</span>
+                                    <span class="colorPri" *ngIf="x?.nfcNo">{{x?.nfcNo}}</span>
+                                    <span class="colorPri" *ngIf="!x?.nfcNo">无</span>
+                                </div> -->
+                            </div>
+                        </ion-card-header>
+                        <ion-card-content>
+                            <div class="disFlex justConSB">
+                                <div>
+                                    <span>街道：{{x?.street?.areaName}}</span>
+                                </div>
+                                <div>
+                                    <span>居委：{{x?.residence?.areaName}}</span>
+                                </div>
+                            </div>
+                            <!-- <div>
+                                <span>地址：{{x?.address}}</span>
+                            </div> -->
+                            <div class="mt10">
+                                <div class="borBBox">
+                                    <div class="disFlex justConSB h26 aligIteC pr10">
+                                        <span class="ftz16 color999">详细地址</span>
+                                    </div>
+                                </div>
+                                <div class="mt5">
+                                    <div class="disFlex flexDirC pl10 pr10 mb10" *ngFor="let y of x?.homeArchiveAddressList;let i = index;">
+                                        <div class="">
+                                            <span class="">{{i + 1}}、{{y.address}}&nbsp;<i class="colorPri" *ngIf="y.defaultFlag == '1'" style="font-style: normal;">(默认)</i></span>
+                                        </div>
+                                        <div class="disFlex justConSB mt5">
+                                            <div>
+                                                <span>标签:</span>
+                                                <span class="colorPri" *ngIf="y?.nfcNo" (click)="selDiscoSer(y?.nfcNo,x?.id)">{{y?.nfcNo}}</span>
+                                                <span class="colorPri" *ngIf="!y?.nfcNo">无</span>
+                                            </div>
+                                            <div>
+                                                <!-- <ion-badge color="orange" *ngIf="!y?.nfcNo" (click)="jumpPage('AddMacPage',{'id':y.id})">写入标签</ion-badge> -->
+                                                <!-- <ion-badge color="orange" *ngIf="y?.nfcNo" (click)="jumpPage('AddMacPage',{'id':y.id})">重写标签</ion-badge> -->
+                                            </div>
+                                            <!-- <span class="ftz16">{{i + 1}}、{{y.address}}&nbsp;<i class="colorPri" *ngIf="y.defaultFlag == '1'" style="font-style: normal;">(默认)</i></span> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <ion-row no-padding align-items-center>
+                                <ion-col col-12 no-padding text-right>
+                                    <button ion-button small color="orange" *ngIf="!x?.nfcNo" (click)="jumpPage('AddMacPage',{'id':x.id})">写入标签</button>
+                                    <button ion-button small color="orange" *ngIf="x?.nfcNo" (click)="jumpPage('AddMacPage',{'id':x.id})">重写标签</button>
+                                </ion-col>
+                            </ion-row> -->
+                        </ion-card-content>
+                    </ion-card>
+                    <!-- <div class="h30 w100p">
+                      <div class="disFlex h30">
+                          <div class="disFlex aligIteC">
+                              <div>
+                                  <span class="ftz16">{{x.name}}({{x.createDate | date:'yyyy-MM-dd HH:mm'}} {{x.timeFrame}})</span>
+                              </div>
+                          </div>
+                          <div class="flexGrow1 disFlex aligIteC flexDirRR pr10">
+                              <div>
+                                  <span class="ftz16 colorPri" *ngIf="!x.isPin">未销样</span>
+                                  <span class="ftz16 colorSec" *ngIf="x.isPin">已销样</span>
+                              </div>
+                          </div>
+                          <div class="w20 disFlex aligIteC justConC">
+                              <div>
+                                  <ion-icon class="ftz30 color999" name="ios-arrow-forward"></ion-icon>
+                              </div>
+                          </div>
+                      </div>
+                  </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 上拉加载控制元素Begin -->
+    <ion-infinite-scroll (ionInfinite)="upLoad($event,reqUrl,sendData)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载更多数据..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <ion-row class="" [hidden]="!isShowNoData" padding-bottom>
+        <ion-col col-12 text-center>
+            <span class="ftz16">没有更多数据</span>
+        </ion-col>
+    </ion-row>
+    <!-- 上拉加载控制元素End -->
+</ion-content>
+<!-- 页面内容区域 End -->

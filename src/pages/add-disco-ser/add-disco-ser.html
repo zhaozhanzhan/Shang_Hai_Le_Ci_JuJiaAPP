@@ -1,0 +1,177 @@
+<!-- 导航条区域 Begin -->
+<ion-header>
+    <ion-navbar color="orange" hideBackButton="true">
+        <ion-title>离线服务</ion-title>
+        <!-- <ion-buttons start>
+            <button ion-button class="pl10" (click)="backHome()">
+                <span color="primary" showWhen="ios">返回</span>
+                <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon>
+            </button>
+        </ion-buttons> -->
+        <ion-buttons end>
+            <button ion-button class="pr10" (click)="navCtrl.canGoBack()?navCtrl.pop():viewCtrl.dismiss()">
+                <span showWhen="android,windows,ios">返回</span>
+                <!-- <ion-icon class="ftz30" name="ios-home" showWhen="android,windows,ios"></ion-icon> -->
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<!-- 导航条区域 End -->
+
+<!-- 页面内容区域 Begin -->
+<ion-content>
+    <div>
+        <div class="p10">
+            <div class="">
+                <div class="posRel h210 w100p">
+                    <div class="w100p h100p posAbs zIndex1 cardBgImg"></div>
+                    <div class="w100p h100p posAbs zIndex2">
+                        <div class="w100p h100p borRadius10 p10">
+                            <div class="w100p h100p posRel">
+                                <div class="disFlex aligIteC">
+                                    <div class="w40 h40 borSDBDFE6 bgcFFF">
+                                        <div class="h100p w100p disFlex justConC aligIteC" [hidden]="(formInfo?.sex == 1)">
+                                            <svg class="colourIcon ftz50" aria-hidden="true">
+                                                <use xlink:href="#icon-Head2"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="h100p w100p disFlex justConC aligIteC" [hidden]="!(formInfo?.sex == 1)">
+                                            <svg class="colourIcon ftz50" aria-hidden="true">
+                                                <use xlink:href="#icon-Head1"></use>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="ml10">
+                                        <span class="ftz24">{{formInfo?.userName}}</span>
+                                    </div>
+                                    <div class="ml20">
+                                        <span class="ftz16">{{formInfo?.userCode}}</span>
+                                    </div>
+                                </div>
+                                <div class="mt5">
+                                    <span class="ftz18 colorFFF">居家养老服务卡</span>
+                                </div>
+                                <div class="mt5">
+                                    <div>
+                                        <span class="">时长信息</span>
+                                    </div>
+                                    <div class="disFlex mt5">
+                                        <div>
+                                            <span class="ftz14">应服务:{{formInfo?.homeArchiveWorktime?.appWorkTimeTotal | defaultNumState | number:'1.2-2'}}&nbsp;分钟</span>
+                                        </div>
+                                        <div class="ml10">
+                                            <span class="ftz14">剩余时长:{{formInfo?.homeArchiveWorktime?.appWorkTimeRest | defaultNumState | number:'1.2-2'}}&nbsp;分钟</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt10">
+                                    <div>
+                                        <span class="">金额信息</span>
+                                    </div>
+                                    <div class="disFlex mt5">
+                                        <div>
+                                            <span class="ftz14">服务金额:{{formInfo?.homeArchiveWorktime?.appWorkMoneyTotal | defaultNumState | number:'1.2-2'}}&nbsp;元</span>
+                                        </div>
+                                        <div class="ml10">
+                                            <span class="ftz14">剩余金额:{{formInfo?.homeArchiveWorktime?.appWorkMoneyRest | defaultNumState | number:'1.2-2'}}&nbsp;元</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt20">
+                    <div>
+                        <div class="borBBox">
+                            <div class="disFlex justConSB h26 aligIteC pl10 pr10">
+                                <span class="ftz16 color999">联系电话：</span>
+                                <span class="ftz16">{{formInfo?.telphone}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt10">
+                        <div class="borBBox">
+                            <div class="disFlex justConSB pl10 pr10">
+                                <div class="flexShrink0">
+                                    <span class="ftz16 color999">签入地址：</span>
+                                </div>
+                                <div class="flexShrink1">
+                                    <span class="ftz16">{{formInfo?.address}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt10">
+                        <div class="borBBox">
+                            <div class="disFlex justConSB h26 aligIteC pl10 pr10">
+                                <span class="ftz16 color999">当前服务内容：</span>
+                            </div>
+                        </div>
+                        <div class="mt5">
+                            <div class="disFlex justConSB h26 aligIteC pl30 pr10">
+                                <span class="ftz18">{{hierarchy}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ion-grid no-padding margin-top>
+                    <ion-row>
+                        <ion-col class="disFlex justConC">
+                            <div class="w90p">
+                                <div class="">
+                                    <ion-row no-padding>
+                                        <ion-col col-12 no-padding class="posRel bgcFFF borRadius10 h200">
+                                            <div class="w100p h100p disFlex flexDirR justConC aligIteC posAbs zIndex5" [hidden]="imgArr[0]?.imgData">
+                                                <img class="w50p h50p" src="assets/imgs/IdCardFront.svg">
+                                            </div>
+                                            <div class="w100p h100p disFlex flexDirR justConC aligIteC posAbs zIndex10" [hidden]="imgArr[0]?.imgData">
+                                                <div class="w50 h50 borRadius50p bgcF00Tran50 tac pt8" (click)="clickCamera(0)">
+                                                    <i class="iconfont icon-XiangJi_Full colorFFF ftz30"></i>
+                                                </div>
+                                            </div>
+                                            <div class="w100p h100p disFlex flexDirR justConC aligIteC posAbs zIndex20" (click)="clickCamera(0)" [hidden]="!imgArr[0]?.imgData">
+                                                <img class="w100p h100p" [src]="domSanitizer.bypassSecurityTrustUrl(imgArr[0]?.imgData)">
+                                            </div>
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row no-padding>
+                                        <ion-col col-12 text-center no-padding>
+                                            <span class="colorDar">请选择服务前照片</span>
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row no-padding margin-top>
+                                        <ion-col col-12 no-padding class="posRel bgcFFF borRadius10 h200">
+                                            <div class="w100p h100p disFlex flexDirR justConC aligIteC posAbs zIndex5" [hidden]="imgArr[1]?.imgData">
+                                                <img class="w50p h50p" src="assets/imgs/IdCardAfter.svg">
+                                            </div>
+                                            <div class="w100p h100p disFlex flexDirR justConC aligIteC posAbs zIndex10" [hidden]="imgArr[1]?.imgData">
+                                                <div class="w50 h50 borRadius50p bgcF00Tran50 tac pt8" (click)="clickCamera(1)">
+                                                    <i class="iconfont icon-XiangJi_Full colorFFF ftz30"></i>
+                                                </div>
+                                            </div>
+                                            <div class="w100p h100p disFlex flexDirR justConC aligIteC posAbs zIndex20" (click)="clickCamera(1)" [hidden]="!imgArr[1]?.imgData">
+                                                <img class="w100p h100p" [src]="domSanitizer.bypassSecurityTrustUrl(imgArr[1]?.imgData)">
+                                            </div>
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row no-padding>
+                                        <ion-col col-12 text-center no-padding>
+                                            <span class="colorDar">请选择服务后照片</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </div>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+                <div class="mt30">
+                    <div text-center>
+                        <button ion-button round class="w90p" color="danger" (click)="openServer()">保存并生成服务</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<!-- 页面内容区域 End -->
