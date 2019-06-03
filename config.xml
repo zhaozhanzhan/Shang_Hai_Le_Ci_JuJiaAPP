@@ -1,8 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.mirrortech.jujiaapp" version="1.0.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.mirrortech.jujiaapp" version="1.0.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>居家APP</name>
     <description>镜子信息技术有限公司居家APP</description>
     <author email="799316652@qq.com" href="http://ionicframework.com/">ZZZ</author>
+    <chcp>
+        <config-file url="http://139.224.12.181:9527/JuJiaUpdate/chcp.json" />
+        <auto-download enabled="true" />
+        <auto-install enabled="true" />
+        <local-development enabled="true" />
+        <native-interface version="7" />
+    </chcp>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
